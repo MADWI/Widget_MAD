@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="hello">Hello World, WidgetPlanActivity!</string>
+    <string name="app_name">WidgetPlan</string>
+    <string name="folder_name">MAD_Plan_ZUT</string>
+
+</resources>
