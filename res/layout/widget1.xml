@@ -1,59 +1,81 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/RelativeLayout1"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:gravity="center|top" >
+    android:gravity="center|top"
+    android:orientation="vertical" >
 
     <TextView
-        android:id="@+id/widget1label"
+        android:id="@+id/tv_ustawienia"
         android:layout_width="294dp"
         android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
         android:layout_marginLeft="5dp"
-   		android:layout_marginRight="5dp"
-   		android:layout_marginTop="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginTop="5dp"
         android:background="@drawable/background_top"
-        android:text=" 03.04.2012           Parzysty "
-        android:textAppearance="?android:attr/textAppearanceLarge"
-         />
+        android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <TextView
-        android:id="@+id/widget2label"
-        android:layout_width="294dp"
+        android:id="@+id/tv_data"
+        android:layout_width="147dp"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="5dp"
-   		android:layout_marginRight="5dp"
+        android:layout_alignLeft="@+id/tv_ustawienia"
+        android:layout_below="@+id/tv_ustawienia"
         android:background="@drawable/background_bottom"
-        android:text=" Plan dla:"
-        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:paddingLeft="5dp"
+        android:text="17.04.2012"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <TextView
+        android:id="@+id/tv_tydzien"
+        android:layout_width="147dp"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/tv_ustawienia"
+        android:layout_below="@+id/tv_ustawienia"
+        android:layout_toRightOf="@+id/tv_data"
+        android:background="@drawable/background_bottom"
+        android:paddingLeft="25dp"
+        android:text="Parzysty"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
 
-         />
-    
-        <TextView
-        android:id="@+id/widget3label"
+    <TextView
+        android:id="@+id/TextView01"
         android:layout_width="294dp"
-        android:layout_height="80dp"
-        android:layout_marginLeft="5dp"
-   		android:layout_marginRight="5dp"
-        android:background="@drawable/background_listview"
-        android:maxLines="5"
-        android:textColor="#000000"
-        android:text="Grupa I1-24B, S1
-Zajęcia z Systemów Operacyjnych II laboratoria w poniedziałek (02.04) od 16 do 18 gr I1-24B zostają odwołane. ..."
+        android:layout_height="40dp"
+        android:layout_alignLeft="@+id/tv_data"
+        android:layout_below="@+id/tv_data"
+        android:background="@drawable/background_bottom"
+        android:paddingLeft="5dp"
+        android:paddingTop="5dp"
+        android:text="Plan dla: "
+        android:textAppearance="?android:attr/textAppearanceLarge" />
 
-         />
-
-                <TextView
-        android:id="@+id/widget4label"
+    <TextView
+        android:id="@+id/TextView02"
         android:layout_width="294dp"
-        android:layout_height="80dp"
-        android:layout_marginLeft="5dp"
-   		android:layout_marginRight="5dp"
+        android:layout_height="25dp"
+        android:layout_alignLeft="@+id/TextView01"
+        android:layout_below="@+id/TextView01"
         android:background="@drawable/background_listview"
-        android:maxLines="5"
-        android:textColor="#000000"
-        android:text="Grupa 23A, S1
-W związku z pełnieniem funkcji elektora w wyborach na stanowisko Rektora ZUT, odwołane zostają ..."
+        android:paddingLeft="5dp"
+        android:paddingTop="5dp"
+        android:text="Grupa I1-24B, S1"
+        android:textColor="#000000" />
 
-         />
-</LinearLayout>
+    <TextView
+        android:id="@+id/tv_zmiany_tresc"
+        android:layout_width="294dp"
+        android:layout_height="60dp"
+        android:layout_alignLeft="@+id/TextView02"
+        android:layout_below="@+id/TextView02"
+        android:background="@drawable/background_listview"
+        android:maxLines="4"
+        android:paddingLeft="5dp"
+        android:paddingTop="5dp"
+        android:text="Laboratoria z przedmiotu 'Przetwarzanie obrazów' prowadzone przez dr P. Forczmańskiego w dniu 18.04.2012r. ..."
+        android:textColor="#000000" />
+
+</RelativeLayout>
