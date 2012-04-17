@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+	<PreferenceCategory android:title="Wybór grupy">
+		<ListPreference
+			android:key="list_of_type"
+			android:dialogTitle="Wybierz rodzaj"
+			android:title="Rodzaj studiów"
+			android:entries="@array/list_rodzaj_studiow"
+			android:entryValues="@array/list_values_rodzaj_studiow"
+			android:summary="Wybierz rodzaj studiów" />
+		<ListPreference
+			android:key="list_fos"
+			android:dialogTitle="Wybierz kierunek"
+			android:title="Kierunek studiów"
+			android:entries="@array/list_kierunek_studiow"
+			android:entryValues="@array/list_values_kierunek_studiow"
+			android:summary="Wybierz kierunek studiów" />
+		<ListPreference
+			android:key="list_year"
+			android:dialogTitle="Wybierz rok"
+			android:title="Rok studiów"
+			android:entries="@array/list_rok_studiow"
+			android:entryValues="@array/list_values_rok_studiow"
+			android:summary="Wybierz rok studiów" />
+		<ListPreference
+			android:key="list_group"
+			android:dialogTitle="Wybierz grupę"
+			android:title="Grupa"
+			android:entries="@array/list_grupy"
+			android:entryValues="@array/list_values_grupy"
+			android:summary="Wybierz grupę do której należysz" />
+	</PreferenceCategory>
+	<PreferenceCategory android:title="Synchronizacja danych">
+		<CheckBoxPreference
+			android:defaultValue="false"
+			android:summary="Włącz automatyczną synchronizację wiadomości"
+			android:key="checkbox"
+			android:title="Automatyczne odświeżanie" />
+	</PreferenceCategory>
+	<PreferenceCategory android:title="Wygląd">
+	    <ListPreference
+			android:key="list_theme_settings"
+			android:dialogTitle="Zmiana motywu"
+			android:title="Zmień motyw"
+			android:entries="@array/list_wyglad"
+			android:entryValues="@array/list_values_wyglad"
+			android:summary="Zmiana motywu graficznego" />
+	</PreferenceCategory>
+</PreferenceScreen>
