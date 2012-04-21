@@ -1,0 +1,27 @@
+Klasa do połączenia Http, pobierająca strone w postaci Stringa.
+
+
+Konstruktor jako argument przyjmuje dwa parametry:
+
+HttpConnect con = new HttpConnect(int timeout, String adres);
+
+Timeout oraz adres strony którą ma pobrać.
+
+Następnie należy wywołać metodę getStrona() , która w przypadku błędu zwróci pusty łańcuch "", a w przypadku powodzenia żądaną stronę.
+
+
+Przykład:
+
+
+static String strona = "";
+static final String adres = "http://wi.zut.edu.pl/plan-zajec/zmiany-w-planie?format=json";
+
+HttpConnect con = new HttpConnect(10000,adres);
+
+
+strona = con.getStrona();
+
+if(strona = "")
+{
+	Log.e(TAG, "Error con.getStrona()");
+}

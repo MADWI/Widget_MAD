@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string name="app_name">Plan Changes WI ZUT</string>
-    <string name="no_response">no response</string>
-    <string name="start_serv">Start useless service</string>
-    <string name="stop_serv">Stop useless service</string>
-    <string name="start">start parse</string>
-
-</resources>
