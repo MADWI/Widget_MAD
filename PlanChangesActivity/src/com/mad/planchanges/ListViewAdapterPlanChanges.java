@@ -14,15 +14,15 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-public class ListViewAdapterPlanChanges extends ArrayAdapter<DataPlanChanges> {
+public class ListViewAdapterPlanChanges extends ArrayAdapter<MessagePlanChanges> {
 
 	private static final int MAX_TITLE_LENGHT = 35;
 	//private static final int MAX_BODY_LENGHT = 100;
 	private final Context context;
-	private ArrayList<DataPlanChanges> messages = new ArrayList<DataPlanChanges>();
+	private ArrayList<MessagePlanChanges> messages = new ArrayList<MessagePlanChanges>();
 	
 	public ListViewAdapterPlanChanges(Context context, int resource,
-			int textViewResourceId, ArrayList<DataPlanChanges> objects) {
+			int textViewResourceId, ArrayList<MessagePlanChanges> objects) {
 		super(context, resource, textViewResourceId, objects);
 		this.context = context;
 		this.messages = objects;

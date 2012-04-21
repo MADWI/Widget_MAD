@@ -20,18 +20,66 @@ public class GetPlanChanges
 		con = new HttpConnect(10000,adres);
 	}
  
-    public ArrayList<DataPlanChanges> getServerMessages() {
+	public MessagePlanChanges getLastMessage()
+	{
+		strona = con.getStrona();
+		MessagePlanChanges tempMsg = new MessagePlanChanges();
+		
+		if(strona != "")
+		{
+			/* Arrays of JSON and Messages elements */
+			JSONArray entry = new JSONArray();
+			JSONObject jsonObject = new JSONObject();
+			/* parse response from server */
+			if (strona != "") {
+				try {
+					/* initialize JSON object with server response */
+					jsonObject = (JSONObject) new JSONTokener(strona)
+							.nextValue();
+					/* get JSONArray from response */
+					entry = jsonObject.getJSONArray("entry");
 
-    	ArrayList<DataPlanChanges> DataArray = new ArrayList<DataPlanChanges>();    
-    	DataPlanChanges tempMsg = new DataPlanChanges();
+					/* parse elements of JSONArray */
+					
+					if (entry.getJSONObject(0).has("title"))
+						tempMsg.setTitle(entry.getJSONObject(0).getString(
+									"title"));
+					if (entry.getJSONObject(0).has("created"))
+						tempMsg.setDate(entry.getJSONObject(0).getString(
+									"created"));
+					if (entry.getJSONObject(0).has("text"))
+						tempMsg.setBody(entry.getJSONObject(0).getString(
+									"text"));
+						
+					//replace &quot and set to body String
+					String temp = tempMsg.getBody();					
+					Matcher matcherString = patternQuot.matcher(temp);
+					tempMsg.setBody(matcherString.replaceAll("\""));
+										
+					} catch (JSONException e) {
+						e.printStackTrace();
+						return null;
+						}
+					}
+			return tempMsg;
+		}
+		else
+			return null;		
+	}
+    public ArrayList<MessagePlanChanges> getServerMessages() {
     	
     	strona = con.getStrona();
     	
-		/* Arrays of JSON and Messages elements */
-		JSONArray entry = new JSONArray();
-		JSONObject jsonObject = new JSONObject();
 		/* parse response from server */
-		if (strona != "") {
+		if (strona != "") 
+		{
+	    	ArrayList<MessagePlanChanges> DataArray = new ArrayList<MessagePlanChanges>();    
+	    	MessagePlanChanges tempMsg = new MessagePlanChanges();
+	    	
+			/* Arrays of JSON and Messages elements */
+			JSONArray entry = new JSONArray();
+			JSONObject jsonObject = new JSONObject();
+			
 			try {
 				/* initialize JSON object with server response */
 				jsonObject = (JSONObject) new JSONTokener(strona)
@@ -43,7 +91,7 @@ public class GetPlanChanges
 				
 				for(int i=0; i<entry.length();i++)
 				{
-					tempMsg = new DataPlanChanges();
+					tempMsg = new MessagePlanChanges();
 					/*
 					 * checking availability of elements and set fields of
 					 * Message objects
@@ -69,8 +117,10 @@ public class GetPlanChanges
 					e.printStackTrace();
 					return null;
 					}
-				}
+			return DataArray;
+			}
 		
-		return DataArray;
+		else
+			return null;				
 	}
 }

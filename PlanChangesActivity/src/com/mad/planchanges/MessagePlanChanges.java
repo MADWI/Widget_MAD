@@ -1,11 +1,11 @@
 package com.mad.planchanges;
 
-public class DataPlanChanges { 
+public class MessagePlanChanges { 
   public String title; 
   public String date; 
   public String body; 
  
-  public DataPlanChanges() { 
+  public MessagePlanChanges() { 
 	  title = "";
 	  date = "";
 	  body = "";	  

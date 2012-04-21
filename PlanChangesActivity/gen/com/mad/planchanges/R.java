@@ -25,6 +25,7 @@ public final class R {
         public static final int ic_launcher=0x7f020000;
         public static final int ic_menu_close_clear_cancel=0x7f020001;
         public static final int ic_menu_refresh=0x7f020002;
+        public static final int wi=0x7f020003;
     }
     public static final class id {
         public static final int body=0x7f070002;

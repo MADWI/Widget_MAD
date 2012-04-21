@@ -15,11 +15,12 @@ import android.view.MenuItem;
 import android.widget.ListView;
 import android.widget.Toast;
 
+
 public class PlanChangesActivity extends Activity{
 	
 	private final GetPlanChanges pars = new GetPlanChanges();
 	private final String TAG = "Plan Changes";
-	private ArrayList<DataPlanChanges> news= new ArrayList<DataPlanChanges>();
+	private ArrayList<MessagePlanChanges> news= new ArrayList<MessagePlanChanges>();
 	private ListViewAdapterPlanChanges adapter;
 	private ListView lvPlanChanges; 
 	boolean enableExecuteRefresh = true;
@@ -86,10 +87,9 @@ public class PlanChangesActivity extends Activity{
 				}
 			}
 			return true;
-			case R.id.exit:
+		case R.id.exit:
 			this.finish();
 			return true;
-
 		default:
 			return super.onOptionsItemSelected(item);
 		}
@@ -97,7 +97,7 @@ public class PlanChangesActivity extends Activity{
 	
 	private class AsyncTaskGetPlanChanges extends AsyncTask <String, Void, String>{
 
-		ArrayList<DataPlanChanges> tempArray= null;
+		ArrayList<MessagePlanChanges> tempArray= null;
 		
 		@Override
 		protected String doInBackground(String... arg0) {
