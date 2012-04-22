@@ -70,7 +70,6 @@ public class GetPlanChanges
     public ArrayList<MessagePlanChanges> getServerMessages() {
     	
     	strona = con.getStrona();
-    	strona.replaceAll("<\\/p>", "\n");
 		/* parse response from server */
 		if (strona != "") 
 		{
