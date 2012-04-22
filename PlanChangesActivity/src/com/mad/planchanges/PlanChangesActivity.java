@@ -25,25 +25,28 @@ public class PlanChangesActivity extends Activity{
 	
 	private final GetPlanChanges pars = new GetPlanChanges();
 	private final String TAG = "Plan Changes";
+	private final AsyncTaskGetPlanChanges async = new AsyncTaskGetPlanChanges();
+	
 	private ArrayList<MessagePlanChanges> news= new ArrayList<MessagePlanChanges>();
 	private ListViewAdapterPlanChanges adapter;
 	private ListView lvPlanChanges; 
-	boolean enableExecuteRefresh = true;
-	private ProgressDialog pd;
-	AsyncTaskGetPlanChanges async = new AsyncTaskGetPlanChanges();
+	private ProgressDialog pd;	
+	private boolean enableExecuteRefresh = true;
+	private boolean firstRun = true;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		Log.e(TAG, "<<< ON CREATE >>>");
 		setContentView(R.layout.main_plan_changes);
-		if(isOnline()==true)
+		if(isOnline()==true || firstRun == true)
 		{
-			new AsyncTaskGetPlanChanges().execute("");
+			firstRun = false;
+			new AsyncTaskGetPlanChanges().execute(getApplicationContext());			
 
-		}	
+		}
 	}
-	
+
 	public void showToast (String text, int duration,Context con)
 	{
 		Log.e(TAG, "<<< ShowToast >>>");
@@ -101,7 +104,7 @@ public class PlanChangesActivity extends Activity{
 			{
 				if(isOnline()==true)
 				{
-					new AsyncTaskGetPlanChanges().execute("");
+					new AsyncTaskGetPlanChanges().execute(getApplicationContext());
 				}
 			}
 			return true;
@@ -113,14 +116,16 @@ public class PlanChangesActivity extends Activity{
 		}
 	}
 	
-	private class AsyncTaskGetPlanChanges extends AsyncTask <String, Void, String>{
+	private class AsyncTaskGetPlanChanges extends AsyncTask <Context, Boolean, Void>{
 
 		ArrayList<MessagePlanChanges> tempArray= null;
+		Context ctx;
 		
 		@Override
-		protected String doInBackground(String... arg0) {
+		protected Void doInBackground(Context... params) {
 			Log.e(TAG, "<<< AsyncTask - doInBackground >>>");
-				
+			ctx = params[0];
+			
 			if(isOnline()==true)
 			{
 				Log.e(TAG, "<<< refreshMessages >>>");
@@ -132,14 +137,25 @@ public class PlanChangesActivity extends Activity{
 				}
 				else
 				{
-					showToast("Nie można pobrać !",2000,getApplicationContext());
+					publishProgress(false);
 				
 				}
 			}
 			return null;
 		}
+		@Override
+		protected void onProgressUpdate(Boolean... values) {
+			super.onProgressUpdate(values);
+			
+			if (values[0]==false) {
+				showToast("Nie można pobrać wiadomości :(",3000,ctx);
+			} else if (values[0]==true ) {
+				showToast("Zakończono !",3000,ctx);
+			}
+	
+		}
 		
-		 @Override
+		@Override
 		 protected void onPreExecute() 
 		 {
 			Log.e(TAG, "<<< AsyncTask - onPreExecute >>>");
@@ -148,14 +164,14 @@ public class PlanChangesActivity extends Activity{
 
 		 }
 		@Override
-		protected void onPostExecute(String result)
+		protected void onPostExecute(Void result)
 		{
 			Log.e(TAG, "<<< AsyncTask - onPostExecute >>>");
 			pd.dismiss();
 			if(tempArray != null)
 			{
 				refreshListView();
-				showToast("Sukces !",2000,getApplicationContext());
+				publishProgress(true);
 			}
 			enableExecuteRefresh = true;
 		}

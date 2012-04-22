@@ -9,6 +9,8 @@ import java.util.ArrayList;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.text.Html;
+import android.text.Spanned;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,7 +20,6 @@ import android.widget.TextView;
 public class ListViewAdapterPlanChanges extends ArrayAdapter<MessagePlanChanges> {
 
 	private static final int MAX_TITLE_LENGHT = 35;
-	//private static final int MAX_BODY_LENGHT = 100;
 	private final Context context;
 	private ArrayList<MessagePlanChanges> messages = new ArrayList<MessagePlanChanges>();
 	
@@ -43,6 +44,7 @@ public class ListViewAdapterPlanChanges extends ArrayAdapter<MessagePlanChanges>
 			 title.setTextColor(Color.WHITE);	         
 			 int color = Color.argb(255, 64, 94, 188 );
 	         title.setBackgroundColor( color );
+	       
 	         
 	         body.setTextColor(Color.BLACK);
 	         body.setBackgroundColor(Color.WHITE);
@@ -62,14 +64,9 @@ public class ListViewAdapterPlanChanges extends ArrayAdapter<MessagePlanChanges>
 		} else
 			title.setText(temp);		
 		
-		temp = messages.get(position).getBody();
-		
-		//w razie potrzeby ograniczenia rozmiaru tekstu
-		//if (temp.length() >= MAX_BODY_LENGHT) {
-			//temp = temp.substring(0, MAX_BODY_LENGHT) + "...";
-			//body.setText(temp);
-		//} else
-			body.setText(temp);
+		Spanned sp = Html.fromHtml(messages.get(position).getBody().trim());
+		temp = sp.toString().replaceAll("[\r\n]{1,}$", "");
+		body.setText(temp);
 		
 		date.setText("Data: "+messages.get(position).getDate());
 		

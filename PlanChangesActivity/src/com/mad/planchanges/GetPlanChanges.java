@@ -10,10 +10,10 @@ import org.json.JSONObject;
 import org.json.JSONTokener;
 public class GetPlanChanges 
 {
-	static String strona = "";
-	static final String adres = "http://wi.zut.edu.pl/plan-zajec/zmiany-w-planie?format=json";
-	static final Pattern patternQuot = Pattern.compile("(&quot;)");	
-	HttpConnect con;
+	private static String strona = "";
+	private static final String adres = "http://wi.zut.edu.pl/plan-zajec/zmiany-w-planie?format=json";
+	private static final Pattern patternQuot = Pattern.compile("(&quot;)");		
+	private final HttpConnect con;
 	 
 	public GetPlanChanges()
 	{		
@@ -55,6 +55,7 @@ public class GetPlanChanges
 					String temp = tempMsg.getBody();					
 					Matcher matcherString = patternQuot.matcher(temp);
 					tempMsg.setBody(matcherString.replaceAll("\""));
+				
 										
 					} catch (JSONException e) {
 						e.printStackTrace();
@@ -69,7 +70,7 @@ public class GetPlanChanges
     public ArrayList<MessagePlanChanges> getServerMessages() {
     	
     	strona = con.getStrona();
-    	
+    	strona.replaceAll("<\\/p>", "\n");
 		/* parse response from server */
 		if (strona != "") 
 		{
@@ -102,10 +103,10 @@ public class GetPlanChanges
 					if (entry.getJSONObject(i).has("created"))
 						tempMsg.setDate(entry.getJSONObject(i).getString(
 								"created"));
-					if (entry.getJSONObject(i).has("text"))
+					if (entry.getJSONObject(i).has("content"))
 						tempMsg.setBody(entry.getJSONObject(i).getString(
-								"text"));
-					
+								"content"));
+				
 					//replace &quot and set to body String
 					String temp = tempMsg.getBody();					
 					Matcher matcherString = patternQuot.matcher(temp);
