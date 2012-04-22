@@ -53,13 +53,14 @@ public class ListViewAdapterPlanChanges extends ArrayAdapter<MessagePlanChanges>
 	        }
 
 		String temp = messages.get(position).getTitle();
+		temp = temp.substring(0,1).toUpperCase() + temp.substring(1,temp.length());
+		
 		
 		if (temp.length() >= MAX_TITLE_LENGHT) {
 			temp = temp.substring(0, MAX_TITLE_LENGHT) + "...";
-			
 			title.setText(temp);
 		} else
-			title.setText(messages.get(position).getTitle());		
+			title.setText(temp);		
 		
 		temp = messages.get(position).getBody();
 		
