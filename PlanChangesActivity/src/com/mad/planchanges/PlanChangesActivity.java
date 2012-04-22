@@ -3,6 +3,7 @@ package com.mad.planchanges;
 import java.util.ArrayList;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -12,7 +13,11 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 
@@ -24,15 +29,14 @@ public class PlanChangesActivity extends Activity{
 	private ListViewAdapterPlanChanges adapter;
 	private ListView lvPlanChanges; 
 	boolean enableExecuteRefresh = true;
-	
+	private ProgressDialog pd;
 	AsyncTaskGetPlanChanges async = new AsyncTaskGetPlanChanges();
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		Log.e(TAG, "<<< ON CREATE >>>");
-
-		setContentView(R.layout.main);
+		setContentView(R.layout.main_plan_changes);
 		if(isOnline()==true)
 		{
 			new AsyncTaskGetPlanChanges().execute("");
@@ -54,6 +58,20 @@ public class PlanChangesActivity extends Activity{
 			android.R.layout.simple_list_item_1,android.R.id.text1,news);
 		lvPlanChanges.setAdapter(adapter);
 		adapter.notifyDataSetChanged();
+		
+		lvPlanChanges.setOnItemClickListener(new OnItemClickListener() {
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view,
+				int position, long id) {
+				
+				 TextView body = (TextView) view.findViewById(R.id.body);
+				 if(body.getVisibility() == View.GONE)
+					 body.setVisibility(View.VISIBLE);
+				 else
+					 body.setVisibility(View.GONE);				
+			}
+		});
+			
 	}
 			
 	public boolean isOnline() {
@@ -106,7 +124,7 @@ public class PlanChangesActivity extends Activity{
 			if(isOnline()==true)
 			{
 				Log.e(TAG, "<<< refreshMessages >>>");
-								
+				
 				tempArray = pars.getServerMessages();
 				if(tempArray != null)
 				{
@@ -125,14 +143,15 @@ public class PlanChangesActivity extends Activity{
 		 protected void onPreExecute() 
 		 {
 			Log.e(TAG, "<<< AsyncTask - onPreExecute >>>");
+			pd = ProgressDialog.show(PlanChangesActivity.this,"Odswieżanie wiadomości","Proszę czekać...",true,false,null);
 			enableExecuteRefresh = false;
-		    showToast("Pobieram wiadomości...",3000,getApplicationContext());
 
 		 }
 		@Override
 		protected void onPostExecute(String result)
 		{
 			Log.e(TAG, "<<< AsyncTask - onPostExecute >>>");
+			pd.dismiss();
 			if(tempArray != null)
 			{
 				refreshListView();

@@ -8,6 +8,7 @@ package com.mad.planchanges;
 import java.util.ArrayList;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,6 +38,20 @@ public class ListViewAdapterPlanChanges extends ArrayAdapter<MessagePlanChanges>
 		TextView body = (TextView) rowView.findViewById(R.id.body);
 		TextView date = (TextView) rowView.findViewById(R.id.date);
 
+		 if(messages.get(position) != null )
+	        {
+			 title.setTextColor(Color.WHITE);	         
+			 int color = Color.argb(255, 64, 94, 188 );
+	         title.setBackgroundColor( color );
+	         
+	         body.setTextColor(Color.BLACK);
+	         body.setBackgroundColor(Color.WHITE);
+	         body.setVisibility(View.GONE);
+	         date.setTextColor(Color.BLACK);
+	         date.setBackgroundColor(Color.WHITE);	
+	         
+	        }
+
 		String temp = messages.get(position).getTitle();
 		
 		if (temp.length() >= MAX_TITLE_LENGHT) {
@@ -55,7 +70,7 @@ public class ListViewAdapterPlanChanges extends ArrayAdapter<MessagePlanChanges>
 		//} else
 			body.setText(temp);
 		
-		date.setText(messages.get(position).getDate());
+		date.setText("Data: "+messages.get(position).getDate());
 		
 		return rowView;
 	}
