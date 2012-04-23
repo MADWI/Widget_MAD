@@ -109,7 +109,7 @@ public class WidgetDownload extends Activity { //nie wiedzialem jak to obejsc, z
     {
     	String newFolder = "/"+getResources().getString(R.string.folder_name);
     	Log.d("Info fn", newFolder);
-        /*String extStorageDirectory = Environment.getExternalStorageDirectory().toString();
+        String extStorageDirectory = Environment.getExternalStorageDirectory().toString();
         File myNewFolder = new File(extStorageDirectory + newFolder);
         if(!myNewFolder.exists())//folder nie istnieje
         {
@@ -121,7 +121,7 @@ public class WidgetDownload extends Activity { //nie wiedzialem jak to obejsc, z
         	{
         		return false;
         	}
-        }*/
+        }
     	return true;//folder istnieje
     }
 
@@ -145,39 +145,39 @@ public class WidgetDownload extends Activity { //nie wiedzialem jak to obejsc, z
     	{
     		Log.d("Info","Blad " + e);
     	}
-    	/*if(setFolder())
+    	if(setFolder())
     	{
     		Log.d("Folder: ", "utworzony");
     	}
     	else
     	{
     		Log.d("Folder: ", "juz byl");
-    	}*/
-    	/*try {
-    		/*URL url = new URL("http://wi.zut.edu.pl/plan/Wydruki/PlanGrup/" + forma + "/" + grupa + ".pdf");
+    	}
+    	try {
+    		URL url = new URL("http://wi.zut.edu.pl/plan/Wydruki/PlanGrup/" + forma + "/" + grupa + ".pdf");
     		File file = new File(extStorageDirectory + "/" + getResources().getString(R.string.folder_name) + "/" + grupa+".pdf");
 
             long startTime = System.currentTimeMillis();//Poczatek pobierania
             /* Open a connection to that URL. */
-            /*URLConnection ucon = url.openConnection();
+            URLConnection ucon = url.openConnection();
 
             /*
             * Define InputStreams to read from the URLConnection.
             */
-            /*InputStream is = ucon.getInputStream();
+            InputStream is = ucon.getInputStream();
             BufferedInputStream bis = new BufferedInputStream(is);
 
             /*
             * Read bytes to the Buffer until there is nothing more to read(-1).
             */
-            /*ByteArrayBuffer baf = new ByteArrayBuffer(50);
+            ByteArrayBuffer baf = new ByteArrayBuffer(50);
             int current = 0;
             while ((current = bis.read()) != -1) {
                    baf.append((byte) current);
             }
 
             /* Convert the Bytes read to a String. */
-            /*FileOutputStream fos = new FileOutputStream(file);
+            FileOutputStream fos = new FileOutputStream(file);
             fos.write(baf.toByteArray());
             fos.close();
             Log.d("WidgetDownload", "download ready in"
@@ -188,7 +188,7 @@ public class WidgetDownload extends Activity { //nie wiedzialem jak to obejsc, z
             } catch (IOException e) {
                     Log.d("WidgetDownload", "Error: " + e);
                     return false;
-            }*/
+            }
 		return false;
     }
 }
