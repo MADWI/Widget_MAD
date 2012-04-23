@@ -25,6 +25,7 @@ public class PrzykladowyActive extends Activity {
         //parse(urlGet(String.valueOf(uri)),"[A-Z]{1,3}[0-9]{1}");
         try{
         	tab = wDownload.getGroups(url,"I1");
+        	Log.d("grupy","ok");
         }
         catch (Exception e) {
 			Log.d("WidgetDownload", "getGroups error: " + e);
@@ -39,6 +40,7 @@ public class PrzykladowyActive extends Activity {
         {
         	Log.d("WidgetDownload", "downloadPlan error: " + e);
         }
+        
         if(wynik)
         {
         	Toast.makeText(getApplicationContext(), "Pobrano plan", Toast.LENGTH_LONG).show();

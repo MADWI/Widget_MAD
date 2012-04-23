@@ -78,9 +78,22 @@ public class WidgetDownload extends Activity { //nie wiedzialem jak to obejsc, z
      */
 	public String[] getGroups(String siteIn, String oznaczenie)
     { 
+		HttpConnect con = new HttpConnect(10000, siteIn);
     	String site = null;
 		//String[] outputTab = new String[]; //- Pamiec jest chyba dynamicznie przydzielana to co jest nie tak?
-    	site = urlGet(siteIn);	
+    	try{
+    		site = con.getStrona();
+    		Log.d("site","ok");
+    	}
+    	catch(Exception e)
+    	{
+    		Log.e("Error catch",e.toString());
+    	}
+
+    	if("" == site)
+    	{
+    		Log.e("Error", "Error con.getStrona()");
+    	}	
     	Pattern p = Pattern.compile(">"+oznaczenie+"-[0-9]{2,3}\\.pdf<");
     	 Matcher m = p.matcher(site);
     	 int i = 0;
@@ -107,8 +120,8 @@ public class WidgetDownload extends Activity { //nie wiedzialem jak to obejsc, z
 	 */
     protected boolean setFolder()
     {
-    	String newFolder = "/"+getResources().getString(R.string.folder_name);
-    	Log.d("Info fn", newFolder);
+    	String newFolder = "/MAD_Plan_ZUT"; //nie wiem czemu nie dziala this.getString(R.string.folder_name);
+    	//Log.d("folder", newFolder);
         String extStorageDirectory = Environment.getExternalStorageDirectory().toString();
         File myNewFolder = new File(extStorageDirectory + newFolder);
         if(!myNewFolder.exists())//folder nie istnieje
@@ -138,7 +151,7 @@ public class WidgetDownload extends Activity { //nie wiedzialem jak to obejsc, z
     	
     	try
     	{
-    		setFolder();
+    		WidgetDownload.this.setFolder();
     		Log.d("Info", "ok");
     	}
     	catch(Exception e)
@@ -153,9 +166,10 @@ public class WidgetDownload extends Activity { //nie wiedzialem jak to obejsc, z
     	{
     		Log.d("Folder: ", "juz byl");
     	}
+    	
     	try {
     		URL url = new URL("http://wi.zut.edu.pl/plan/Wydruki/PlanGrup/" + forma + "/" + grupa + ".pdf");
-    		File file = new File(extStorageDirectory + "/" + getResources().getString(R.string.folder_name) + "/" + grupa+".pdf");
+    		File file = new File(extStorageDirectory + "/MAD_Plan_ZUT/" + grupa+".pdf");
 
             long startTime = System.currentTimeMillis();//Poczatek pobierania
             /* Open a connection to that URL. */
@@ -180,15 +194,12 @@ public class WidgetDownload extends Activity { //nie wiedzialem jak to obejsc, z
             FileOutputStream fos = new FileOutputStream(file);
             fos.write(baf.toByteArray());
             fos.close();
-            Log.d("WidgetDownload", "download ready in"
-                                    + ((System.currentTimeMillis() - startTime) / 1000)
-                                    + " sec");//koniec pobierania
+            Log.d("WidgetDownload", "downloaded");//koniec pobierania
             return true;
 
             } catch (IOException e) {
-                    Log.d("WidgetDownload", "Error: " + e);
+                    Log.d("WidgetDownload", "Last Error: "+e);
                     return false;
             }
-		return false;
     }
 }
