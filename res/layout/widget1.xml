@@ -9,7 +9,7 @@
     <TextView
         android:id="@+id/tv_ustawienia"
         android:layout_width="294dp"
-        android:layout_height="wrap_content"
+        android:layout_height="35dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:layout_marginLeft="5dp"
@@ -38,11 +38,11 @@
         android:layout_toRightOf="@+id/tv_data"
         android:background="@drawable/background_bottom"
         android:paddingLeft="25dp"
-        android:text="Parzysty"
+        android:text="parzysty"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <TextView
-        android:id="@+id/TextView01"
+        android:id="@+id/tv_plan"
         android:layout_width="294dp"
         android:layout_height="40dp"
         android:layout_alignLeft="@+id/tv_data"
@@ -53,12 +53,13 @@
         android:text="Plan dla: "
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
+
     <TextView
-        android:id="@+id/TextView02"
+        android:id="@+id/tv_zmiany_tytul"
         android:layout_width="294dp"
         android:layout_height="25dp"
-        android:layout_alignLeft="@+id/TextView01"
-        android:layout_below="@+id/TextView01"
+        android:layout_alignLeft="@+id/tv_plan"
+        android:layout_below="@+id/tv_plan"
         android:background="@drawable/background_listview"
         android:paddingLeft="5dp"
         android:paddingTop="5dp"
@@ -69,13 +70,33 @@
         android:id="@+id/tv_zmiany_tresc"
         android:layout_width="294dp"
         android:layout_height="60dp"
-        android:layout_alignLeft="@+id/TextView02"
-        android:layout_below="@+id/TextView02"
+        android:layout_alignLeft="@+id/tv_zmiany_tytul"
+        android:layout_below="@+id/tv_zmiany_tytul"
         android:background="@drawable/background_listview"
         android:maxLines="4"
         android:paddingLeft="5dp"
         android:paddingTop="5dp"
-        android:text="Laboratoria z przedmiotu 'Przetwarzanie obrazów' prowadzone przez dr P. Forczmańskiego w dniu 18.04.2012r. ..."
+        android:text="Laboratoria z przedmiotu &apos;Przetwarzanie obrazów&apos; prowadzone przez dr P. Forczmańskiego w dniu 18.04.2012r. ..."
         android:textColor="#000000" />
+
+    <ImageButton
+        android:id="@+id/imb_odswiez"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_alignRight="@+id/tv_ustawienia"
+        android:layout_alignTop="@+id/tv_ustawienia"
+        android:layout_marginRight="20dp"
+        android:background="@android:color/transparent"
+        android:src="@drawable/ic_menu_refresh2" />
+
+    <ImageButton
+        android:id="@+id/imb_ustawienia"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_marginRight="5dp"
+        android:layout_above="@+id/tv_tydzien"
+        android:layout_toLeftOf="@+id/imb_odswiez"
+        android:background="@android:color/transparent"
+        android:src="@drawable/ic_menu_preferences" />
 
 </RelativeLayout>
