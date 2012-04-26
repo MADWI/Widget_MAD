@@ -1,1 +1,20 @@
-Pierwszy Widget ko³a naukowego MAD
+Pierwszy Widget ko³a naukowego MAD ( proszê was nie wrzucajcie nic na mastera , tylko na swoje branche a potem dawajcie pull request ) 
+
+CHANGELOG ;)
+
+v 0.01 (jeszcze pracujê nad wersj¹ bez poni¿szych bugów, pobierzcie i zaproponujcie poprawê jak coœ wymyœlicie) 
+
+ZAUWA¯ONE BUGI:
+- nie dzia³a wy³¹czanie automatycznego odswie¿ania
+- czasami przy braku po³¹czenia z Internetem zmiany wyrzucaj¹ NullPointerException
+- nie wyœwietla siê ostatnia zmiana w planie
+
+- zbyt powolne pobieranie daty na starcie ?? 
+
+NOWE:
+- dodano aktywnosc ustawien
+- dodano aktywnosc zmian w planie
+- dodano ProgressBar
+- dodano niewidoczny przycisk na ostatniej zmianie w planie
+- ustawiono akcje onClick dla Buttonow
+- poprawiono wyœwietlanie daty systemowej
