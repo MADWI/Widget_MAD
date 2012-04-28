@@ -1,1 +1,37 @@
-Pierwszy Widget ko�a naukowego MAD
+Pierwszy Widget ko³a naukowego MAD 
+
+UWAGI :
+
+- napisy polskie wrzucajcie tlyko do strings.xml, nie piszcie ich bezpośrendio w kodzie bo po sćiagnieciu z githuba zmieni się kodowanie będzie je łatwo poprawić z jednego miejsca
+
+CHANGELOG ;)
+
+v 0.02
+NOWE:
+- obsługa sytuacji w których brak połączenia z Internetem
+- wyświetlanie ostatniej zmiany w planie
+- Button do pobrania planu
+- usunięcie błędów przy chowaniu Progress Bara
+- pobieranie samej daty ( bez czasu ) 
+
+BUGI
+
+- nie dziala wylaczanie automatycznego odswieżania
+
+
+v 0.01 
+NOWE:
+- dodano aktywnosc ustawien
+- dodano aktywnosc zmian w planie
+- dodano ProgressBar
+- dodano niewidoczny przycisk na ostatniej zmianie w planie
+- ustawiono akcje onClick dla Buttonow
+- poprawiono wyświetlanie daty systemowej
+
+
+BUGI:
+
+- czasami przy braku po³¹czenia z Internetem zmiany wyrzucają NullPointerException
+- nie wyswietla siê ostatnia zmiana w planie
+
+- zbyt powolne pobieranie daty na starcie ?? 
