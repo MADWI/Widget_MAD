@@ -22,10 +22,9 @@ public class HttpConnect {
 	private HttpGet requestGET;
 	private HttpResponse response;
 	private HttpEntity entity;
-	
-	public HttpConnect(int timeout, String adres)
-	{
-		strona="";
+
+	public HttpConnect(int timeout, String adres) {
+		strona = "";
 
 		HttpParams params = new BasicHttpParams();
 		HttpConnectionParams.setConnectionTimeout(params, timeout);
@@ -35,66 +34,54 @@ public class HttpConnect {
 			requestGET = new HttpGet(new URI(adres));
 		} catch (URISyntaxException e) {
 			e.printStackTrace();
-		}     
+		}
 	}
-	
-	public String getStrona()
-	{
 
-		if(executeHttpGet()==false)
-		{
+	public String getStrona() {
+
+		if (executeHttpGet() == false) {
 			return "";
 		}
 		return strona;
 	}
-	
-	 private boolean executeHttpGet()
-	    {
-	        BufferedReader in = null;
-	        try 
-	        {
-	            response = client.execute(requestGET);
-	            entity =response.getEntity();
-	            if(entity ==null)
-	            	return false;
-	            
-	            in = new BufferedReader(new InputStreamReader(entity.getContent()));
-	            StringBuffer sb = new StringBuffer("");
-	            String line = "";
-	            String NL = System.getProperty("line.separator");
-	            
-	            while( (line = in.readLine()) != null ) {
-	            	sb.append(line + NL);
-	            }            
-	           strona = sb.toString();  
-	           
-	        }
-	        catch(Exception e)
-			{
-				e.printStackTrace();
+
+	private boolean executeHttpGet() {
+		BufferedReader in = null;
+		try {
+			response = client.execute(requestGET);
+			entity = response.getEntity();
+			if (entity == null)
 				return false;
-			} 
-	        finally 
-	        {   
-	        	try {
-					entity.consumeContent();
-				} catch (IOException e1) {
-					e1.printStackTrace();
+
+			in = new BufferedReader(new InputStreamReader(entity.getContent()));
+			StringBuffer sb = new StringBuffer("");
+			String line = "";
+			String NL = System.getProperty("line.separator");
+
+			while ((line = in.readLine()) != null) {
+				sb.append(line + NL);
+			}
+			strona = sb.toString();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		} finally {
+			try {
+				entity.consumeContent();
+			} catch (IOException e1) {
+				e1.printStackTrace();
+				return false;
+			}
+			if (in != null) {
+				try {
+					in.close();
+				} catch (IOException e) {
+					e.printStackTrace();
 					return false;
-				} 
-	        	if (in != null)
-	        	{
-	        		try
-	        		{
-	        			in.close();
-	        		}
-	        		catch(IOException e)
-	        		{
-	        			e.printStackTrace();
-	        			return false;
-	        		} 
-	        	}
-	        }
-	        return true;
-	    }
+				}
+			}
+		}
+		return true;
+	}
 }

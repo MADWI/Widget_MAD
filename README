@@ -1,20 +1,37 @@
-Pierwszy Widget ko³a naukowego MAD ( proszê was nie wrzucajcie nic na mastera , tylko na swoje branche a potem dawajcie pull request ) 
+Pierwszy Widget koÂ³a naukowego MAD 
+
+UWAGI :
+
+- napisy polskie wrzucajcie tlyko do strings.xml, nie piszcie ich bezpoÅ›rendio w kodzie bo po sÄ‡iagnieciu z githuba zmieni siÄ™ kodowanie bÄ™dzie je Å‚atwo poprawiÄ‡ z jednego miejsca
 
 CHANGELOG ;)
 
-v 0.01 (jeszcze pracujê nad wersj¹ bez poni¿szych bugów, pobierzcie i zaproponujcie poprawê jak coœ wymyœlicie) 
+v 0.02
+NOWE:
+- obsÅ‚uga sytuacji w ktÃ³rych brak poÅ‚Ä…czenia z Internetem
+- wyÅ›wietlanie ostatniej zmiany w planie
+- Button do pobrania planu
+- usuniÄ™cie bÅ‚Ä™dÃ³w przy chowaniu Progress Bara
+- pobieranie samej daty ( bez czasu ) 
 
-ZAUWA¯ONE BUGI:
-- nie dzia³a wy³¹czanie automatycznego odswie¿ania
-- czasami przy braku po³¹czenia z Internetem zmiany wyrzucaj¹ NullPointerException
-- nie wyœwietla siê ostatnia zmiana w planie
+BUGI
 
-- zbyt powolne pobieranie daty na starcie ?? 
+- nie dziala wylaczanie automatycznego odswieÅ¼ania
 
+
+v 0.01 
 NOWE:
 - dodano aktywnosc ustawien
 - dodano aktywnosc zmian w planie
 - dodano ProgressBar
 - dodano niewidoczny przycisk na ostatniej zmianie w planie
 - ustawiono akcje onClick dla Buttonow
-- poprawiono wyœwietlanie daty systemowej
+- poprawiono wyÅ›wietlanie daty systemowej
+
+
+BUGI:
+
+- czasami przy braku poÂ³Â¹czenia z Internetem zmiany wyrzucajÄ… NullPointerException
+- nie wyswietla siÃª ostatnia zmiana w planie
+
+- zbyt powolne pobieranie daty na starcie ?? 

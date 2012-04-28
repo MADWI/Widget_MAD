@@ -47,16 +47,18 @@ public final class R {
         public static final int wi=0x7f02000a;
     }
     public static final class id {
+        public static final int ProgressBarLayout=0x7f09000e;
         public static final int RelativeLayout1=0x7f090004;
         public static final int body=0x7f090002;
         public static final int btZmianyPlanu=0x7f09000d;
+        public static final int btnPobierzPlan=0x7f090010;
         public static final int date=0x7f090001;
-        public static final int exit=0x7f090010;
+        public static final int exit=0x7f090012;
         public static final int imb_odswiez=0x7f09000b;
         public static final int imb_ustawienia=0x7f09000c;
         public static final int listPlanChanges=0x7f090003;
-        public static final int progressCircle=0x7f09000e;
-        public static final int refresh=0x7f09000f;
+        public static final int progressCircle=0x7f09000f;
+        public static final int refresh=0x7f090011;
         public static final int title=0x7f090000;
         public static final int tv_data=0x7f090006;
         public static final int tv_plan=0x7f090008;
@@ -75,7 +77,14 @@ public final class R {
     }
     public static final class string {
         public static final int app_name=0x7f070000;
+        public static final int load_plan_changes=0x7f070005;
+        public static final int no_Internet=0x7f070006;
         public static final int no_response=0x7f070001;
+        public static final int plan_changes_Messages=0x7f070007;
+        public static final int plan_changes_finished=0x7f070008;
+        public static final int plan_changes_refreshing_body=0x7f07000a;
+        public static final int plan_changes_refreshing_title=0x7f070009;
+        public static final int plan_for=0x7f07000b;
         public static final int start=0x7f070004;
         public static final int start_serv=0x7f070002;
         public static final int stop_serv=0x7f070003;
