@@ -78,6 +78,7 @@ public class MyPreferences extends PreferenceActivity {
 		editor.putString(LIST_FIELD_GROUP, listPreferenceGroup.getValue());//save group
 		editor.putBoolean(CHECKBOX_FIELD, checkBoxPreference.isChecked());//auto-sync
 		editor.commit();
+		
 
 	}
 }

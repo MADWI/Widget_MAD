@@ -30,10 +30,13 @@ public class MadWIWidgetActivity extends AppWidgetProvider {
 	private static final String TAG = "MAD WIZUT Widget";
 	private SharedPreferences ustawienia;
 
-	static final long refresh_seconds = 10000;
+	static final long refresh_seconds = 10;
 	private Boolean running = false;
 	private Boolean autoRefresh;
-
+	
+	private WeekParityChecker checker = new WeekParityChecker();
+	private String currentWeekStatus;
+	
 	// obiekt do pobierania zmian w planie
 	private final GetPlanChanges PlanChanges = new GetPlanChanges();
 	// ostatnia zmiana w planie
@@ -43,6 +46,7 @@ public class MadWIWidgetActivity extends AppWidgetProvider {
 	public void onUpdate(Context context, AppWidgetManager appWidgetManager,
 			int[] appWidgetIds) {
 
+		
 		// pobarnie chceckoboxa z info o automatycznej aktualizacji z shared
 		// preferences
 		ustawienia = context.getSharedPreferences(PREFERENCES_NAME,
@@ -53,7 +57,7 @@ public class MadWIWidgetActivity extends AppWidgetProvider {
 
 		if (autoRefresh == true) {
 			new Timer().scheduleAtFixedRate(new Aktualizacja(context,
-					appWidgetManager), 0, refresh_seconds * 1000);
+					appWidgetManager), 10, refresh_seconds * 1000);
 			Log.e(TAG, "<<< AUTOREFRESH ON >>>");
 		} else {
 			Log.e(TAG, "<<< AUTOREFRESH OFF  >>>");
@@ -110,7 +114,7 @@ public class MadWIWidgetActivity extends AppWidgetProvider {
 
 				if (running == false)
 					new Timer().schedule(new Aktualizacja(context,
-							AppWidgetManager.getInstance(context)), 0);
+							AppWidgetManager.getInstance(context)),10);
 			} else {
 			}
 			super.onReceive(context, intent);
@@ -151,17 +155,20 @@ public class MadWIWidgetActivity extends AppWidgetProvider {
 
 			Log.e(TAG, "<<< RUN refresh>>");
 			running = true;
-
+			
 			// pobranie daty zgodnie z ustawieniami jezyka telefonu
 			String currentDateTimeString = DateFormat.getDateInstance().format(
 					new Date());
 			remoteViews.setTextViewText(R.id.tv_data, currentDateTimeString
 					+ " r.");
-
+			
 			appWidgetManager.updateAppWidget(thisWidget, remoteViews);
 
 			// sprawdzanie czy jest połaczenie z Internetem
 			if (isOnline(ctx)) {
+				currentWeekStatus= checker.getParity(); 
+				remoteViews.setTextViewText(R.id.tv_tydzien, currentWeekStatus);
+				
 				// pokazuje i chowam layout z progrsse barem
 				// poniewaz on sam nie obsluguje ustawiania widocznosci
 				remoteViews.setViewVisibility(R.id.ProgressBarLayout,

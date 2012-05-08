@@ -38,11 +38,10 @@
         android:layout_below="@+id/tv_ustawienia"
         android:layout_toRightOf="@+id/tv_data"
         android:background="@drawable/background_bottom"
-        android:text="parzysty"
+        android:text="..."
         android:textAppearance="?android:attr/textAppearanceMedium" 
         android:textStyle="bold"
-        android:gravity="center_vertical|center_horizontal"/>
-
+        android:gravity="center_vertical|center_horizontal"/>
     <TextView
         android:id="@+id/tv_plan"
         android:layout_width="294dp"
