@@ -5,6 +5,13 @@ Twórcy: Studenckie Koło Naukowe M.A.D.
 
 CHANGELOG ;)
 
+v 0.04
+NOWE:
+- dodanie przycisku "o autorach" w ustawieniach
+
+BUGI
+- nie dziala wylaczanie automatycznego odswieżania (jak w wersji 0.03)
+
 v 0.03
 NOWE:
 - przezroczystość okna widgetu
