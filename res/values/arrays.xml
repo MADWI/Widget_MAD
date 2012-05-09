@@ -72,4 +72,5 @@
 	    <item >702</item>
 	    <item >703</item>
 	</string-array>
+	<string  name="authors_list"></string>
 </resources>

@@ -37,5 +37,11 @@
 			android:key="checkbox"
 			android:title="Automatyczne odświeżanie" />
 	</PreferenceCategory>
+	<PreferenceCategory android:title="Autorzy">
+	    <Preference 
+	        android:title="O nas"
+	        android:key="about"
+	        android:summary="Informacje o autorach"/>
+	</PreferenceCategory>
 	
 </PreferenceScreen>
