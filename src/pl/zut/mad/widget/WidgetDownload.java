@@ -27,48 +27,8 @@ import android.util.Log;
 public class WidgetDownload extends Activity { //nie wiedzialem jak to obejsc, zeby wykorzystac getResources
 	
 	//String stronaPlanStacjonarne;
-	String urlPlanNiestacojonarne;
-    
-    /**
-     * Funkcja pobiera zrdlo zadanej strony i zwraca w postaci stringa
-     * @param string url strony do pobrania
-     * @return string zrodlo pobranej strony
-     * @author Sebastian Peryt
-     */
-	private String urlGet(String urlString){
+	String urlStrony;
         
-        URLConnection urlConnection = null;
-           URL url = null;
-           String string = null;
-            
-           try {
-      url = new URL(urlString);
-      urlConnection = url.openConnection();
-       
-      InputStream inputStream = urlConnection.getInputStream();
-      InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
-      BufferedReader reader = new BufferedReader(inputStreamReader);
-       
-          
-      StringBuffer stringBuffer = new StringBuffer();
-       
-      while((string = reader.readLine()) != null){
-       stringBuffer.append(string + "\n");
-      }
-      inputStream.close(); 
-       
-      string = stringBuffer.toString();
-       
-       
-     } catch (MalformedURLException e) {
-    	 Log.d("WidgetDownload", "Error: " + e);
-     } catch (IOException e) {
-    	 Log.d("WidgetDownload", "Error: " + e);
-     }  
-      
-     return string;
-       }
-    
     /**
      * Funkcja na podstawie zadanego ciagu wejsciowego zwraca tablice z numerami grup.
      * @param String adres strony z ktorej ma byc pobrany plan (w wersji finalnej bedzie usuniety) 
@@ -76,10 +36,11 @@ public class WidgetDownload extends Activity { //nie wiedzialem jak to obejsc, z
      * @return Tablica stringow ze znalezionymi grupami
      * @author Sebastian Peryt
      */
-	public String[] getGroups(String siteIn, String oznaczenie)
+	public String[] getGroups(String siteIn, String rodzajStudiow, String kierunek, int stopien, int rok)
     { 
-		HttpConnect con = new HttpConnect(10000, siteIn);
+		HttpConnect con = new HttpConnect(10000, siteIn + rodzajStudiow);
     	String site = null;
+    	String tmp = null;
 		//String[] outputTab = new String[]; //- Pamiec jest chyba dynamicznie przydzielana to co jest nie tak?
     	try{
     		site = con.getStrona();
@@ -93,8 +54,23 @@ public class WidgetDownload extends Activity { //nie wiedzialem jak to obejsc, z
     	if("" == site)
     	{
     		Log.e("Error", "Error con.getStrona()");
-    	}	
-    	Pattern p = Pattern.compile(">"+oznaczenie+"-[0-9]{2,3}\\.pdf<");
+    	}
+    	
+    	//wybor kierunku i roku
+    	Pattern p = null;
+    	if(kierunek.equals("Bioinformatyka"))
+    	{
+    		p = Pattern.compile(">BI"+stopien+"-"+rok+"[0-9]{1,2}\\.pdf<");
+    	}
+    	else if(kierunek.equals("Informatyka"))
+    	{
+    		p = Pattern.compile(">I"+stopien+"-"+rok+"[0-9]{1,2}\\.pdf<");
+    	}
+    	else if(kierunek.equals("ZIP"))
+    	{
+    		p = Pattern.compile(">ZIP"+stopien+"-"+rok+"[0-9]{1,2}\\.pdf<");
+    	}
+    	
     	 Matcher m = p.matcher(site);
     	 int i = 0;
     	 while (m.find()) 
@@ -105,9 +81,9 @@ public class WidgetDownload extends Activity { //nie wiedzialem jak to obejsc, z
     	 String[] outputTab = new String[i];
     	 i = 0;
     	 while (m.find()) 
-    	 { 
+    	 {
     		 outputTab[i] = m.group().subSequence(1,m.group().indexOf(".pdf")).toString();
-    		 //Log.d("WidgetDownload: ", outputTab[i]);
+    		 Log.d("WidgetDownload: ", outputTab[i]);
     		 i++;
     	 }
         return outputTab;
@@ -145,7 +121,7 @@ public class WidgetDownload extends Activity { //nie wiedzialem jak to obejsc, z
 	 * @return true jesli pomyslnie pobrano plan
 	 * @author Sebastian Peryt
 	 */
-    public boolean downloadPlan(String forma, String grupa)
+    public boolean downloadPlan(String inputUrl, String forma, String grupa)
     {
     	String extStorageDirectory = Environment.getExternalStorageDirectory().toString();
     	
@@ -168,7 +144,7 @@ public class WidgetDownload extends Activity { //nie wiedzialem jak to obejsc, z
     	}
     	
     	try {
-    		URL url = new URL("http://wi.zut.edu.pl/plan/Wydruki/PlanGrup/" + forma + "/" + grupa + ".pdf");
+    		URL url = new URL(inputUrl + forma + "/" + grupa + ".pdf");
     		File file = new File(extStorageDirectory + "/MAD_Plan_ZUT/" + grupa+".pdf");
 
             long startTime = System.currentTimeMillis();//Poczatek pobierania

@@ -21,10 +21,9 @@ public class PrzykladowyActive extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
-        String url = "http://wi.zut.edu.pl/plan/Wydruki/PlanGrup/Stacjonarne/";
-        //parse(urlGet(String.valueOf(uri)),"[A-Z]{1,3}[0-9]{1}");
+        String url = "http://wi.zut.edu.pl/plan/Wydruki/PlanGrup/";
         try{
-        	tab = wDownload.getGroups(url,"I1");
+        	tab = wDownload.getGroups(url,"Stacjonarne","Informatyka",1,2);
         	Log.d("grupy","ok");
         }
         catch (Exception e) {
@@ -34,7 +33,7 @@ public class PrzykladowyActive extends Activity {
         boolean wynik = false;
         try
         {
-        	wynik = wDownload.downloadPlan("Stacjonarne", "I1-22");
+        	wynik = wDownload.downloadPlan(url, "Stacjonarne", tab[1]);
         }
         catch(Exception e)
         {
