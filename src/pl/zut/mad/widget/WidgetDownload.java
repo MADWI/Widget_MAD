@@ -62,17 +62,17 @@ public class WidgetDownload extends Activity { //nie wiedzialem jak to obejsc, z
     	
     	//wybor kierunku i roku
     	Pattern p = null;
-    	if(kierunek.equals("Bioinformatyka"))
+    	p = this.getRodzaj(rodzajStudiow, kierunek, stopien, rok);
+    	
+    	/**
+    	 * W momencie gdy zle zostana podane dane: rok; kierunek; rodzaj;
+    	 */
+    	if(null==p)
     	{
-    		p = Pattern.compile(">BI"+stopien+"-"+rok+"[0-9]{1,2}\\.pdf<");
-    	}
-    	else if(kierunek.equals("Informatyka"))
-    	{
-    		p = Pattern.compile(">I"+stopien+"-"+rok+"[0-9]{1,2}\\.pdf<");
-    	}
-    	else if(kierunek.equals("ZIP"))
-    	{
-    		p = Pattern.compile(">ZIP"+stopien+"-"+rok+"[0-9]{1,2}\\.pdf<");
+    		String[] outputTab = new String[1];
+    		outputTab[0] = "B³ednie podane dane";
+    		Log.d(TAG, outputTab[0]);
+    		return outputTab;
     	}
     	
     	 Matcher m = p.matcher(site);
@@ -92,6 +92,62 @@ public class WidgetDownload extends Activity { //nie wiedzialem jak to obejsc, z
     	 }
         return outputTab;
        }
+	
+	/**
+	 * 
+	 * @param rodzaj String Rodzaj studiów z du¿ej litery
+	 * @param kierunek String Kierunek studiów z du¿ej litery
+	 * @param stopien int Stopien studów
+	 * @param rok int Rok studiow
+	 * @return pattern jeœli dane istnieje, null jesli nie.
+	 * @author Sebastian Peryt
+	 */
+	protected Pattern getRodzaj(String rodzaj, String kierunek, int stopien, int rok)
+	{
+		Pattern p = null;
+		if(rodzaj.equals("Stacjonarne"))
+		{
+			if(kierunek.equals("Bioinformatyka"))
+	    	{
+	    		p = Pattern.compile(">BI"+stopien+"-"+rok+"[0-9]{1,2}\\.pdf<");
+	    	}
+	    	else if(kierunek.equals("Informatyka"))
+	    	{
+	    		p = Pattern.compile(">I"+stopien+"-"+rok+"[0-9]{1,2}\\.pdf<");
+	    	}
+	    	else if(kierunek.equals("ZIP"))
+	    	{
+	    		p = Pattern.compile(">ZIP"+stopien+"-"+rok+"[0-9]{1,2}\\.pdf<");
+	    	}
+			return p;
+		}
+		else if(rodzaj.equals("Niestacjonarne"))
+		{
+			if(kierunek.equals("Bioinformatyka"))
+	    	{
+	    		p = null;
+	    	}
+	    	else if(kierunek.equals("Informatyka"))
+	    	{
+	    		p = Pattern.compile(">I"+stopien+"n-"+rok+"[0-9]{1,2}\\.pdf<");
+	    	}
+	    	else if(kierunek.equals("ZIP"))
+	    	{
+	    		p = Pattern.compile(">ZIP"+stopien+"n-"+rok+"[0-9]{1,2}\\.pdf<");
+	    		/*if(1==rok)
+	    		{
+	    			p = Pattern.compile(">ZIP"+stopien+"n-"+rok+"[0-9]{1,2}\\.pdf<");
+	    		}
+	    		else
+	    		{
+	    			p = null;
+	    		}*/
+	    	}
+			return p;
+		}
+		
+		return null;
+	}
     
 	/**
 	 * Funkcja sprawdza czy folder do przechowywania planu istnieje i ew. go tworzy

@@ -23,7 +23,7 @@ public class PrzykladowyActive extends Activity {
         setContentView(R.layout.main);
         String url = "http://wi.zut.edu.pl/plan/Wydruki/PlanGrup/";
         try{
-        	tab = wDownload.getGroups("Stacjonarne","Informatyka",1,2);
+        	tab = wDownload.getGroups("Niestacjonarne","Informatyka",1,2);
         	Log.d(TAG,"grupy - ok");
         }
         catch (Exception e) {
@@ -31,6 +31,7 @@ public class PrzykladowyActive extends Activity {
 		}
         
         boolean wynik = false;
+        /**
         try
         {
         	wynik = wDownload.downloadPlan(url, "Stacjonarne", tab[1]);
@@ -48,6 +49,7 @@ public class PrzykladowyActive extends Activity {
         {
         	Toast.makeText(getApplicationContext(), "B³¹d pobrania planu", Toast.LENGTH_LONG).show();
         }
+        /**/
     } 
     
 }
