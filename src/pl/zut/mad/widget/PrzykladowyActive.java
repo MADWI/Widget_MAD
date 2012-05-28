@@ -12,7 +12,7 @@ public class PrzykladowyActive extends Activity {
 	//String stronaPlanStacjonarne;
 	String urlPlanNiestacojonarne;
 	String[] tab = null;
-	
+	private static final String TAG = "SebaJestZajebistymKoderem";
 	WidgetDownload wDownload = new WidgetDownload();
 	
 	
@@ -23,8 +23,8 @@ public class PrzykladowyActive extends Activity {
         setContentView(R.layout.main);
         String url = "http://wi.zut.edu.pl/plan/Wydruki/PlanGrup/";
         try{
-        	tab = wDownload.getGroups(url,"Stacjonarne","Informatyka",1,2);
-        	Log.d("grupy","ok");
+        	tab = wDownload.getGroups("Stacjonarne","Informatyka",1,2);
+        	Log.d(TAG,"grupy - ok");
         }
         catch (Exception e) {
 			Log.d("WidgetDownload", "getGroups error: " + e);

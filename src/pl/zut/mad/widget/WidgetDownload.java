@@ -26,8 +26,9 @@ import android.util.Log;
  */
 public class WidgetDownload extends Activity { //nie wiedzialem jak to obejsc, zeby wykorzystac getResources
 	
-	//String stronaPlanStacjonarne;
+	private static final String TAG = "SebaJestZajebistymKoderem";
 	String urlStrony;
+	final static String siteIn = "http://wi.zut.edu.pl/plan/Wydruki/PlanGrup/";
         
     /**
      * Funkcja na podstawie zadanego ciagu wejsciowego zwraca tablice z numerami grup.
@@ -36,24 +37,27 @@ public class WidgetDownload extends Activity { //nie wiedzialem jak to obejsc, z
      * @return Tablica stringow ze znalezionymi grupami
      * @author Sebastian Peryt
      */
-	public String[] getGroups(String siteIn, String rodzajStudiow, String kierunek, int stopien, int rok)
+	public String[] getGroups(String rodzajStudiow, String kierunek, int stopien, int rok)
     { 
+		Log.d(TAG,"Stopien: "+new Integer(stopien).toString());
+		Log.d(TAG,"Rok: "+new Integer(rok).toString());
+		
 		HttpConnect con = new HttpConnect(10000, siteIn + rodzajStudiow);
     	String site = null;
     	String tmp = null;
 		//String[] outputTab = new String[]; //- Pamiec jest chyba dynamicznie przydzielana to co jest nie tak?
     	try{
     		site = con.getStrona();
-    		Log.d("site","ok");
+    		Log.d(TAG,"Polaczono ze strona");
     	}
     	catch(Exception e)
     	{
-    		Log.e("Error catch",e.toString());
+    		Log.e(TAG,e.toString());
     	}
 
     	if("" == site)
     	{
-    		Log.e("Error", "Error con.getStrona()");
+    		Log.e(TAG, "Error con.getStrona()");
     	}
     	
     	//wybor kierunku i roku
@@ -83,7 +87,7 @@ public class WidgetDownload extends Activity { //nie wiedzialem jak to obejsc, z
     	 while (m.find()) 
     	 {
     		 outputTab[i] = m.group().subSequence(1,m.group().indexOf(".pdf")).toString();
-    		 Log.d("WidgetDownload: ", outputTab[i]);
+    		 Log.d(TAG, outputTab[i]);
     		 i++;
     	 }
         return outputTab;
@@ -128,19 +132,19 @@ public class WidgetDownload extends Activity { //nie wiedzialem jak to obejsc, z
     	try
     	{
     		WidgetDownload.this.setFolder();
-    		Log.d("Info", "ok");
+    		Log.d(TAG, "setFolder - ok");
     	}
     	catch(Exception e)
     	{
-    		Log.d("Info","Blad " + e);
+    		Log.d(TAG,"setFolder - Blad " + e);
     	}
     	if(setFolder())
     	{
-    		Log.d("Folder: ", "utworzony");
+    		Log.d(TAG, "Folder utworzony");
     	}
     	else
     	{
-    		Log.d("Folder: ", "juz byl");
+    		Log.d(TAG, "Folder juz byl");
     	}
     	
     	try {
@@ -170,11 +174,11 @@ public class WidgetDownload extends Activity { //nie wiedzialem jak to obejsc, z
             FileOutputStream fos = new FileOutputStream(file);
             fos.write(baf.toByteArray());
             fos.close();
-            Log.d("WidgetDownload", "downloaded");//koniec pobierania
+            Log.d(TAG, "downloaded");//koniec pobierania
             return true;
 
             } catch (IOException e) {
-                    Log.d("WidgetDownload", "Last Error: "+e);
+                    Log.d(TAG, "Last Error: "+e);
                     return false;
             }
     }
