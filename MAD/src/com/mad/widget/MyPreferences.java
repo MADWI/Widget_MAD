@@ -52,7 +52,7 @@ public class MyPreferences extends PreferenceActivity {
 	listPreferenceGroup = (ListPreference) findPreference("list_group");
 	listPreferenceGroup.setOnPreferenceClickListener(gropuBotton);
 	about_authors = (Preference) findPreference("about");
-	about_authors.setOnPreferenceClickListener(gropuBotton);
+	about_authors.setOnPreferenceClickListener(about);
 
 	initPreferences();
     }
