@@ -12,7 +12,7 @@ public class PrzykladowyActive extends Activity {
 	//String stronaPlanStacjonarne;
 	String urlPlanNiestacojonarne;
 	String[] tab = null;
-
+	private static final String TAG = "SebaJestZajebistymKoderem";
 	WidgetDownload wDownload = new WidgetDownload();
 
 
@@ -21,33 +21,42 @@ public class PrzykladowyActive extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.widget1);
-        String url = "http://wi.zut.edu.pl/plan/Wydruki/PlanGrup/";
         try{
         	tab = wDownload.getGroups("Stacjonarne","Informatyka",1,2);
-        	Log.d("grupy","ok");
+        	Log.d(TAG,"grupy - ok");
         }
         catch (Exception e) {
-			Log.d("WidgetDownload", "getGroups error: " + e);
+			Log.e(TAG, "getGroups error: " + e);
 		}
         
         boolean wynik = false;
         try
         {
-        	wynik = wDownload.downloadPlan(url, "Stacjonarne", tab[1]);
+        	wynik = wDownload.openPlan("Stacjonarne", tab[1]);
         }
         catch(Exception e)
         {
-        	Log.d("WidgetDownload", "downloadPlan error: " + e);
+        	Log.e(TAG, "downloadPlan error: " + e);
         }
         
+        /**        
+        try
+        {
+        	wynik = wDownload.downloadPlan("Stacjonarne", tab[1]);
+        }
+        catch(Exception e)
+        {
+        	Log.d(TAG, "downloadPlan error: " + e);
+        }
         if(wynik)
         {
         	Toast.makeText(getApplicationContext(), "Pobrano plan", Toast.LENGTH_LONG).show();
         }
         else
         {
-        	Toast.makeText(getApplicationContext(), "B³¹d pobrania planu", Toast.LENGTH_LONG).show();
+        	Toast.makeText(getApplicationContext(), "BÂ³Â¹d pobrania planu", Toast.LENGTH_LONG).show();
         }
+        /**/
     } 
     
 }
