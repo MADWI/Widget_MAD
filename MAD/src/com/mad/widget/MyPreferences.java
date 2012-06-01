@@ -12,7 +12,8 @@ import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
 import android.util.Log;
-import android.widget.SlidingDrawer;
+
+//import android.widget.SlidingDrawer;
 
 public class MyPreferences extends PreferenceActivity {
 
@@ -38,6 +39,9 @@ public class MyPreferences extends PreferenceActivity {
 
     WidgetDownload wDownload = new WidgetDownload();
 
+    // flaga do obslugi listenera
+    boolean flaga = true;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 	super.onCreate(savedInstanceState);
@@ -48,9 +52,9 @@ public class MyPreferences extends PreferenceActivity {
 	listPreferenceOfStudy = (ListPreference) findPreference("list_fos");
 	listGradesOfStudy = (ListPreference) findPreference("list_stopien_studiow");
 	listPreferenceYear = (ListPreference) findPreference("list_year");
-	
+	listPreferenceYear.setOnPreferenceClickListener(groupButton);
 	listPreferenceGroup = (ListPreference) findPreference("list_group");
-	listPreferenceGroup.setOnPreferenceClickListener(gropuBotton);
+	listPreferenceGroup.setOnPreferenceClickListener(groupButton);
 	about_authors = (Preference) findPreference("about");
 	about_authors.setOnPreferenceClickListener(about);
 
@@ -66,141 +70,159 @@ public class MyPreferences extends PreferenceActivity {
 	}
     };
 
-    public OnPreferenceClickListener gropuBotton = new OnPreferenceClickListener() {
+    public OnPreferenceClickListener groupButton = new OnPreferenceClickListener() {
 
-	public boolean onPreferenceClick(Preference gropuBotton) {
-	    preferences = PreferenceManager
-		    .getDefaultSharedPreferences(getBaseContext());
+	public boolean onPreferenceClick(Preference groupButton) {
 
-	    // type of studies
-	    String listDefaultValueType = listPreferenceField.getEntryValues()[0]
-		    .toString();
-	    String listValueOfType = preferences.getString(LIST_FIELD_TYPE,
-		    listDefaultValueType);
-	    listPreferenceField.setValue(listValueOfType);
+	    if (flaga == true) {
 
-	    String rodzaj = preferences.getString("list_of_type",
-		    "nieokreslony_rodzaj");
+		preferences = PreferenceManager
+			.getDefaultSharedPreferences(getBaseContext());
 
-	    if (rodzaj.equals("1")) {
-		rodzaj = "Stacjonarne";
-		Log.e(TAG, "<<<stacjonarne>>>");
-	    } else {
-		rodzaj = "Niestacjonarne";
-		Log.e(TAG, "<<<niestacjonarne>>>");
-	    }
+		// ----------------------------------------------------------------------
+		// type of studies
+		String listDefaultValueType = listPreferenceField
+			.getEntryValues()[0].toString();
+		String listValueOfType = preferences.getString(LIST_FIELD_TYPE,
+			listDefaultValueType);
+		listPreferenceField.setValue(listValueOfType);
 
-	    // field of studies
-	    String listDefaultValueField = listPreferenceOfStudy
-		    .getEntryValues()[0].toString();
-	    String listValueOfStudy = preferences.getString(
-		    LIST_FIELD_OF_STUDY, listDefaultValueField);
-	    listPreferenceOfStudy.setValue(listValueOfStudy);
+		String rodzaj = preferences.getString("list_of_type",
+			"nieokreslony_rodzaj");
 
-	    String kierunek = preferences.getString("list_fos",
-		    "nieokreslony_kierunek");
+		if (rodzaj.equals("1")) {
+		    rodzaj = "Stacjonarne";
+		    Log.e(TAG, "<<<stacjonarne>>>");
+		} else {
+		    rodzaj = "Niestacjonarne";
+		    Log.e(TAG, "<<<niestacjonarne>>>");
+		}
+		// ----------------------------------------------------------------------
+		// field of studies
+		String listDefaultValueField = listPreferenceOfStudy
+			.getEntryValues()[0].toString();
+		String listValueOfStudy = preferences.getString(
+			LIST_FIELD_OF_STUDY, listDefaultValueField);
+		listPreferenceOfStudy.setValue(listValueOfStudy);
 
-	    if (kierunek.equals("3")) {
-		kierunek = "Informatyka";
-		Log.e(TAG, "<<<Informatyka>>>");
-	    } else if (kierunek.equals("4")) {
-		kierunek = "ZIP";
-		Log.e(TAG, "<<<ZIP>>>");
-	    } else {
-		kierunek = "Bioinformatyka";
-		Log.e(TAG, "<<<BIOInf>>>");
-	    }
+		String kierunek = preferences.getString("list_fos",
+			"nieokreslony_kierunek");
 
-	    // grades of studies
-	    String listDefaultValueGrade = listGradesOfStudy.getEntryValues()[0]
-		    .toString();
-	    String listValueGrades = preferences.getString(LIST_GRADE_OF_STUDY,
-		    listDefaultValueGrade);
-	    listGradesOfStudy.setValue(listValueGrades);
+		if (kierunek.equals("3")) {
+		    kierunek = "Informatyka";
+		    Log.e(TAG, "<<<Informatyka>>>");
+		} else if (kierunek.equals("4")) {
+		    kierunek = "ZIP";
+		    Log.e(TAG, "<<<ZIP>>>");
+		} else {
+		    kierunek = "Bioinformatyka";
+		    Log.e(TAG, "<<<BIOInf>>>");
+		}
+		// ----------------------------------------------------------------------
+		// grades of studies
+		String listDefaultValueGrade = listGradesOfStudy
+			.getEntryValues()[0].toString();
+		String listValueGrades = preferences.getString(
+			LIST_GRADE_OF_STUDY, listDefaultValueGrade);
+		listGradesOfStudy.setValue(listValueGrades);
 
-	    String s_stopien = preferences.getString("list_stopien_studiow",
-		    "nieokreslony_stopien");
+		String s_stopien = preferences.getString(
+			"list_stopien_studiow", "nieokreslony_stopien");
 
-	    if (s_stopien.equals("6")) {
-		s_stopien = "1";
-		Log.e(TAG, "<<<pierwszy stopien>>>");
-	    } else {
-		s_stopien = "2";
-		Log.e(TAG, "<<<drugi stopien>>>");
-	    }
-	    // convert string to int
-	    int stopien = Integer.parseInt(s_stopien);
-	    System.out.println("int stopien = " + stopien);
+		if (s_stopien.equals("6")) {
+		    s_stopien = "1";
+		    Log.e(TAG, "<<<pierwszy stopien>>>");
+		} else {
+		    s_stopien = "2";
+		    Log.e(TAG, "<<<drugi stopien>>>");
+		}
+		// convert string to int
+		int stopien = Integer.parseInt(s_stopien);
+		System.out.println("int stopien = " + stopien);
+		// ----------------------------------------------------------------------
+		// year of studies
+		String listDefaultValueYear = listPreferenceYear
+			.getEntryValues()[0].toString();
+		String listValueYear = preferences.getString(LIST_FIELD_YEAR,
+			listDefaultValueYear);
+		listPreferenceYear.setValue(listValueYear);
 
-	    // year of studies
-	    String listDefaultValueYear = listPreferenceYear.getEntryValues()[0]
-		    .toString();
-	    String listValueYear = preferences.getString(LIST_FIELD_YEAR,
-		    listDefaultValueYear);
-	    listPreferenceYear.setValue(listValueYear);
+		String s_year = preferences.getString("list_year",
+			"nieokreslony_rok");
 
-	    String s_year = preferences.getString("list_year",
-		    "nieokreslony_rok");
+		if (s_year.equals("8")) {
+		    s_year = "1";
+		    Log.e(TAG, "<<<pierwszy rok>>>");
+		} else if (s_year.equals("9")) {
+		    s_year = "2";
+		    Log.e(TAG, "<<<drugi rok>>>");
+		} else if (s_year.equals("10")) {
+		    s_year = "3";
+		    Log.e(TAG, "<<<trzeci rok>>>");
+		} else {
+		    s_year = "4";
+		    Log.e(TAG, "<<<czwarty rok>>>");
+		}
 
-	    if (s_year.equals("8")) {
-		s_year = "1";
-		Log.e(TAG, "<<<pierwszy rok>>>");
-	    } else if (s_year.equals("9")) {
-		s_year = "2";
-		Log.e(TAG, "<<<drugi rok>>>");
-	    } else if (s_year.equals("10")) {
-		s_year = "3";
-		Log.e(TAG, "<<<trzeci rok>>>");
-	    } else {
-		s_year = "4";
-		Log.e(TAG, "<<<czwarty rok>>>");
-	    }
+		// convert string to int
+		int rok = Integer.parseInt(s_year);
+		// print out the value after the conversion
+		System.out.println("int rok = " + rok);
 
-	    // convert string to int
-	    int rok = Integer.parseInt(s_year);
-	    // print out the value after the conversion
-	    System.out.println("int rok = " + rok);
+		// ----------------------------------------------------------------------
+		//group
+		// ponowne wywolanie listenera w celu wyswietlenia grup za
+		// pierwszym razem
+		String listDefaultValueGroup = listPreferenceGroup
+			.getEntryValues()[0].toString();
+		String listValueGroup =
+			preferences.getString(LIST_FIELD_GROUP,		 
+				listDefaultValueGroup);
+			listPreferenceGroup.setValue(listValueGroup);
+			 
 
-	    // tablica stringow z grupami
-	    if ((tabGrupy = wDownload.getGroups(rodzaj, kierunek, stopien, rok)) != null) {
+		flaga = false;
+		// this.onPreferenceClick(groupButton);
+		groupButton.getOnPreferenceClickListener();
+		
+		// tablica stringow z grupami
+		if ((tabGrupy = wDownload.getGroups(rodzaj, kierunek, stopien,
+			rok)) != null) {
 
-		Log.e(TAG, "<<tab grpy>> " + rodzaj);
-		Log.e(TAG, "<<tab grpy>> " + kierunek);
-		Log.e(TAG, "<<tab grpy>> " + Integer.toString(stopien));
-		Log.e(TAG, "<<tab grpy>> " + Integer.toString(rok));
+		    Log.e(TAG, "<<GRUPY>" + Integer.toString(tabGrupy.length));
+		    if (tabGrupy.length > 0) {
+			try {
+			    groupButton.getOnPreferenceClickListener();
+			    listPreferenceGroup.setEntries(tabGrupy);
 
-		Log.e(TAG, "<<GRUPY>" + Integer.toString(tabGrupy.length));
-		if (tabGrupy.length > 0) {
-		    try {
-			listPreferenceGroup.setEntries(tabGrupy);
+			    String[] entryValues = new String[tabGrupy.length];
 
-			String[] entryValues = new String[tabGrupy.length];
+			    for (int i = 0; i < tabGrupy.length; i++) {
+				Log.e(TAG, "<<tab grpy>> " + tabGrupy[i]);
+				entryValues[i] = Integer.toString(i);
 
-			for (int i = 0; i < tabGrupy.length; i++) {
-			    Log.e(TAG, "<<tab grpy>> " + tabGrupy[i]);
-			    entryValues[i] = Integer.toString(i);
-
+			    }
+			    groupButton.getOnPreferenceClickListener();
+			    listPreferenceGroup.setEntryValues(entryValues);
+			savePreferences();
+			} catch (Exception e) {
+			    Log.e(TAG, e.toString());
 			}
 
-			listPreferenceGroup.setEntryValues(entryValues);
-		    } catch (Exception e) {
-			Log.e(TAG, e.toString());
 		    }
-
+		} else {
+		    Log.e(TAG, "<<seba >>");
+		    return false;
 		}
-	    } else {
-		Log.e(TAG, "<<seba >>");
+	
 		return false;
+	    } else {
+		flaga = true;
+		return flaga;
 	    }
-	    // group
-	   /* String listDefaultValueGroup = listPreferenceGroup.getEntryValues()[0]
-		    .toString();
-	    String listValueGroup = preferences.getString(LIST_FIELD_GROUP,
-		    listDefaultValueGroup);
-	    listPreferenceGroup.setValue(listValueGroup);*/
 
-	    return true;
 	}
+	
     };
 
     protected Dialog onCreateDialog(int id) {
