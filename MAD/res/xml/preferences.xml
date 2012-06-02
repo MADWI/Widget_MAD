@@ -37,13 +37,7 @@
 			android:entryValues="@array/list_values_grupy"
 			android:summary="Wybierz grupę do której należysz" />
 	</PreferenceCategory>
-	<PreferenceCategory android:title="Synchronizacja danych">
-		<CheckBoxPreference
-			android:defaultValue="true"
-			android:summary="Włącz automatyczną synchronizację wiadomości"
-			android:key="checkbox"
-			android:title="Automatyczne odświeżanie" />
-	</PreferenceCategory>
+
 	<PreferenceCategory android:title="Autorzy">
 	    <Preference 
 	        android:title="O nas"

@@ -11,18 +11,20 @@
 	<string-array name="list_kierunek_studiow">
 		<item>Informatyka</item>
 		<item >ZIP</item>
+		<item>Bioinformatyka</item>
 	</string-array>
 	<string-array name="list_values_kierunek_studiow">
 		<item>3</item>
 		<item>4</item>
+		<item>5</item>
 	</string-array>
 	<string-array name="list_stopien_studiow">
 	    <item>pierwszy</item>
 	    <item>drugi</item>
 	</string-array>
 	<string-array name="list_values_stopien_studiow">
-	    <item>5</item>
 	    <item>6</item>
+	    <item>7</item>
 	</string-array>
 	<string-array name="list_rok_studiow">
 		<item>Pierwszy</item>
@@ -31,15 +33,15 @@
 		<item >Czwarty</item>
 	</string-array>
 	<string-array name="list_values_rok_studiow">
-		<item>7</item>
 		<item>8</item>
 		<item>9</item>
-		<item >10</item>
+		<item>10</item>
+		<item >11</item>
 	</string-array>
 	<string-array name="list_grupy">
-		<item ></item>
+		<item></item>
 		</string-array>
 	<string-array name="list_values_grupy">
-		<item >0</item>
+		<item ></item>
 		</string-array>
 </resources>
