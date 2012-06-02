@@ -11,5 +11,7 @@
     <string name="plan_changes_finished">Zakończono !</string>      
     <string name="plan_changes_refreshing_title">Odswieżanie wiadomości</string> 
     <string name="plan_changes_refreshing_body">Proszę czekać ...</string>
-    <string name="plan_for">Plan dla grupy:</string>           
+    <string name="plan_for">Plan dla grupy:</string>
+    <string name="authors_list">Mobile Application Developers\nWydział Informatyki ZUT \nKoło naukowe\n::::::::::::::::\n\nAutorzy:\n:::::::::::::\nFabisiak Grzegorz\nGliński Dawid\nPeryt Sebastian\nŚwierczek Sebastian\nWojtalewicz Michał\n\nOpiekun koła:\n:::::::::::::::::::::::\ndr inż. Radosław Maciaszczyk</string>
+    
 </resources>
