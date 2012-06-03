@@ -29,7 +29,7 @@ import android.widget.Toast;
 public class PlanChangesActivity extends Activity {
 
 	private final GetPlanChanges pars = new GetPlanChanges();
-	private final String TAG = "MAD WIZUT Widget Plan Changes";
+	private static final String TAG = "MAD WIZUT Widget";
 
 	private Resources res;
 	private ArrayList<MessagePlanChanges> news = new ArrayList<MessagePlanChanges>();
@@ -42,7 +42,7 @@ public class PlanChangesActivity extends Activity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		Log.e(TAG, "<<< ON CREATE >>>");
+		Log.i(TAG, "<<< ON CREATE >>>");
 		setContentView(R.layout.main_plan_changes);
 		res = getApplicationContext().getResources();
 
@@ -54,12 +54,12 @@ public class PlanChangesActivity extends Activity {
 	}
 
 	public void showToast(String text, int duration, Context con) {
-		Log.e(TAG, "<<< ShowToast >>>");
+		Log.i(TAG, "<<< ShowToast >>>");
 		Toast.makeText(con, text, duration).show();
 	}
 
 	private void refreshListView() {
-		Log.e(TAG, "<<< refreshListView >>>");
+		Log.i(TAG, "<<< refreshListView >>>");
 		lvPlanChanges = (ListView) findViewById(R.id.listPlanChanges);
 		adapter = new ListViewAdapterPlanChanges(getApplicationContext(),
 				android.R.layout.simple_list_item_1, android.R.id.text1, news);
@@ -68,7 +68,6 @@ public class PlanChangesActivity extends Activity {
 
 		lvPlanChanges.setOnItemClickListener(new OnItemClickListener() {
 
-			@Override
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
 
@@ -84,7 +83,7 @@ public class PlanChangesActivity extends Activity {
 	}
 
 	public boolean isOnline() {
-		Log.e(TAG, "<<< is Online ? >>>");
+		Log.i(TAG, "<<< is Online ? >>>");
 		ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
 		NetworkInfo ni = cm.getActiveNetworkInfo();
 		if (ni != null && ni.isAvailable() && ni.isConnected()) {
@@ -105,7 +104,7 @@ public class PlanChangesActivity extends Activity {
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		Log.e(TAG, "<<< onOptionsItemSelected >>>");
+		Log.i(TAG, "<<< onOptionsItemSelected >>>");
 		switch (item.getItemId()) {
 		case R.id.refresh:
 			if (enableExecuteRefresh) {
@@ -131,11 +130,11 @@ public class PlanChangesActivity extends Activity {
 
 		@Override
 		protected Void doInBackground(Context... params) {
-			Log.e(TAG, "<<< AsyncTask - doInBackground >>>");
+			Log.i(TAG, "<<< AsyncTask - doInBackground >>>");
 			ctx = params[0];
 
 			if (isOnline() == true) {
-				Log.e(TAG, "<<< refreshMessages >>>");
+				Log.i(TAG, "<<< refreshMessages >>>");
 
 				tempArray = pars.getServerMessages();
 				if (tempArray != null) {
@@ -164,7 +163,7 @@ public class PlanChangesActivity extends Activity {
 
 		@Override
 		protected void onPreExecute() {
-			Log.e(TAG, "<<< AsyncTask - onPreExecute >>>");
+			Log.i(TAG, "<<< AsyncTask - onPreExecute >>>");
 			pd = ProgressDialog.show(PlanChangesActivity.this,
 					res.getString(R.string.plan_changes_refreshing_title),
 					res.getString(R.string.plan_changes_refreshing_body), true,
@@ -175,7 +174,7 @@ public class PlanChangesActivity extends Activity {
 
 		@Override
 		protected void onPostExecute(Void result) {
-			Log.e(TAG, "<<< AsyncTask - onPostExecute >>>");
+			Log.i(TAG, "<<< AsyncTask - onPostExecute >>>");
 			pd.dismiss();
 			if (tempArray != null) {
 				refreshListView();

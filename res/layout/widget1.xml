@@ -41,7 +41,8 @@
         android:text="..."
         android:textAppearance="?android:attr/textAppearanceMedium" 
         android:textStyle="bold"
-        android:gravity="center_vertical|center_horizontal"/>
+        android:gravity="center_vertical|center_horizontal"/>
+
     <TextView
         android:id="@+id/tv_plan"
         android:layout_width="294dp"
@@ -66,7 +67,8 @@
         android:paddingTop="5dp"
         android:textColor="#000000"
         android:textStyle="bold" />
-
+
+
     <TextView
         android:id="@+id/tv_zmiany_tresc"
         android:layout_width="294dp"
@@ -87,8 +89,7 @@
         android:layout_alignTop="@+id/tv_ustawienia"
         android:layout_marginRight="20dp"
         android:background="@android:color/transparent"
-        android:src="@drawable/ic_menu_refresh2"
-        android:contentDescription="Odswież"/>
+        android:src="@drawable/ic_menu_refresh2"/>
 
     <ImageButton
         android:id="@+id/imb_ustawienia"
@@ -119,7 +120,8 @@
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/tv_ustawienia"
         android:layout_toRightOf="@+id/tv_data"
-        android:orientation="horizontal" >
+        android:orientation="horizontal" >
+
 
         <ProgressBar
             android:id="@+id/progressCircle"
@@ -131,7 +133,13 @@
             android:indeterminate="true" />
         
     </LinearLayout>
-
+
+
+
+
+
+
+
     <Button
         android:id="@+id/btnPobierzPlan"
         android:layout_width="wrap_content"
@@ -145,5 +153,6 @@
         android:text="I1-22"
         android:textColor="@color/white1"
         android:textSize="20dp" />
-
+
+
 </RelativeLayout>

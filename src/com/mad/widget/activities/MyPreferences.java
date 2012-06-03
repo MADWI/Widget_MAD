@@ -8,6 +8,7 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.preference.ListPreference;
 import android.preference.Preference;
@@ -15,6 +16,7 @@ import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
 import android.util.Log;
+import android.widget.Toast;
 
 //import android.widget.SlidingDrawer;
 
@@ -36,14 +38,15 @@ public class MyPreferences extends PreferenceActivity {
 	private ListPreference listPreferenceGroup;
 	private Preference about_authors;
 
-	private static final String TAG = "tofik master programer :P";
+	private static final String TAG = "MAD WIZUT Widget";
 
 	String[] tabGrupy;
-
 	WidgetDownload wDownload = new WidgetDownload();
 
 	// flaga do obslugi listenera
 	boolean flaga = true;
+	
+	private Resources res;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -55,18 +58,18 @@ public class MyPreferences extends PreferenceActivity {
 		listPreferenceOfStudy = (ListPreference) findPreference("list_fos");
 		listGradesOfStudy = (ListPreference) findPreference("list_stopien_studiow");
 		listPreferenceYear = (ListPreference) findPreference("list_year");
-		listPreferenceYear.setOnPreferenceClickListener(groupButton);
 		listPreferenceGroup = (ListPreference) findPreference("list_group");
 		listPreferenceGroup.setOnPreferenceClickListener(groupButton);
 		about_authors = findPreference("about");
 		about_authors.setOnPreferenceClickListener(about);
 
+		res = getApplicationContext().getResources();
+		
 		initPreferences();
 	}
 
 	public OnPreferenceClickListener about = new OnPreferenceClickListener() {
 
-		@Override
 		public boolean onPreferenceClick(Preference about_button) {
 			if (about_button.getTitle().equals("O nas")) {
 				showDialog(0);
@@ -77,7 +80,6 @@ public class MyPreferences extends PreferenceActivity {
 
 	public OnPreferenceClickListener groupButton = new OnPreferenceClickListener() {
 
-		@Override
 		public boolean onPreferenceClick(Preference groupButton) {
 
 			if (flaga == true) {
@@ -98,10 +100,10 @@ public class MyPreferences extends PreferenceActivity {
 
 				if (rodzaj.equals("1")) {
 					rodzaj = "Stacjonarne";
-					Log.e(TAG, "<<<stacjonarne>>>");
+					Log.i(TAG, "<<<stacjonarne>>>");
 				} else {
 					rodzaj = "Niestacjonarne";
-					Log.e(TAG, "<<<niestacjonarne>>>");
+					Log.i(TAG, "<<<niestacjonarne>>>");
 				}
 				// ----------------------------------------------------------------------
 				// field of studies
@@ -116,13 +118,13 @@ public class MyPreferences extends PreferenceActivity {
 
 				if (kierunek.equals("3")) {
 					kierunek = "Informatyka";
-					Log.e(TAG, "<<<Informatyka>>>");
+					Log.i(TAG, "<<<Informatyka>>>");
 				} else if (kierunek.equals("4")) {
 					kierunek = "ZIP";
-					Log.e(TAG, "<<<ZIP>>>");
+					Log.i(TAG, "<<<ZIP>>>");
 				} else {
 					kierunek = "Bioinformatyka";
-					Log.e(TAG, "<<<BIOInf>>>");
+					Log.i(TAG, "<<<BIOInf>>>");
 				}
 				// ----------------------------------------------------------------------
 				// grades of studies
@@ -137,10 +139,10 @@ public class MyPreferences extends PreferenceActivity {
 
 				if (s_stopien.equals("6")) {
 					s_stopien = "1";
-					Log.e(TAG, "<<<pierwszy stopien>>>");
+					Log.i(TAG, "<<<pierwszy stopien>>>");
 				} else {
 					s_stopien = "2";
-					Log.e(TAG, "<<<drugi stopien>>>");
+					Log.i(TAG, "<<<drugi stopien>>>");
 				}
 				// convert string to int
 				int stopien = Integer.parseInt(s_stopien);
@@ -158,16 +160,16 @@ public class MyPreferences extends PreferenceActivity {
 
 				if (s_year.equals("8")) {
 					s_year = "1";
-					Log.e(TAG, "<<<pierwszy rok>>>");
+					Log.i(TAG, "<<<pierwszy rok>>>");
 				} else if (s_year.equals("9")) {
 					s_year = "2";
-					Log.e(TAG, "<<<drugi rok>>>");
+					Log.i(TAG, "<<<drugi rok>>>");
 				} else if (s_year.equals("10")) {
 					s_year = "3";
-					Log.e(TAG, "<<<trzeci rok>>>");
+					Log.i(TAG, "<<<trzeci rok>>>");
 				} else {
 					s_year = "4";
-					Log.e(TAG, "<<<czwarty rok>>>");
+					Log.i(TAG, "<<<czwarty rok>>>");
 				}
 
 				// convert string to int
@@ -193,7 +195,8 @@ public class MyPreferences extends PreferenceActivity {
 				if ((tabGrupy = wDownload.getGroups(rodzaj, kierunek, stopien,
 						rok)) != null) {
 
-					Log.e(TAG, "<<GRUPY>" + Integer.toString(tabGrupy.length));
+					Log.i(TAG, "<<GRUPY>" + Integer.toString(tabGrupy.length));
+					
 					if (tabGrupy.length > 0) {
 						try {
 							groupButton.getOnPreferenceClickListener();
@@ -202,7 +205,7 @@ public class MyPreferences extends PreferenceActivity {
 							String[] entryValues = new String[tabGrupy.length];
 
 							for (int i = 0; i < tabGrupy.length; i++) {
-								Log.e(TAG, "<<tab grpy>> " + tabGrupy[i]);
+								Log.i(TAG, "<<tab grupy>> " + tabGrupy[i]);
 								entryValues[i] = Integer.toString(i);
 
 							}
@@ -210,12 +213,15 @@ public class MyPreferences extends PreferenceActivity {
 							listPreferenceGroup.setEntryValues(entryValues);
 							savePreferences();
 						} catch (Exception e) {
-							Log.e(TAG, e.toString());
+							Log.i(TAG, e.toString());
 						}
 
 					}
+					else
+						Toast.makeText(getApplicationContext(), res.getString(R.string.no_groups), 3000).show();
+					
 				} else {
-					Log.e(TAG, "<<seba >>");
+					Log.e(TAG, "Nie pobrano grup poprawnie !");
 					return false;
 				}
 
@@ -234,11 +240,10 @@ public class MyPreferences extends PreferenceActivity {
 		AlertDialog.Builder alert = new AlertDialog.Builder(this);
 		alert.setTitle("MADWI Widget")
 				.setMessage(
-						"Mobile Application Developers\nWydzia� Informatyki ZUT \nKo�o naukowe\n::::::::::::::::\n\nAutorzy:\n:::::::::::::\nFabisiak Grzegorz\nGli�ski Dawid\nPeryt Sebastian\n�wierczek Sebastian\nWojtalewicz Micha�\n\nOpiekun ko�a:\n:::::::::::::::::::::::\ndr in�. Rados�aw Maciaszczyk")
+						res.getString(R.string.authors_list))
 				.setPositiveButton("Zamknij",
 						new DialogInterface.OnClickListener() {
 
-							@Override
 							public void onClick(DialogInterface dialog,
 									int which) {
 								dialog.cancel();

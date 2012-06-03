@@ -46,6 +46,8 @@ public class HttpConnect {
 	}
 
 	private boolean executeHttpGet() {
+	 client.getConnectionManager().closeExpiredConnections();
+	 
 		BufferedReader in = null;
 		try {
 			response = client.execute(requestGET);
@@ -67,6 +69,7 @@ public class HttpConnect {
 			e.printStackTrace();
 			return false;
 		} finally {
+		    client.getConnectionManager().shutdown();
 			try {
 				entity.consumeContent();
 			} catch (IOException e1) {

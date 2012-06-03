@@ -29,7 +29,7 @@ import android.util.Log;
 public class WidgetDownload extends Activity { // nie wiedzialem jak to obejsc,
 	// zeby wykorzystac getResources
 
-	private static final String TAG = "SebaJestZajebistymKoderem";
+	private static final String TAG = "MAD WIZUT Widget";
 	String urlStrony;
 	final static String siteIn = "http://wi.zut.edu.pl/plan/Wydruki/PlanGrup/";
 
