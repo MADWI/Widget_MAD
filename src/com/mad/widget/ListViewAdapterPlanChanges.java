@@ -3,12 +3,9 @@
  * The West Pomeranian University of Technology
  * sswierczek@wi.zut.edu.pl
  */
-
 package com.mad.widget;
 
 import com.mad.widget.R;
-import com.mad.widget.http.MessagePlanChanges;
-
 import java.util.ArrayList;
 
 import android.content.Context;
@@ -32,7 +29,7 @@ public class ListViewAdapterPlanChanges extends
 			int textViewResourceId, ArrayList<MessagePlanChanges> objects) {
 		super(context, resource, textViewResourceId, objects);
 		this.context = context;
-		messages = objects;
+		this.messages = objects;
 	}
 
 	@Override
@@ -64,9 +61,8 @@ public class ListViewAdapterPlanChanges extends
 		if (temp.length() >= MAX_TITLE_LENGHT) {
 			temp = temp.substring(0, MAX_TITLE_LENGHT) + "...";
 			title.setText(temp);
-		} else {
+		} else
 			title.setText(temp);
-		}
 
 		Spanned sp = Html.fromHtml(messages.get(position).getBody().trim());
 		temp = sp.toString().replaceAll("[\r\n]{1,}$", "");
