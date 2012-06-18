@@ -5,11 +5,7 @@ import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import com.mad.widget.R;
-import com.mad.widget.http.GetPlanChanges;
-import com.mad.widget.http.MessagePlanChanges;
-import com.mad.widget.http.WeekParityChecker;
-
+import android.app.Activity;
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
@@ -24,113 +20,83 @@ import android.util.Log;
 import android.view.View;
 import android.widget.RemoteViews;
 
+import com.mad.widget.MessagePlanChanges;
+import com.mad.widget.R;
+import com.mad.widget.connections.GetPlanChanges;
+import com.mad.widget.connections.WeekParityChecker;
+
 public class MadWIWidgetActivity extends AppWidgetProvider {
 
     public static final String ACTION_WIDGET_GET_PLAN_CHANGES = "PlanChangesWidget";
-    public static String ACTION_WIDGET_REFRESH = "ActionRefreshWidget";
-    public static String ACTION_WIDGET_PREFERENCES = "ActionPreferencesWidget";
+    public static final String ACTION_WIDGET_REFRESH = "ActionRefreshWidget";
+    public static final String ACTION_WIDGET_PREFERENCES = "ActionPreferencesWidget";
 
+    private static final String PREFERENCES_NAME = "MAD_WIZUT_Preferences";
+    private static final String LIST_FIELD_GROUP = "list_group";
     private static final String TAG = "MAD WIZUT Widget";
+    private SharedPreferences ustawienia;
 
     static final long refresh_seconds = 43200;
     private Boolean running = false;
 
-    /*
-     * Week parity
-     */
     private final WeekParityChecker checker = new WeekParityChecker();
     private String currentWeekStatus;
 
-    /*
-     * Plan Changes
-     */
+    // obiekt do pobierania zmian w planie
     private final GetPlanChanges PlanChanges = new GetPlanChanges();
+    // ostatnia zmiana w planie
     private MessagePlanChanges lastMessage = null;
 
-    /*
-     * Shared Preferences
-     */
-    private static final String PREFERENCES_NAME = "MAD_WIZUT_Preferences";
-    private SharedPreferences preferences;
-
-    /*
-     * Resources
-     */
-    private Resources res;
-
     @Override
-    public void onUpdate(final Context context,
-	    final AppWidgetManager appWidgetManager, int[] appWidgetIds) {
-	super.onUpdate(context, appWidgetManager, appWidgetIds);
+    public void onUpdate(Context context, AppWidgetManager appWidgetManager,
+	    int[] appWidgetIds) {
 
-	/*
-	 * Get Resources
-	 */
-	res = context.getResources();
+	ComponentName thisWidget = new ComponentName(context,
+		MadWIWidgetActivity.class);
 
-	/*
-	 * Schedule Timer
-	 */
-	new Timer().scheduleAtFixedRate(new Aktualizacja(context,
-		appWidgetManager), 10, refresh_seconds * 1000);
+	ustawienia = context.getSharedPreferences(PREFERENCES_NAME,
+		Activity.MODE_WORLD_READABLE);
 
-	/*
-	 * Attach shared preferences
-	 */
-	preferences = context.getSharedPreferences(PREFERENCES_NAME,
-		getResultCode());
+	int[] allWidgetIds = appWidgetManager.getAppWidgetIds(thisWidget);
+	for (int widgetId : allWidgetIds) {
 
-	/*
-	 * Get package name
-	 */
-	final String sPackageName = context.getPackageName();
+	    RemoteViews remoteViews = new RemoteViews(context.getPackageName(),
+		    R.layout.widget1);
 
-	/*
-	 * Connect remote view with widget
-	 */
-	RemoteViews oRemoteViews = new RemoteViews(sPackageName,
-		R.layout.widget1);
-	/*
-	 * Set OnClick Plan Changes
-	 */
-	Intent changesIntent = new Intent(context, PlanChangesActivity.class);
-	changesIntent.setAction(ACTION_WIDGET_GET_PLAN_CHANGES);
-	PendingIntent changesPendingIntent = PendingIntent.getActivity(context,
-		0, changesIntent, 0);
-	oRemoteViews.setOnClickPendingIntent(R.id.btZmianyPlanu,
-		changesPendingIntent);
+	    new Timer().scheduleAtFixedRate(new Aktualizacja(context,
+		    appWidgetManager, remoteViews), 10, refresh_seconds * 1000);
 
-	/*
-	 * Set OnClick Preferences
-	 */
-	Intent configIntent = new Intent(context, MyPreferences.class);
-	configIntent.setAction(ACTION_WIDGET_PREFERENCES);
-	PendingIntent configPendingIntent = PendingIntent.getActivity(context,
-		0, configIntent, 0);
-	oRemoteViews.setOnClickPendingIntent(R.id.imb_ustawienia,
-		configPendingIntent);
+	    // onclik zmiany w planie
+	    Intent changesIntent = new Intent(context,
+		    PlanChangesActivity.class);
+	    changesIntent.setAction(ACTION_WIDGET_GET_PLAN_CHANGES);
+	    PendingIntent changesPendingIntent = PendingIntent.getActivity(
+		    context, 0, changesIntent, 0);
+	    remoteViews.setOnClickPendingIntent(R.id.btZmianyPlanu,
+		    changesPendingIntent);
 
-	/*
-	 * Set OnClick Refresh
-	 */
-	Intent active = new Intent(context, MadWIWidgetActivity.class);
-	active.setAction(ACTION_WIDGET_REFRESH);
-	PendingIntent actionPendingIntent = PendingIntent.getBroadcast(context,
-		0, active, 0);
-	oRemoteViews.setOnClickPendingIntent(R.id.imb_odswiez,
-		actionPendingIntent);
+	    // onclik ustawienia
+	    Intent configIntent = new Intent(context, MyPreferences.class);
+	    configIntent.setAction(ACTION_WIDGET_PREFERENCES);
+	    PendingIntent configPendingIntent = PendingIntent.getActivity(
+		    context, 0, configIntent, 0);
+	    remoteViews.setOnClickPendingIntent(R.id.imb_ustawienia,
+		    configPendingIntent);
 
-	/*
-	 * Update the remote views
-	 */
+	    // onclick refresh
+	    Intent active = new Intent(context, MadWIWidgetActivity.class);
+	    active.setAction(ACTION_WIDGET_REFRESH);
+	    PendingIntent actionPendingIntent = PendingIntent.getBroadcast(
+		    context, 0, active, 0);
+	    remoteViews.setOnClickPendingIntent(R.id.imb_odswiez,
+		    actionPendingIntent);
 
-	appWidgetManager.updateAppWidget(appWidgetIds, oRemoteViews);
-
+	    appWidgetManager.updateAppWidget(widgetId, remoteViews);
+	}
     }
 
     @Override
     public void onReceive(Context context, Intent intent) {
-	super.onReceive(context, intent);
 
 	final String action = intent.getAction();
 
@@ -139,32 +105,33 @@ public class MadWIWidgetActivity extends AppWidgetProvider {
 		    AppWidgetManager.EXTRA_APPWIDGET_ID,
 		    AppWidgetManager.INVALID_APPWIDGET_ID);
 	    if (appWidgetId != AppWidgetManager.INVALID_APPWIDGET_ID) {
-		onDeleted(context, new int[] { appWidgetId });
+		this.onDeleted(context, new int[] { appWidgetId });
 	    }
 	} else {
 
 	    if (intent.getAction().equals(ACTION_WIDGET_REFRESH)) {
-		Log.i(TAG, "<<< onClick Refresh Button  >>>");
+		Log.e(TAG, "<<< onClick Refresh Button  >>>");
 
 		if (running == false) {
-		    new Timer().schedule(new Aktualizacja(context,
-			    AppWidgetManager.getInstance(context)), 10);
+
+		    new Timer().scheduleAtFixedRate(new Aktualizacja(context,
+			    AppWidgetManager.getInstance(context),
+			    new RemoteViews(context.getPackageName(),
+				    R.layout.widget1)), 10, 10);
 		}
-	    } else {
 	    }
 	    super.onReceive(context, intent);
 	}
     }
 
     public boolean isOnline(Context ctx) {
-	Log.i(TAG, "<<< is Online ? >>>");
+	Log.e(TAG, "<<< is Online ? >>>");
 	ConnectivityManager cm = (ConnectivityManager) ctx
 		.getSystemService(Context.CONNECTIVITY_SERVICE);
 	NetworkInfo ni = cm.getActiveNetworkInfo();
 	if (ni != null && ni.isAvailable() && ni.isConnected()) {
 	    return true;
 	} else {
-	    Log.e(TAG, "<<< is Online ? NO CONNECTION >>>");
 	    return false;
 	}
     }
@@ -175,93 +142,82 @@ public class MadWIWidgetActivity extends AppWidgetProvider {
 	private final ComponentName thisWidget;
 	private final AppWidgetManager appWidgetManager;
 	private final Context ctx;
+	private final Resources res;
+	int[] allWidgetIds;
 
-	public Aktualizacja(Context context, AppWidgetManager appWidgetManager) {
+	public Aktualizacja(Context context, AppWidgetManager appWidgetManager,
+		RemoteViews _remoteViews) {
 	    this.appWidgetManager = appWidgetManager;
-	    remoteViews = new RemoteViews(context.getPackageName(),
-		    R.layout.widget1);
-	    thisWidget = new ComponentName(context, MadWIWidgetActivity.class);
-	    ctx = context;
+	    this.remoteViews = _remoteViews;
+	    this.thisWidget = new ComponentName(context,
+		    MadWIWidgetActivity.class);
+	    this.allWidgetIds = appWidgetManager.getAppWidgetIds(thisWidget);
+	    this.ctx = context;
+	    this.res = context.getResources();
 	}
 
 	@Override
 	public void run() {
 
-	    Log.i(TAG, "<<< RUN refresh>>");
-	    running = true;
+	    Log.e(TAG, "<<< RUN refresh>>");
+	    for (int widgetId : allWidgetIds) {
 
-	    /*
-	     * Get system date
-	     */
-	    String currentDateTimeString = DateFormat.getDateInstance().format(
-		    new Date());
-	    remoteViews.setTextViewText(R.id.tv_data, currentDateTimeString
-		    + " r.");
-	    /*
-	     * Do it only if have connectivity
-	     */
-	    if (isOnline(ctx)) {
+		running = true;
 
-		/*
-		 * Set progress bar and default text in TextView's
-		 */
-		remoteViews.setViewVisibility(R.id.ProgressBarLayout,
-			View.VISIBLE);
-		remoteViews.setTextViewText(R.id.tv_zmiany_tytul, "");
-		remoteViews.setTextViewText(R.id.tv_zmiany_tresc,
-			res.getString(R.string.load_plan_changes));
+		// pobranie grupy uzytkowniak
 		remoteViews.setTextViewText(R.id.btnPobierzPlan,
-			preferences.getString("list_group", "Brak grupy"));
+			ustawienia.getString(LIST_FIELD_GROUP, "brak grupy"));
 
-		/*
-		 * Get week parity
-		 */
-		Log.i(TAG, "<<< get week parity >>>");
-		currentWeekStatus = checker.getParity();
-		remoteViews.setTextViewText(R.id.tv_tydzien, currentWeekStatus);
+		// pobranie daty zgodnie z ustawieniami jezyka telefonu
+		String currentDateTimeString = DateFormat.getDateInstance()
+			.format(new Date());
+		remoteViews.setTextViewText(R.id.tv_data, currentDateTimeString
+			+ " r.");
 
-		/*
-		 * Get last plan changes
-		 */
-		Log.i(TAG, "<<< getlast messages (plan changes)>>>");
-		lastMessage = PlanChanges.getLastMessage();
+		// sprawdzanie czy jest połaczenie z Internetem
+		if (isOnline(ctx)) {
+		    currentWeekStatus = checker.getParity();
+		    remoteViews.setTextViewText(R.id.tv_tydzien,
+			    currentWeekStatus);
 
-		if (lastMessage != null) {
-		    remoteViews.setTextViewText(R.id.tv_zmiany_tytul,
-			    lastMessage.getTitle());
-		    String bodyLastMessage = lastMessage.getBody().substring(0,
-			    110)
-			    + "...";
+		    // pokazuje i chowam layout z progrsse barem
+		    // poniewaz on sam nie obsluguje ustawiania widocznosci
+		    remoteViews.setViewVisibility(R.id.ProgressBarLayout,
+			    View.VISIBLE);
+
+		    remoteViews.setTextViewText(R.id.tv_zmiany_tytul, "");
 		    remoteViews.setTextViewText(R.id.tv_zmiany_tresc,
-			    bodyLastMessage);
+			    res.getString(R.string.load_plan_changes));
+
+		    Log.e(TAG, "<<< getlast plan changes");
+
+		    lastMessage = PlanChanges.getLastMessage();
+
+		    if (lastMessage != null) {
+			remoteViews.setTextViewText(R.id.tv_zmiany_tytul,
+				lastMessage.getTitle());
+			String bodyLastMessage = lastMessage.getBody()
+				.substring(0, 110) + "...";
+			remoteViews.setTextViewText(R.id.tv_zmiany_tresc,
+				bodyLastMessage);
+
+		    } // schowanie layoutu z progress barem
+		    remoteViews.setViewVisibility(R.id.ProgressBarLayout,
+			    View.INVISIBLE);
+
+		} else {
+		    remoteViews.setViewVisibility(R.id.ProgressBarLayout,
+			    View.INVISIBLE);
+		    remoteViews.setTextViewText(R.id.tv_zmiany_tytul,
+			    res.getString(R.string.no_Internet));
+		    remoteViews.setTextViewText(R.id.tv_zmiany_tresc, "");
+
 		}
 
-		/*
-		 * Unset progress bar
-		 */
-		remoteViews.setViewVisibility(R.id.ProgressBarLayout,
-			View.INVISIBLE);
-
-		/*
-		 * Update all changes
-		 */
-		Log.i(TAG, "<<< remoteview updated>>>");
-		appWidgetManager.updateAppWidget(thisWidget, remoteViews);
-
-	    } else {
-		/*
-		 * If have no connectivity set info about that in widget
-		 * TextView's
-		 */
-		remoteViews.setViewVisibility(R.id.ProgressBarLayout,
-			View.INVISIBLE);
-		remoteViews.setTextViewText(R.id.tv_zmiany_tytul,
-			res.getString(R.string.no_Internet));
-		remoteViews.setTextViewText(R.id.tv_zmiany_tresc, "");
-		appWidgetManager.updateAppWidget(thisWidget, remoteViews);
+		appWidgetManager.updateAppWidget(widgetId, remoteViews);
+		running = false;
+		Log.e(TAG, "<<< RUN refresh END");
 	    }
-
-	    running = false;
 	}
     }
 }
