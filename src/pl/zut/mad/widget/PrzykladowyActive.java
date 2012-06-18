@@ -2,6 +2,8 @@ package pl.zut.mad.widget;
 
 import java.io.IOException;
 
+import pl.zut.mad.widget.WidgetDownload;
+
 import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
@@ -13,7 +15,7 @@ public class PrzykladowyActive extends Activity {
 	String urlPlanNiestacojonarne;
 	String[] tab = null;
 	private static final String TAG = "SebaJestZajebistymKoderem";
-	WidgetDownload wDownload = new WidgetDownload();
+	WidgetDownload wDownload = null;
 	
 	
     /** Called when the activity is first created. */
@@ -21,6 +23,7 @@ public class PrzykladowyActive extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
+        wDownload = new WidgetDownload(getApplicationContext());
         try{
         	tab = wDownload.getGroups("Stacjonarne","Informatyka",1,2);
         	Log.d(TAG,"grupy - ok");
@@ -30,33 +33,12 @@ public class PrzykladowyActive extends Activity {
 		}
         
         boolean wynik = false;
-        try
-        {
-        	wynik = wDownload.openPlan("Stacjonarne", tab[1]);
-        }
-        catch(Exception e)
-        {
-        	Log.e(TAG, "downloadPlan error: " + e);
-        }
-        
-        /**        
-        try
-        {
-        	wynik = wDownload.downloadPlan("Stacjonarne", tab[1]);
-        }
-        catch(Exception e)
-        {
-        	Log.d(TAG, "downloadPlan error: " + e);
-        }
-        if(wynik)
-        {
-        	Toast.makeText(getApplicationContext(), "Pobrano plan", Toast.LENGTH_LONG).show();
-        }
-        else
-        {
-        	Toast.makeText(getApplicationContext(), "B³¹d pobrania planu", Toast.LENGTH_LONG).show();
-        }
-        /**/
+        boolean wynik = false;
+		try {
+			wynik = wDownload.openPlan("Stacjonarne", tab[1]);
+		} catch (Exception e) {
+			Log.e(TAG, "downloadPlan error: " + e);
+		}
     } 
     
 }

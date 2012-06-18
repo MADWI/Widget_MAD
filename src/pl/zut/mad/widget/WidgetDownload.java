@@ -17,6 +17,7 @@ import org.apache.http.util.ByteArrayBuffer;
 
 import android.app.Activity;
 import android.content.ActivityNotFoundException;
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Environment;
@@ -28,11 +29,17 @@ import android.widget.Toast;
  * @author Sebastian Peryt
  *
  */
-public class WidgetDownload extends Activity { //nie wiedzialem jak to obejsc, zeby wykorzystac getResources
+public class WidgetDownload /*extends Activity*/ { //nie wiedzialem jak to obejsc, zeby wykorzystac getResources
 	
-	private static final String TAG = "SebaJestZajebistymKoderem";
+	private static final String TAG = "WidgetDownload";
 	String urlStrony;
 	final static String siteIn = "http://wi.zut.edu.pl/plan/Wydruki/PlanGrup/";
+	private Context con = null;
+       
+	
+	public WidgetDownload(Context applicationContext) {
+		con = applicationContext;
+	}
         
     /**
      * Funkcja na podstawie zadanego ciagu wejsciowego zwraca tablice z numerami grup.
@@ -261,21 +268,26 @@ public class WidgetDownload extends Activity { //nie wiedzialem jak to obejsc, z
     	File file = new File(extStorageDirectory + "/MAD_Plan_ZUT/" + grupa+".pdf");
     	if (file.exists()) {
             Uri path = Uri.fromFile(file);
-            Intent intent = new Intent(Intent.ACTION_VIEW);
+            Intent intent = new Intent(con, getClass());
+            //Intent intent = new Intent(Intent.ACTION_VIEW);
+            intent.setAction(Intent.ACTION_VIEW);
             intent.setDataAndType(path, "application/pdf");
-            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
             try {
-                startActivity(intent);
+            	con.startActivity(intent);
                 /**
                  * W tym miejscu wyrzuca NullPointerException
                  */
             } 
             catch (ActivityNotFoundException e) {
-                /*Toast.makeText(WidgetDownload.this.getApplicationContext(), 
+                /*Toast.makeText(con, 
                     "No Application Available to View PDF", 
                     Toast.LENGTH_SHORT).show();*/
             	Log.d(TAG,"Nie ma czym otworzyc PDF");
+            } catch(Exception e)
+            {
+            	Log.d(TAG,"nie wiem co jest grane " + e.toString());
             }
     	}
     }
