@@ -1,4 +1,4 @@
-package com.mad.widget;
+package mad.widget.models;
 
 public class MessagePlanChanges {
     public String title;

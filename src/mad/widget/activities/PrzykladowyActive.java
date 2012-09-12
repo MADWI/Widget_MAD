@@ -1,4 +1,4 @@
-package com.mad.widget.activities;
+package mad.widget.activities;
 
 import android.app.Activity;
 

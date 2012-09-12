@@ -1,4 +1,4 @@
-package com.mad.widget.connections;
+package mad.widget.connections;
 
 import java.net.MalformedURLException;
 import java.net.URL;

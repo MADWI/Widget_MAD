@@ -1,4 +1,4 @@
-package com.mad.widget.connections;
+package mad.widget.connections;
 
 import java.io.BufferedInputStream;
 import java.io.File;
@@ -12,7 +12,6 @@ import java.util.regex.Pattern;
 
 import org.apache.http.util.ByteArrayBuffer;
 
-
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
@@ -23,9 +22,9 @@ import android.util.Log;
 /**
  * Klasa odpowiedzialan za pobieranie listy grup ze strony oraz pobieranie planu
  * zajec dla kazdej grupy
- * 
+ *
  * @author Sebastian Peryt
- * 
+ *
  */
 public class WidgetDownload /* extends Activity */{ // nie wiedzialem jak to
 						    // obejsc, zeby wykorzystac
@@ -43,7 +42,7 @@ public class WidgetDownload /* extends Activity */{ // nie wiedzialem jak to
     /**
      * Funkcja na podstawie zadanego ciagu wejsciowego zwraca tablice z numerami
      * grup.
-     * 
+     *
      * @param String
      *            adres strony z ktorej ma byc pobrany plan (w wersji finalnej
      *            bedzie usuniety)
@@ -54,8 +53,8 @@ public class WidgetDownload /* extends Activity */{ // nie wiedzialem jak to
      */
     public String[] getGroups(String rodzajStudiow, String kierunek,
 	    int stopien, int rok) {
-	Log.d(TAG, "Stopien: " + new Integer(stopien).toString());
-	Log.d(TAG, "Rok: " + new Integer(rok).toString());
+	Log.d(TAG, "Stopien: " + Integer.valueOf(stopien));
+	Log.d(TAG, "Rok: " + Integer.valueOf(rok));
 
 	HttpConnect con = new HttpConnect(10000, siteIn + rodzajStudiow);
 	String site = null;
@@ -109,7 +108,7 @@ public class WidgetDownload /* extends Activity */{ // nie wiedzialem jak to
     }
 
     /**
-     * 
+     *
      * @param rodzaj
      *            String Rodzaj studi�w z du�ej litery
      * @param kierunek
@@ -160,7 +159,7 @@ public class WidgetDownload /* extends Activity */{ // nie wiedzialem jak to
     /**
      * Funkcja sprawdza czy folder do przechowywania planu istnieje i ew. go
      * tworzy
-     * 
+     *
      * @return true jesli folder istniej lub utworzono, false jesli wystapil
      *         blad
      * @author Sebastian Peryt
@@ -185,7 +184,7 @@ public class WidgetDownload /* extends Activity */{ // nie wiedzialem jak to
     /**
      * <b>TODO</b>Sprawdzic co sie dzieje jesli nie ma takiego planu na
      * serwerze, lub nie ma internetu
-     * 
+     *
      * @param String
      *            forma studiow - Stacjonarne, Niestacjonarne (Musi byc z
      *            wielkiej litery)
@@ -257,7 +256,7 @@ public class WidgetDownload /* extends Activity */{ // nie wiedzialem jak to
      * jest gdzies przy wywolaniu startActivity. <br>
      * <br>
      * Funkcja wywo�uje intent, kt�ry otwiera plan w pliku pdf
-     * 
+     *
      * @param grupa
      *            String z numerem grupy
      * @author Sebastian Peryt
@@ -294,7 +293,7 @@ public class WidgetDownload /* extends Activity */{ // nie wiedzialem jak to
 
     /**
      * Funkcja sprawdza, czy plan dla podanej grupy jest pobrany
-     * 
+     *
      * @param grupa
      * @return true je�li wszystko jest ok, false w przeciwnym wypadku
      * @author Sebastian Peryt

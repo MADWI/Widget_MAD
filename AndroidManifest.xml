@@ -1,33 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-      package="com.mad.widget"
-      android:versionCode="1"
-      android:versionName="1.0">
-      <uses-permission android:name="android.permission.INTERNET" ></uses-permission>
-      <uses-permission  android:name="android.permission.ACCESS_NETWORK_STATE"></uses-permission>
-      
-      <uses-sdk android:minSdkVersion="8" />
-      
-    <application  android:label="@string/app_name" android:icon="@drawable/ic_launcher">
-        <!-- Broadcast Receiver that will process AppWidget updates -->
-        <receiver android:name=".activities.MadWIWidgetActivity" android:label="@string/app_name">
+    package="mad.widget"
+    android:versionCode="1"
+    android:versionName="1.0" >
+
+    <uses-permission android:name="android.permission.INTERNET" >
+    </uses-permission>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" >
+    </uses-permission>
+
+    <uses-sdk
+        android:maxSdkVersion="16"
+        android:minSdkVersion="7"
+        android:targetSdkVersion="7" />
+
+    <application
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name" >
+
+        <activity
+            android:name=".activities.MyPreferences"
+            android:exported="false"
+            android:theme="@android:style/Theme.NoTitleBar" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+                <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
+            </intent-filter>
+        </activity>
+    
+        <receiver
+            android:name=".MadWidgetProvider"
+            android:label="@string/app_name" >
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/mad_widget_provider" />
+
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
-               	<action android:name="com.mad.widget.MadWIWidgetActivity.ACTION_WIDGET_REFRESH"/>
             </intent-filter>
-            <meta-data android:name="android.appwidget.provider" android:resource="@xml/widget" />
         </receiver>
+
+        <activity
+            android:name=".activities.PlanChangesActivity"
+            android:exported="false"
+            android:theme="@android:style/Theme.NoTitleBar" >
+            <intent-filter>
+                <action android:name="mad.widget.utils.Constans.ACTION_WIDGET_GET_PLAN_CHANGES" />
+            </intent-filter>
+        </activity>
         
-        <activity android:name=".activities.PlanChangesActivity">
-			<intent-filter>
-				<action android:name="com.mad.widget.MadWIWidgetActivity.ACTION_WIDGET_GET_PLAN_CHANGES"/>
-			</intent-filter>
-		</activity>
-		<activity android:name=".activities.MyPreferences">
-			<intent-filter>
-				<action android:name="com.mad.widget.MadWIWidgetActivity.ACTION_WIDGET_PREFERENCES"/>
-			</intent-filter>
-		</activity>
+
+        <service android:name=".UpdateWidgetService" >
+        </service>
     </application>
-    
+
 </manifest>

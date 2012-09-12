@@ -1,0 +1,27 @@
+UWAGA !!
+1.Emulatory Androida maj¹ znany b³¹d, w którym metoda updateAppWidget() nie zachowujê siê odpowienido.
+
+ród³o tu : http://code.google.com/p/android/issues/detail?id=8889
+i z wlasnego doswiadczenia.
+
+Niestety pomimo tego , ¿e jest tam napisane i¿ wersje > 2.2 dzia³aj¹ OK, wg mnie tak nie jest, testowane na 2.3.3.
+
+INSTRUKCJA JAK URUCHAMIAC WIDGET NA EMULATORZE:
+
+1. Uruchom czysta instancje emulator ( wipe user data).
+2. Zainstalujcie cokolwiek ( np widget).
+3. Zamknijcie emulator.
+4. Wystartujcie go ponownie lecz BEZ SNAPSHOTA i BEZ WPIE USER DATA, po prostu zwyk³y start.  
+(trzeba odznaczyc odpowiednie dwie opcje w okienku pojawiajacym sie po klikniêciu na start, jedyne co powinno byæ zaznaczone
+to "Save to snapshot").
+
+
+
+
+2.Napisy polskie wrzucajcie tlyko do strings.xml, nie piszcie ich bezpoœrendio w kodzie poniewa¿
+je¿eli po sciagnieciu z githuba zmieni siê kodowanie bêdzie je ³atwo poprawiæ z jednego miejsca
+i ponado to jest dobra praktyka (jest trochê takich napisów do uporz¹dkowania w aplikacji).
+
+
+3.Wszelkie zmiany w klasach MadWidgetProvider oraz UpdateWidgetService prosze konsultowaæ ze mn¹. S¹ to "delikatne" klasy i nawet
+teoretycznie logiczna zmiana mo¿e powodowaæ, ¿e ca³y widget przestanie siê odswie¿aæ.
