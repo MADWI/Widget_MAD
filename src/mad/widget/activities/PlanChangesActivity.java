@@ -11,14 +11,13 @@ import java.util.ArrayList;
 
 import mad.widget.R;
 import mad.widget.connections.GetPlanChanges;
+import mad.widget.connections.HttpConnect;
 import mad.widget.models.ListViewAdapterPlanChanges;
 import mad.widget.models.MessagePlanChanges;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.res.Resources;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -43,7 +42,8 @@ public class PlanChangesActivity extends Activity {
 	private ListView lvPlanChanges;
 	private ProgressDialog pd;
 	private boolean enableExecuteRefresh = true;
-	private boolean firstRun = true;
+
+	// private boolean firstRun = true;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -52,8 +52,8 @@ public class PlanChangesActivity extends Activity {
 		setContentView(R.layout.main_plan_changes);
 		res = getApplicationContext().getResources();
 
-		if (isOnline() == true && firstRun == true) {
-			firstRun = false;
+		if (HttpConnect.isOnline(getApplicationContext()) == true) {
+			// firstRun = false;
 			new AsyncTaskGetPlanChanges().execute(getApplicationContext());
 
 		}
@@ -88,19 +88,6 @@ public class PlanChangesActivity extends Activity {
 
 	}
 
-	public boolean isOnline() {
-		Log.i(TAG, "isOnline");
-		ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-		NetworkInfo ni = cm.getActiveNetworkInfo();
-		if (ni != null && ni.isAvailable() && ni.isConnected()) {
-			return true;
-		} else {
-			showToast(res.getString(R.string.no_Internet), 2000,
-					getApplicationContext());
-			return false;
-		}
-	}
-
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		MenuInflater inflater = getMenuInflater();
@@ -114,7 +101,7 @@ public class PlanChangesActivity extends Activity {
 		switch (item.getItemId()) {
 		case R.id.refresh:
 			if (enableExecuteRefresh) {
-				if (isOnline() == true) {
+				if (HttpConnect.isOnline(getApplicationContext()) == true) {
 					new AsyncTaskGetPlanChanges()
 							.execute(getApplicationContext());
 				}
@@ -139,7 +126,7 @@ public class PlanChangesActivity extends Activity {
 			Log.i(TAG, "doInBackground");
 			ctx = params[0];
 
-			if (isOnline() == true) {
+			if (HttpConnect.isOnline(getApplicationContext()) == true) {
 				tempArray = pars.getServerMessages();
 				if (tempArray != null) {
 					news = tempArray;
@@ -155,13 +142,9 @@ public class PlanChangesActivity extends Activity {
 		protected void onProgressUpdate(Boolean... values) {
 			super.onProgressUpdate(values);
 			Log.i(TAG, "onProgressUpdate");
-			if (values[0] == false) {
+			if (values[0] == false)
 				showToast(res.getString(R.string.plan_changes_Messages), 3000,
-						ctx);
-			} else if (values[0] == true) {
-				showToast(res.getString(R.string.plan_changes_finished), 3000,
-						ctx);
-			}
+						ctx);	
 
 		}
 

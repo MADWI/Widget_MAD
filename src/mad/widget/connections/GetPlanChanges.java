@@ -41,12 +41,12 @@ public class GetPlanChanges {
 		strona = con.getPage();
 		MessagePlanChanges tempMsg = new MessagePlanChanges();
 
-		if (strona != "") {
+		if (!strona.equals("")) {
 			/* Arrays of JSON and Messages elements */
 			JSONArray entry = new JSONArray();
 			JSONObject jsonObject = new JSONObject();
 			/* parse response from server */
-			if (strona != "") {
+			if (!strona.equals("")) {
 				try {
 					/* initialize JSON object with server response */
 					jsonObject = (JSONObject) new JSONTokener(strona)
@@ -92,7 +92,7 @@ public class GetPlanChanges {
 		Log.i(TAG, "getServerMessages");
 		strona = con.getPage();
 		/* parse response from server */
-		if (strona != "") {
+		if (!strona.equals("")) {
 			ArrayList<MessagePlanChanges> DataArray = new ArrayList<MessagePlanChanges>();
 			MessagePlanChanges tempMsg = new MessagePlanChanges();
 

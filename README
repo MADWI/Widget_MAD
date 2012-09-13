@@ -4,7 +4,22 @@ Autorzy: Studenckie Koło Naukowe M.A.D. , Wydział Informatyki ZUT w Szczecinie
 
 CHANGELOG 
 
-Wersja 0.06
+Wersja 0.11
+
+NOWE
+- poprawiono obsługe braku łączności z Internetem
+- kilka innych drobnych poprawek
+- zmiana numeracji wesji
+
+BRAK
+-pobierania planu i grup ze strony WI.
+
+BUGI
+-nie działa pobiernie grupy ponieważ nie ma planu na stronie WI, klasa MyPreferences zostanie wtedy przebudowana 
+do poprawnego działania.
+-czasami  przy słabym Internecie odswieżenie powoduje wyjątek NullPointerException w klasie WeekParityChecker
+
+Wersja 0.10
 
 NOWE
 -przeniesiono długtrwałe operację do serwisu, który aktualizuje widget.
@@ -19,8 +34,6 @@ BUGI
 -nie działa pobiernie grupy ponieważ nie ma planu na stronie WI, klasa MyPreferences zostanie wtedy przebudowana 
 do poprawnego działania.
 -czasami odswieżenie powoduje wyjątek NullPointerException w klasie WeekParityChecker
-
-
 
 Wersja 0.05
 
@@ -46,7 +59,6 @@ NOWE:
 BUGI
 - nie dziala wylaczanie automatycznego odswieżania
 
-
 Wersja 0.02
 
 NOWE:
@@ -58,7 +70,6 @@ NOWE:
 
 BUGI
 - nie dziala wylaczanie automatycznego odswieżania
-
 
 Wersja 0.01 
 NOWE:
@@ -74,6 +85,4 @@ BUGI:
 - czasami przy braku po³¹czenia z Internetem zmiany wyrzucają NullPointerException
 - nie wyswietla siê ostatnia zmiana w planie
 
-- zbyt powolne pobieranie daty na starcie ?? 
-
-
+- zbyt powolne pobieranie daty na starcie 

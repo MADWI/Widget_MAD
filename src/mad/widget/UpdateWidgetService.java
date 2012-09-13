@@ -1,7 +1,5 @@
 package mad.widget;
 
-import java.util.Random;
-
 import mad.widget.connections.GetPlanChanges;
 import mad.widget.connections.HttpConnect;
 import mad.widget.connections.WeekParityChecker;
@@ -62,7 +60,7 @@ public class UpdateWidgetService extends IntentService {
 
 		// get week parity and plan changes
 
-		String currentWeekParity = " ";
+		String currentWeekParity = "";
 		if (HttpConnect.isOnline(this.getApplicationContext())) {
 			Log.i(TAG, "Getting week parity...");
 			currentWeekParity = checker.getParity();
@@ -77,18 +75,7 @@ public class UpdateWidgetService extends IntentService {
 						+ "success");
 			}
 
-		} else {
-			Log.w(TAG, "No connectivity :<");
-			// inform user that have no connectivity
-			lastMessage.setTitle(this.getApplicationContext().getString(
-					R.string.no_Internet));
-			lastMessage.setBody(" ");
-
 		}
-
-		// Create some random data for checking refresh
-		int number = (new Random().nextInt(100));
-		Log.i(TAG, "random number = " + String.valueOf(number));
 
 		// remote view to update widget layout
 		RemoteViews remoteViews = new RemoteViews(this.getApplicationContext()
@@ -98,14 +85,37 @@ public class UpdateWidgetService extends IntentService {
 		remoteViews.setTextViewText(R.id.btnPobierzPlan, userGroup);
 
 		// set week parity
-		remoteViews.setTextViewText(R.id.tv_tydzien, currentWeekParity);
+		if (!currentWeekParity.equals("")) {
+			remoteViews.setTextViewText(R.id.tv_tydzien, currentWeekParity);
+			SharedPrefUtils.saveString(ustawienia, Constans.WEEK_PARITY,
+					currentWeekParity);
+		} else {
+			remoteViews.setTextViewText(R.id.tv_tydzien, SharedPrefUtils
+					.loadString(ustawienia, Constans.WEEK_PARITY));
+		}
 
-		// show last plan change
-		remoteViews.setTextViewText(R.id.tv_zmiany_tytul,
-				lastMessage.getTitle());
-		String bodyLastMessage = lastMessage.getBody().substring(0, 110)
-				+ "...";
-		remoteViews.setTextViewText(R.id.tv_zmiany_tresc, bodyLastMessage);
+		// show last plan change title
+		if (!lastMessage.getTitle().equals("")) {
+			remoteViews.setTextViewText(R.id.tv_zmiany_tytul,
+					lastMessage.getTitle());
+			SharedPrefUtils.saveString(ustawienia, Constans.TITLE_PLAN_CHANGES,
+					lastMessage.getTitle());
+		} else
+			remoteViews.setTextViewText(R.id.tv_zmiany_tytul, SharedPrefUtils
+					.loadString(ustawienia, Constans.TITLE_PLAN_CHANGES));
+
+		// set plan changes body
+		if (!lastMessage.getBody().equals("")) {
+			String bodyLastMessage = lastMessage.getBody().substring(0, 110)
+					+ "...";
+			remoteViews.setTextViewText(R.id.tv_zmiany_tresc, bodyLastMessage);
+
+			SharedPrefUtils.saveString(ustawienia, Constans.BODY_PLAN_CHANGES,
+					bodyLastMessage);
+		} else {
+			remoteViews.setTextViewText(R.id.tv_zmiany_tresc, SharedPrefUtils
+					.loadString(ustawienia, Constans.BODY_PLAN_CHANGES));
+		}
 
 		// hide progress bar
 		remoteViews.setViewVisibility(R.id.ProgressBarLayout, View.INVISIBLE);

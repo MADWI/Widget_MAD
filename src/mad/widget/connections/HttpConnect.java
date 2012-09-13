@@ -12,6 +12,8 @@ import java.io.InputStreamReader;
 import java.net.URI;
 import java.net.URISyntaxException;
 
+import mad.widget.R;
+
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -25,6 +27,7 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.util.Log;
+import android.widget.Toast;
 
 public class HttpConnect {
 
@@ -97,8 +100,7 @@ public class HttpConnect {
 				try {
 					in.close();
 				} catch (IOException e2) {
-					Log.e(TAG,
-							"Exception 2 (executeHttpGet) " + e2.toString());
+					Log.e(TAG, "Exception 2 (executeHttpGet) " + e2.toString());
 					e2.printStackTrace();
 					return false;
 				}
@@ -116,6 +118,8 @@ public class HttpConnect {
 		if (ni != null && ni.isAvailable() && ni.isConnected()) {
 			return true;
 		} else {
+			Toast.makeText(ctx, ctx.getString(R.string.no_Internet),
+					Toast.LENGTH_LONG).show();
 			return false;
 		}
 	}

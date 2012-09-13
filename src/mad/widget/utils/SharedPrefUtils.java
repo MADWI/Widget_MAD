@@ -19,4 +19,15 @@ public class SharedPrefUtils {
 		editor.commit();
 	}
 
+	public static void saveString(SharedPreferences preferences, String key,
+			String value) {
+		SharedPreferences.Editor editor = preferences.edit();
+		editor.putString(key, value);
+		editor.commit();
+	}
+
+	public static String loadString(SharedPreferences preferences, String key) {
+		return preferences.getString(key, "");
+	}
+
 }
