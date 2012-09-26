@@ -7,6 +7,7 @@ import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 
 public class Intents {
 	public static final Intent actionRefresh(final Context context) {
@@ -22,9 +23,18 @@ public class Intents {
 
 	}
 
-	public static final Intent actionSettings(final Context context, int appWidgetId) {
+	public static final Intent actionSettings(final Context context,
+			int appWidgetId) {
 		final Intent intent = new Intent(context, MyPreferences.class);
-		intent.putExtra(AppWidgetManager. EXTRA_APPWIDGET_ID,appWidgetId);
+		intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
+		return intent;
+
+	}
+
+	public static final Intent actionWebpage(final Context context,
+			int appWidgetId) {
+		final Uri uri = Uri.parse("http://www.mad.zut.edu.pl");
+		Intent intent = new Intent(Intent.ACTION_VIEW, uri);
 		return intent;
 
 	}

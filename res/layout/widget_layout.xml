@@ -110,7 +110,6 @@
             android:layout_marginRight="20dp"
             android:layout_marginTop="3dp"
             android:indeterminate="true" />
-
     </LinearLayout>
 
     <Button
@@ -152,5 +151,15 @@
         android:scaleType="centerInside"
         android:src="@drawable/bar_refresh"
         android:visibility="visible" />
+
+    <Button
+        android:id="@+id/btnWeb"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/tv_ustawienia"
+        android:layout_alignLeft="@+id/tv_ustawienia"
+        android:layout_alignRight="@+id/tv_data"
+        android:layout_alignTop="@+id/tv_ustawienia"
+        android:background="@android:color/transparent" />
 
 </RelativeLayout>

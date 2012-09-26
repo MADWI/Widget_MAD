@@ -44,6 +44,7 @@ public class MadWidgetProvider extends AppWidgetProvider {
 			remoteViews.setTextViewText(R.id.tv_data, currentDateTimeString
 					+ " r.");
 
+			// refresh OnClick
 			Intent clickIntent = Intents.actionRefresh(context);
 			PendingIntent pendingIntentRefresh = Intents.createPendingService(
 					context, clickIntent);
@@ -57,12 +58,20 @@ public class MadWidgetProvider extends AppWidgetProvider {
 			remoteViews.setOnClickPendingIntent(R.id.btZmianyPlanu,
 					pendingIntentPlan);
 
-			// planChanges OnClick
+			// settings OnClick
 			Intent settingsIntent = Intents.actionSettings(context, widgetId);
 			PendingIntent pendingSettingsIntent = Intents
 					.createPendingActivity(context, settingsIntent);
 			remoteViews.setOnClickPendingIntent(R.id.imb_ustawienia,
 					pendingSettingsIntent);
+
+			// open webapge OnClick
+
+			Intent webpageIntent = Intents.actionWebpage(context, widgetId);
+			PendingIntent webpageSettingsIntent = Intents
+					.createPendingActivity(context, webpageIntent);
+			remoteViews.setOnClickPendingIntent(R.id.btnWeb,
+					webpageSettingsIntent);
 
 			appWidgetManager.updateAppWidget(widgetId, remoteViews);
 
