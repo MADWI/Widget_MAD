@@ -17,7 +17,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 
-import android.content.Context;
 import android.util.Log;
 
 public class GetPlanChanges {
@@ -37,7 +36,7 @@ public class GetPlanChanges {
 	 * 
 	 * @return last plan change as MessagePlanChanges object.
 	 */
-	public MessagePlanChanges getLastMessage(Context ctx) {
+	public MessagePlanChanges getLastMessage() {
 		Log.i(TAG, "getLastMessage");
 		strona = con.getPage();
 		MessagePlanChanges tempMsg = new MessagePlanChanges();

@@ -67,7 +67,7 @@ public class UpdateWidgetService extends IntentService {
 			Log.i(TAG, "Week parity = " + currentWeekParity);
 
 			Log.i(TAG, "Getting last plan change...");
-			lastMessage = PlanChanges.getLastMessage(this);
+			lastMessage = PlanChanges.getLastMessage();
 			if (lastMessage == null) {
 				lastMessage = new MessagePlanChanges();
 				lastMessage.setBody(getString(R.string.no_messages));
