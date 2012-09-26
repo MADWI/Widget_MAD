@@ -17,6 +17,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 
+import android.content.Context;
 import android.util.Log;
 
 public class GetPlanChanges {
@@ -33,10 +34,10 @@ public class GetPlanChanges {
 
 	/**
 	 * Method for getting last plan change from website.
-	 *
+	 * 
 	 * @return last plan change as MessagePlanChanges object.
 	 */
-	public MessagePlanChanges getLastMessage() {
+	public MessagePlanChanges getLastMessage(Context ctx) {
 		Log.i(TAG, "getLastMessage");
 		strona = con.getPage();
 		MessagePlanChanges tempMsg = new MessagePlanChanges();
@@ -85,7 +86,7 @@ public class GetPlanChanges {
 	/**
 	 * Method for getting all plan changes from WI ZUT website as ArrayList of
 	 * MessagePlanChanges objects.
-	 *
+	 * 
 	 * @return ArrayList with plan changes.
 	 */
 	public ArrayList<MessagePlanChanges> getServerMessages() {

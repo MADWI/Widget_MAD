@@ -17,7 +17,7 @@
         android:layout_marginTop="5dp"
         android:background="@drawable/background_top"
         android:textAppearance="?android:attr/textAppearanceLarge" />
-
+
     <TextView
         android:id="@+id/tv_data"
         android:layout_width="147dp"
@@ -29,7 +29,7 @@
         android:paddingLeft="5dp"
         android:text="@string/empty"
         android:textAppearance="?android:attr/textAppearanceMedium" />
-
+
     <TextView
         android:id="@+id/tv_tydzien"
         android:layout_width="147dp"
@@ -55,7 +55,7 @@
         android:paddingTop="5dp"
         android:text="@string/plan_for"
         android:textAppearance="?android:attr/textAppearanceLarge" />
-
+
     <TextView
         android:id="@+id/tv_zmiany_tytul"
         android:layout_width="294dp"
@@ -68,7 +68,7 @@
         android:text="@string/empty"
         android:textColor="#000000"
         android:textStyle="bold" />
-
+
     <TextView
         android:id="@+id/tv_zmiany_tresc"
         android:layout_width="294dp"
@@ -81,31 +81,7 @@
         android:paddingTop="5dp"
         android:text="@string/load_plan_changes"
         android:textColor="#000000" />
-
-    <ImageButton
-        android:id="@+id/imb_odswiez"
-        android:layout_width="35dp"
-        android:layout_height="35dp"
-        android:layout_alignRight="@+id/tv_ustawienia"
-        android:layout_alignTop="@+id/tv_ustawienia"
-        android:layout_marginRight="20dp"
-        android:background="@android:color/transparent"
-        android:contentDescription="@string/refresh"
-        android:src="@drawable/ic_menu_refresh2"
-        android:visibility="visible" />
-
-    <ImageButton
-        android:id="@+id/imb_ustawienia"
-        android:layout_width="35dp"
-        android:layout_height="35dp"
-        android:layout_above="@+id/tv_tydzien"
-        android:layout_marginRight="5dp"
-        android:layout_toLeftOf="@+id/imb_odswiez"
-        android:background="@drawable/ic_menu_preferences"
-        android:contentDescription="@string/settings"
-        android:src="@drawable/ic_menu_preferences"
-        android:visibility="visible" />
-
+
     <Button
         android:id="@+id/btZmianyPlanu"
         android:layout_width="wrap_content"
@@ -116,7 +92,7 @@
         android:layout_alignTop="@+id/tv_zmiany_tytul"
         android:background="@android:color/transparent"
         android:text="@string/empty" />
-
+
     <LinearLayout
         android:id="@+id/ProgressBarLayout"
         android:layout_width="wrap_content"
@@ -128,14 +104,15 @@
 
         <ProgressBar
             android:id="@+id/progressCircle"
-            android:layout_width="30dp"
+            android:layout_width="29dp"
             android:layout_height="29dp"
-            android:layout_marginBottom="4dp"
-            android:layout_marginLeft="4dp"
-            android:layout_marginTop="2dp"
+            android:layout_marginBottom="3dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="3dp"
             android:indeterminate="true" />
+
     </LinearLayout>
-
+
     <Button
         android:id="@+id/btnPobierzPlan"
         android:layout_width="wrap_content"
@@ -149,5 +126,31 @@
         android:text="@string/empty"
         android:textColor="@color/white1"
         android:textSize="20dp" />
+
+    <ImageButton
+        android:id="@+id/imb_ustawienia"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_above="@+id/tv_tydzien"
+        android:layout_alignRight="@+id/btnPobierzPlan"
+        android:layout_alignTop="@+id/tv_ustawienia"
+        android:layout_marginRight="10dp"
+        android:background="@android:color/transparent"
+        android:contentDescription="@string/settings"
+        android:scaleType="fitCenter"
+        android:src="@drawable/bar_settings"
+        android:visibility="visible" />
+
+    <ImageButton
+        android:id="@+id/imb_odswiez"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_alignTop="@+id/tv_ustawienia"
+        android:layout_toLeftOf="@+id/imb_ustawienia"
+        android:background="@android:color/transparent"
+        android:contentDescription="@string/refresh"
+        android:scaleType="centerInside"
+        android:src="@drawable/bar_refresh"
+        android:visibility="visible" />
 
 </RelativeLayout>

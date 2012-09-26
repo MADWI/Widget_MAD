@@ -67,9 +67,11 @@ public class UpdateWidgetService extends IntentService {
 			Log.i(TAG, "Week parity = " + currentWeekParity);
 
 			Log.i(TAG, "Getting last plan change...");
-			lastMessage = PlanChanges.getLastMessage();
+			lastMessage = PlanChanges.getLastMessage(this);
 			if (lastMessage == null) {
 				lastMessage = new MessagePlanChanges();
+				lastMessage.setBody(getString(R.string.no_messages));
+
 			} else {
 				Log.i(TAG, "last plan change= " + lastMessage.getTitle()
 						+ "success");
@@ -105,13 +107,23 @@ public class UpdateWidgetService extends IntentService {
 					.loadString(ustawienia, Constans.TITLE_PLAN_CHANGES));
 
 		// set plan changes body
-		if (!lastMessage.getBody().equals("")) {
+		// if there is no messages
+		if (lastMessage.getBody().equals(getString(R.string.no_messages))) {
+			remoteViews.setTextViewText(R.id.tv_zmiany_tresc,
+					lastMessage.getBody());
+			// if messages downloaded successfull
+		} else if (!lastMessage.getBody().equals("")) {
 			String bodyLastMessage = lastMessage.getBody().substring(0, 110)
 					+ "...";
 			remoteViews.setTextViewText(R.id.tv_zmiany_tresc, bodyLastMessage);
 
 			SharedPrefUtils.saveString(ustawienia, Constans.BODY_PLAN_CHANGES,
 					bodyLastMessage);
+			if (lastMessage.getBody().equals(getString(R.string.no_messages))) {
+				remoteViews.setTextViewText(R.id.tv_zmiany_tresc,
+						bodyLastMessage);
+			}
+			// if have no Internet connectivity
 		} else {
 			remoteViews.setTextViewText(R.id.tv_zmiany_tresc, SharedPrefUtils
 					.loadString(ustawienia, Constans.BODY_PLAN_CHANGES));

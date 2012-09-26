@@ -119,7 +119,7 @@ public class HttpConnect {
 			return true;
 		} else {
 			Toast.makeText(ctx, ctx.getString(R.string.no_Internet),
-					Toast.LENGTH_LONG).show();
+					Toast.LENGTH_SHORT).show();
 			return false;
 		}
 	}

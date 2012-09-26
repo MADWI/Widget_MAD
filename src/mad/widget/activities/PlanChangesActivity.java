@@ -86,6 +86,11 @@ public class PlanChangesActivity extends Activity {
 			}
 		});
 
+		if (news.size() == 0) {
+			Toast.makeText(this, getString(R.string.no_messages),
+					Toast.LENGTH_LONG).show();
+		}
+
 	}
 
 	@Override
@@ -144,7 +149,7 @@ public class PlanChangesActivity extends Activity {
 			Log.i(TAG, "onProgressUpdate");
 			if (values[0] == false)
 				showToast(res.getString(R.string.plan_changes_Messages), 3000,
-						ctx);	
+						ctx);
 
 		}
 

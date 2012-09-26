@@ -19,5 +19,6 @@
     <string name="refresh">Odswież</string>
     <string name="settings">Ustawienia</string>
     <string name="empty">" "</string>
+    <string name="no_messages">Brak zmian w planie</string>
 
 </resources>
