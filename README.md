@@ -105,6 +105,6 @@ NOWE:
 
 BUGI:
 
-- czasami przy braku po³¹czenia z Internetem zmiany wyrzucają NullPointerException
-- nie wyswietla siê ostatnia zmiana w planie
+- czasami przy braku połaczenia z Internetem zmiany wyrzucają NullPointerException
+- nie wyswietla się ostatnia zmiana w planie
 - zbyt powolne pobieranie daty na starcie 
