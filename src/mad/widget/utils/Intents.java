@@ -1,7 +1,7 @@
 package mad.widget.utils;
 
 import mad.widget.UpdateWidgetService;
-import mad.widget.activities.MyPreferences;
+import mad.widget.activities.MyPrefs;
 import mad.widget.activities.PlanChangesActivity;
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
@@ -25,7 +25,7 @@ public class Intents {
 
 	public static final Intent actionSettings(final Context context,
 			int appWidgetId) {
-		final Intent intent = new Intent(context, MyPreferences.class);
+		final Intent intent = new Intent(context, MyPrefs.class);
 		intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
 		return intent;
 

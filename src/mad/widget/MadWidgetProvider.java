@@ -3,6 +3,8 @@ package mad.widget;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
+import mad.widget.activities.MyPrefs;
+import mad.widget.utils.Constans;
 import mad.widget.utils.Intents;
 import mad.widget.utils.SharedPrefUtils;
 import android.app.PendingIntent;
@@ -45,9 +47,9 @@ public class MadWidgetProvider extends AppWidgetProvider {
 					+ " r.");
 
 			// refresh OnClick
-			Intent clickIntent = Intents.actionRefresh(context);
+			Intent refreshIntent = Intents.actionRefresh(context);
 			PendingIntent pendingIntentRefresh = Intents.createPendingService(
-					context, clickIntent);
+					context, refreshIntent);
 			remoteViews.setOnClickPendingIntent(R.id.imb_odswiez,
 					pendingIntentRefresh);
 
@@ -88,13 +90,24 @@ public class MadWidgetProvider extends AppWidgetProvider {
 	@Override
 	public void onDisabled(Context context) {
 		super.onDisabled(context);
-		SharedPrefUtils.clearPreferences(context);
+		Log.i(TAG, "onDisabled");		
+
 	}
 
 	@Override
 	public void onEnabled(Context context) {
+		Log.i(TAG, "onEnabled");
 		super.onEnabled(context);
-		SharedPrefUtils.clearPreferences(context);
+
+		// show MyPref acvtivity when added widget if there is no group field in
+		// SharedPreferences
+		if (!SharedPrefUtils.getSharedPreferences(context).contains(
+				Constans.GROUP)) {
+
+			Intent intent = new Intent(context, MyPrefs.class);
+			intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+			context.startActivity(intent);
+		}
 	}
 
 	@Override

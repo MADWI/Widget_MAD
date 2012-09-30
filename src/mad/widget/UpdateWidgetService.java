@@ -55,7 +55,7 @@ public class UpdateWidgetService extends IntentService {
 				.getSharedPreferences(this.getApplicationContext());
 
 		// get user group
-		userGroup = ustawienia.getString(Constans.LIST_FIELD_GROUP,
+		userGroup = ustawienia.getString(Constans.GROUP,
 				"brak grupy");
 
 		// get week parity and plan changes

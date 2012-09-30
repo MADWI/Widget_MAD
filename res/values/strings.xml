@@ -11,7 +11,7 @@
     <string name="plan_changes_Messages">Nie można pobrać wiadomości</string>
     <string name="plan_changes_finished">Zakończono !</string>
     <string name="plan_changes_refreshing_title">Odswieżanie wiadomości</string>
-    <string name="plan_changes_refreshing_body">Proszę czekać &#8230;</string>
+    <string name="refreshing_body">Proszę czekać &#8230;</string>
     <string name="plan_for">Plan dla grupy:</string>
     <string name="authors_list">Mobile Application Developers\nWydział Informatyki ZUT \nKoło naukowe\n::::::::::::::::\n\nAutorzy:\n:::::::::::::\nFabisiak Grzegorz\nGliński Dawid\nPeryt Sebastian\nŚwierczek Sebastian\nWojtalewicz Michał\n\nOpiekun koła:\n:::::::::::::::::::::::\ndr inż. Radosław Maciaszczyk</string>
     <string name="no_groups">Brak wybranych grup !</string>
@@ -20,5 +20,23 @@
     <string name="settings">Ustawienia</string>
     <string name="empty">" "</string>
     <string name="no_messages">Brak zmian w planie</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="title_activity_my_prefs">MyPrefs</string>
+    <string name="studies_type">Rodzaj studiów:</string>
+    <string name="studies_degree">Kierunek_studiów:</string>
+    <string name="studies_level">Stopień studiów:</string>
+    <string name="studies_year">Rok studiów:</string>
+    <string name="studies_group">Grupa:</string>
+    <string name="studies_download_grups">Pobierz grupy</string>
+    <string name="ok_button">Dalej</string>
+    <string name="cancel_button">Anuluj</string>
+    <string name="group_settings_title">Widget M.A.D. - Ustawienia grupy </string>
+    <string name="menu_info_title">Informacje</string>
+    <string name="about_title">O nas</string>
+    <string name="logo_description">logo</string>
+    <string name="authors">Mobile Applications Developers</string>
+    <string name="ok_title">OK</string>
+    <string name="cannot_download_groups">Brak grup lub nie można ich pobrać</string>
+    <string name="download_groups_title">Pobieranie grup</string>
 
 </resources>

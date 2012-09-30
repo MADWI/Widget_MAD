@@ -26,26 +26,21 @@ import android.util.Log;
  * @author Sebastian Peryt
  *
  */
-public class WidgetDownload /* extends Activity */{ // nie wiedzialem jak to
-						    // obejsc, zeby wykorzystac
-						    // getResources
+public class PlanDownloader { 
 
     private static final String TAG = "WidgetDownload";
     String urlStrony;
     final static String siteIn = "http://wi.zut.edu.pl/plan/Wydruki/PlanGrup/";
     private Context con = null;
 
-    public WidgetDownload(Context applicationContext) {
-	con = applicationContext;
+    public PlanDownloader(Context applicationContext) {
+    	con = applicationContext;
     }
 
     /**
      * Funkcja na podstawie zadanego ciagu wejsciowego zwraca tablice z numerami
      * grup.
      *
-     * @param String
-     *            adres strony z ktorej ma byc pobrany plan (w wersji finalnej
-     *            bedzie usuniety)
      * @param String
      *            numer grupy np. I1 do wyszukania
      * @return Tablica stringow ze znalezionymi grupami
@@ -202,12 +197,12 @@ public class WidgetDownload /* extends Activity */{ // nie wiedzialem jak to
 	 * zakonczenia test�w, lepiej zostawic :)
 	 */
 	try {
-	    WidgetDownload.this.setFolder();
+	    PlanDownloader.this.setFolder();
 	    Log.d(TAG, "setFolder - ok");
 	} catch (Exception e) {
 	    Log.e(TAG, "setFolder - Blad " + e);
 	}
-	if (WidgetDownload.this.setFolder()) {
+	if (PlanDownloader.this.setFolder()) {
 	    Log.d(TAG, "Folder utworzony");
 	} else {
 	    Log.e(TAG, "B�ad utworzenia folderu");

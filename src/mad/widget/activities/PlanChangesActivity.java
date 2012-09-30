@@ -96,7 +96,7 @@ public class PlanChangesActivity extends Activity {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		MenuInflater inflater = getMenuInflater();
-		inflater.inflate(R.menu.main_menu, menu);
+		inflater.inflate(R.menu.plan_changes_menu, menu);
 		return true;
 	}
 
@@ -158,8 +158,9 @@ public class PlanChangesActivity extends Activity {
 			Log.i(TAG, "onPreExecute");
 			pd = ProgressDialog.show(PlanChangesActivity.this,
 					res.getString(R.string.plan_changes_refreshing_title),
-					res.getString(R.string.plan_changes_refreshing_body), true,
+					res.getString(R.string.refreshing_body), true,
 					true);
+			pd.setCancelable(false);
 			enableExecuteRefresh = false;
 
 		}
