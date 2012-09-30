@@ -116,10 +116,13 @@ public class MyPrefs extends Activity implements OnClickListener {
 
 				downloadGroups.execute(this);
 			} else {
-				// second click , save group and refresh layout
+				// second click , save group/type and refresh layout
 
 				SharedPrefUtils.saveString(preferences, Constans.GROUP,
 						spinGroup.getSelectedItem().toString());
+				
+				SharedPrefUtils.saveString(preferences, Constans.TYPE,
+						spinType.getSelectedItem().toString());
 
 				Intent refresh = Intents.actionRefresh(this);
 				startService(refresh);

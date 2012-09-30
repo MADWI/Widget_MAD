@@ -5,11 +5,9 @@ import android.appwidget.AppWidgetManager;
 public class Constans {
 
 	public static final String PREFERENCES_NAME = "MAD_Widget_Preferences";
-	/**
-	 * Pola w ktorych zapisywabe sa wartosci poszczegolnych list
-	 */
 	
 	public static final String GROUP = "group"; //grupa
+	public static final String TYPE = "type"; //rodzaj studiów
 
 	public static final String WEEK_PARITY = "week_parity";
 	public static final String TITLE_PLAN_CHANGES = "title_plan_changes";
