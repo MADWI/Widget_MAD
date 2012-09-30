@@ -10,6 +10,25 @@
 
 ##CHANGELOG
 
+###Wersja 0.12
+
+NOWE
+
+- dodano nową aktywność ustawien 
+- działa pobieranie grup i zapisywanie do SharedPreferences
+- przy dodawaniu widgetu po raz pierwszy, wyświetla się aktywność ustawień grupy
+- odswieżony Dialog About 
+- po nacisnięciu logo WI w przeglądarce otwiera się strona MAD
+- dodano obsluge sytuacji w której brakuje zmian w planie na stronie WI
+
+BRAK
+
+- pobierania planu dla konkretnej grupy
+
+BUGI
+
+- czasami  przy występuję wyjątek NullPointerException w klasie WeekParityChecker
+
 ###Wersja 0.11
 
 NOWE
@@ -24,9 +43,7 @@ BRAK
 
 BUGI
 
-- nie działa pobiernie grupy ponieważ nie ma planu na stronie WI, klasa MyPreferences zostanie wtedy przebudowana 
-do poprawnego działania.
-- czasami  przy słabym Internecie odswieżenie powoduje wyjątek NullPointerException w klasie WeekParityChecker
+- czasami  przy występuję wyjątek NullPointerException w klasie WeekParityChecker
 
 ###Wersja 0.10
 
