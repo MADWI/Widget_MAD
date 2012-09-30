@@ -51,10 +51,10 @@ public class MyPrefs extends Activity implements OnClickListener {
 	private RelativeLayout pic_group;
 
 	// selected items
-	String rodzaj;
-	String kierunek;
-	int stopien;
-	int rok;
+	private String rodzaj;
+	private String kierunek;
+	private int stopien;
+	private int rok;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -90,7 +90,6 @@ public class MyPrefs extends Activity implements OnClickListener {
 		/*
 		 * initialize plan downloader object
 		 */
-
 		pd = new PlanDownloader(this);
 		downloadGroups = new AsyncTaskDownloadGroups();
 
@@ -150,8 +149,8 @@ public class MyPrefs extends Activity implements OnClickListener {
 
 		switch (item.getItemId()) {
 		case R.id.menu_info:
+			
 			// custom dialog
-
 			final Dialog dialog = new Dialog(this);
 			dialog.setContentView(R.layout.dialog_info_layout);
 			dialog.setTitle(getString(R.string.about_title));
@@ -177,7 +176,7 @@ public class MyPrefs extends Activity implements OnClickListener {
 	private class AsyncTaskDownloadGroups extends
 			AsyncTask<Context, Void, String[]> {
 
-		Context ctx;
+		private Context ctx;
 
 		@Override
 		protected String[] doInBackground(Context... params) {

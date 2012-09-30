@@ -29,8 +29,7 @@ import android.util.Log;
 public class PlanDownloader { 
 
     private static final String TAG = "WidgetDownload";
-    String urlStrony;
-    final static String siteIn = "http://wi.zut.edu.pl/plan/Wydruki/PlanGrup/";
+    private final static String siteIn = "http://wi.zut.edu.pl/plan/Wydruki/PlanGrup/";
     private Context con = null;
 
     public PlanDownloader(Context applicationContext) {

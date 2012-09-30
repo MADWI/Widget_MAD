@@ -29,7 +29,7 @@ public class UpdateWidgetService extends IntentService {
 	private MessagePlanChanges lastMessage = new MessagePlanChanges();
 
 	// fields Strings
-	String userGroup = " ";
+	private String userGroup = " ";
 
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
