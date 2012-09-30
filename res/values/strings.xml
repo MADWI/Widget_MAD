@@ -13,7 +13,7 @@
     <string name="plan_changes_refreshing_title">Odswieżanie wiadomości</string>
     <string name="refreshing_body">Proszę czekać &#8230;</string>
     <string name="plan_for">Plan dla grupy:</string>
-    <string name="authors_list">Mobile Application Developers\nWydział Informatyki ZUT \nKoło naukowe\n::::::::::::::::\n\nAutorzy:\n:::::::::::::\nFabisiak Grzegorz\nGliński Dawid\nPeryt Sebastian\nŚwierczek Sebastian\nWojtalewicz Michał\n\nOpiekun koła:\n:::::::::::::::::::::::\ndr inż. Radosław Maciaszczyk</string>
+    <string name="authors_list">Opiekun koła/Project Manager:\n----------\n dr inż. Radosław Maciaszczyk\n\nProgramiści:\n----------\n- Fabisiak Grzegorz\n- Gliński Dawid\n- Peryt Sebastian\n- Świerczek Sebastian\n- Wojtalewicz Michał</string>
     <string name="no_groups">Brak wybranych grup !</string>
     <string name="ellipsis">&#8230;</string>
     <string name="refresh">Odswież</string>
@@ -38,5 +38,7 @@
     <string name="ok_title">OK</string>
     <string name="cannot_download_groups">Brak grup lub nie można ich pobrać</string>
     <string name="download_groups_title">Pobieranie grup</string>
+    <string name="website">www.mad.zut.edu.pl</string>
+    <string name="email">e-mail: mad@zut.edu.pl</string>
 
 </resources>

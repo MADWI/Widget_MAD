@@ -116,8 +116,8 @@ public class MyPrefs extends Activity implements OnClickListener {
 
 				downloadGroups.execute(this);
 			} else {
-				//second click , save group and refresh layout
-				
+				// second click , save group and refresh layout
+
 				SharedPrefUtils.saveString(preferences, Constans.GROUP,
 						spinGroup.getSelectedItem().toString());
 

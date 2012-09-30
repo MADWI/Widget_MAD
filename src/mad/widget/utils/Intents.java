@@ -45,7 +45,6 @@ public class Intents {
 				PendingIntent.FLAG_UPDATE_CURRENT);
 	}
 
-	// FIXME: Hash codes are a hack here since it wastes pendingintents.
 	public static PendingIntent createPendingService(final Context context,
 			final Intent intent) {
 		return PendingIntent.getService(context, 0, intent,
