@@ -17,7 +17,7 @@ NOWE
 
 BUGI
 
-- czasami  przy występuję wyjątek NullPointerException w klasie WeekParityChecker
+- czasami występuję wyjątek NullPointerException w klasie WeekParityChecker
 
 ###Wersja 0.12
 
@@ -36,7 +36,7 @@ BRAK
 
 BUGI
 
-- czasami  przy występuję wyjątek NullPointerException w klasie WeekParityChecker
+- czasami występuję wyjątek NullPointerException w klasie WeekParityChecker
 
 ###Wersja 0.11
 
@@ -52,7 +52,7 @@ BRAK
 
 BUGI
 
-- czasami  przy występuję wyjątek NullPointerException w klasie WeekParityChecker
+- czasami występuję wyjątek NullPointerException w klasie WeekParityChecker
 
 ###Wersja 0.10
 
@@ -71,7 +71,7 @@ BUGI
 
 - nie działa pobiernie grupy ponieważ nie ma planu na stronie WI, klasa MyPreferences zostanie wtedy przebudowana 
 do poprawnego działania.
-- czasami odswieżenie powoduje wyjątek NullPointerException w klasie WeekParityChecker
+- czasami występuję wyjątek NullPointerException w klasie WeekParityChecker
 
 ###Wersja 0.05
 
