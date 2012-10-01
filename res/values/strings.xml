@@ -40,5 +40,8 @@
     <string name="download_groups_title">Pobieranie grup</string>
     <string name="website">www.mad.zut.edu.pl</string>
     <string name="email">e-mail: mad@zut.edu.pl</string>
+    <string name="empty_group">brak grupy</string>
+    <string name="folder_name">/MAD_Plan_ZUT</string>
+    <string name="cannot_download_plan">Nie moża pobrać planu </string>
 
 </resources>

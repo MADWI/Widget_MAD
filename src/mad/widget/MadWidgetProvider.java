@@ -61,7 +61,7 @@ public class MadWidgetProvider extends AppWidgetProvider {
 					pendingIntentPlan);
 
 			// settings OnClick
-			Intent settingsIntent = Intents.actionSettings(context, widgetId);
+			Intent settingsIntent = Intents.actionSettings(context);
 			PendingIntent pendingSettingsIntent = Intents
 					.createPendingActivity(context, settingsIntent);
 			remoteViews.setOnClickPendingIntent(R.id.imb_ustawienia,
@@ -69,7 +69,7 @@ public class MadWidgetProvider extends AppWidgetProvider {
 
 			// open webapge OnClick
 
-			Intent webpageIntent = Intents.actionWebpage(context, widgetId);
+			Intent webpageIntent = Intents.actionWebpage(context);
 			PendingIntent webpageSettingsIntent = Intents
 					.createPendingActivity(context, webpageIntent);
 			remoteViews.setOnClickPendingIntent(R.id.btnWeb,

@@ -2,11 +2,14 @@ package mad.widget;
 
 import mad.widget.connections.GetPlanChanges;
 import mad.widget.connections.HttpConnect;
+import mad.widget.connections.PlanDownloader;
 import mad.widget.connections.WeekParityChecker;
 import mad.widget.models.MessagePlanChanges;
 import mad.widget.utils.Constans;
+import mad.widget.utils.Intents;
 import mad.widget.utils.SharedPrefUtils;
 import android.app.IntentService;
+import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.content.ComponentName;
 import android.content.Intent;
@@ -15,12 +18,9 @@ import android.os.IBinder;
 import android.util.Log;
 import android.view.View;
 import android.widget.RemoteViews;
+import android.widget.Toast;
 
 public class UpdateWidgetService extends IntentService {
-	public UpdateWidgetService() {
-		super("UpdateWidgetService");
-
-	}
 
 	private static final String TAG = "UpdateWidgetService";
 
@@ -30,6 +30,12 @@ public class UpdateWidgetService extends IntentService {
 
 	// fields Strings
 	private String userGroup = " ";
+	private String userStudiesType = " ";
+
+	public UpdateWidgetService() {
+		super("UpdateWidgetService");
+
+	}
 
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
@@ -56,10 +62,15 @@ public class UpdateWidgetService extends IntentService {
 
 		// get user group
 		userGroup = ustawienia.getString(Constans.GROUP,
-				"brak grupy");
+				getString(R.string.empty_group));
+
+		// get user studies type
+		userStudiesType = ustawienia.getString(Constans.TYPE, "");
+
+		Log.d(TAG, "Grupa " + userGroup);
+		Log.d(TAG, "Typ " + userStudiesType);
 
 		// get week parity and plan changes
-
 		String currentWeekParity = "";
 		if (HttpConnect.isOnline(this.getApplicationContext())) {
 			Log.i(TAG, "Getting week parity...");
@@ -82,6 +93,34 @@ public class UpdateWidgetService extends IntentService {
 		// remote view to update widget layout
 		RemoteViews remoteViews = new RemoteViews(this.getApplicationContext()
 				.getPackageName(), R.layout.widget_layout);
+
+		// download plan if no exist and setonclick
+
+		if (PlanDownloader.planExists(userGroup)) {
+			Log.d(TAG, "Plan istnieje na dysku");
+		} else {
+			Log.d(TAG, "Plan nie isteniejê, pobieram...");
+			if (PlanDownloader.downloadPlan(userStudiesType, userGroup)) {
+
+				// plan show onClick
+				Intent showPlanIntent = Intents.actionShowPlan(
+						this.getApplicationContext(), userGroup);
+
+				PendingIntent pendingIntentPlan = Intents
+						.createPendingActivity(this.getApplicationContext(),
+								showPlanIntent);
+				remoteViews.setOnClickPendingIntent(R.id.btnPobierzPlan,
+						pendingIntentPlan);
+
+				Log.d(TAG, "Pobrano plan");
+			} else {
+				Toast.makeText(this.getApplicationContext(),
+						this.getString(R.string.cannot_download_plan),
+						Toast.LENGTH_SHORT).show();
+				Log.d(TAG, "Niepobrano planu ");
+			}
+
+		}
 
 		// set user group
 		remoteViews.setTextViewText(R.id.btnPobierzPlan, userGroup);

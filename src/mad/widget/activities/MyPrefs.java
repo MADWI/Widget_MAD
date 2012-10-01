@@ -34,7 +34,6 @@ public class MyPrefs extends Activity implements OnClickListener {
 	private SharedPreferences preferences;
 	private Resources res;
 
-	private PlanDownloader pd;
 	private AsyncTaskDownloadGroups downloadGroups;
 
 	// view elements
@@ -88,9 +87,8 @@ public class MyPrefs extends Activity implements OnClickListener {
 		res = getApplicationContext().getResources();
 
 		/*
-		 * initialize plan downloader object
+		 * initialize asynctask object
 		 */
-		pd = new PlanDownloader(this);
 		downloadGroups = new AsyncTaskDownloadGroups();
 
 	}
@@ -119,9 +117,9 @@ public class MyPrefs extends Activity implements OnClickListener {
 
 				SharedPrefUtils.saveString(preferences, Constans.GROUP,
 						spinGroup.getSelectedItem().toString());
-				
-				SharedPrefUtils.saveString(preferences, Constans.TYPE,
-						spinType.getSelectedItem().toString());
+
+				SharedPrefUtils.saveString(preferences, Constans.TYPE, spinType
+						.getSelectedItem().toString());
 
 				Intent refresh = Intents.actionRefresh(this);
 				startService(refresh);
@@ -149,7 +147,7 @@ public class MyPrefs extends Activity implements OnClickListener {
 
 		switch (item.getItemId()) {
 		case R.id.menu_info:
-			
+
 			// custom dialog
 			final Dialog dialog = new Dialog(this);
 			dialog.setContentView(R.layout.dialog_info_layout);
@@ -185,7 +183,8 @@ public class MyPrefs extends Activity implements OnClickListener {
 
 			String[] tempGroups = null;
 			if (HttpConnect.isOnline(getApplicationContext()) == true) {
-				tempGroups = pd.getGroups(rodzaj, kierunek, stopien, rok);
+				tempGroups = PlanDownloader.getGroups(rodzaj, kierunek,
+						stopien, rok);
 			}
 			return tempGroups;
 		}

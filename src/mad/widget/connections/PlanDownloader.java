@@ -1,313 +1,267 @@
 package mad.widget.connections;
 
-import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URL;
-import java.net.URLConnection;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.apache.http.util.ByteArrayBuffer;
-
-import android.content.ActivityNotFoundException;
-import android.content.Context;
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Environment;
 import android.util.Log;
 
 /**
  * Klasa odpowiedzialan za pobieranie listy grup ze strony oraz pobieranie planu
  * zajec dla kazdej grupy
- *
- * @author Sebastian Peryt
- *
+ * 
+ * @author Sebastian Peryt, SŒ
+ * 
  */
-public class PlanDownloader { 
+public class PlanDownloader {
 
-    private static final String TAG = "WidgetDownload";
-    private final static String siteIn = "http://wi.zut.edu.pl/plan/Wydruki/PlanGrup/";
-    private Context con = null;
-
-    public PlanDownloader(Context applicationContext) {
-    	con = applicationContext;
-    }
-
-    /**
-     * Funkcja na podstawie zadanego ciagu wejsciowego zwraca tablice z numerami
-     * grup.
-     *
-     * @param String
-     *            numer grupy np. I1 do wyszukania
-     * @return Tablica stringow ze znalezionymi grupami
-     * @author Sebastian Peryt
-     */
-    public String[] getGroups(String rodzajStudiow, String kierunek,
-	    int stopien, int rok) {
-	Log.d(TAG, "Stopien: " + Integer.valueOf(stopien));
-	Log.d(TAG, "Rok: " + Integer.valueOf(rok));
-
-	HttpConnect con = new HttpConnect(10000, siteIn + rodzajStudiow);
-	String site = null;
-
-	// String[] outputTab = new String[]; //- Pamiec jest chyba dynamicznie
-	// przydzielana to co jest nie tak?
-	try {
-	    site = con.getPage();
-	    Log.d(TAG, "Polaczono ze strona");
-	} catch (Exception e) {
-	    Log.e(TAG, e.toString());
-	}
-
-	if ("" == site) {
-	    Log.e(TAG, "Error con.getStrona()");
-	}
-
-	// wybor kierunku i roku
-	Pattern p = null;
-	p = this.getRodzaj(rodzajStudiow, kierunek, stopien, rok);
-
-	// sP = this.getRodzaj(rodzajStudiow, kierunek, stopien, rok);
+	private static final String TAG = "WidgetDownload";
+	private final static String siteIn = "http://wi.zut.edu.pl/plan/Wydruki/PlanGrup/";
 
 	/**
-	 * W momencie gdy zle zostana podane dane: rok; kierunek; rodzaj;
+	 * Funkcja na podstawie zadanego ciagu wejsciowego zwraca tablice z numerami
+	 * grup.
+	 * 
+	 * @param String
+	 *            numer grupy np. I1 do wyszukania
+	 * @return Tablica stringow ze znalezionymi grupami
+	 * @author Sebastian Peryt
 	 */
-	if (null == p) {
-	    String[] outputTab = new String[1];
-	    outputTab[0] = "Bï¿½ednie podane dane";
-	    Log.d(TAG, outputTab[0]);
-	    return outputTab;
-	}
+	public static String[] getGroups(String rodzajStudiow, String kierunek,
+			int stopien, int rok) {
+		Log.d(TAG, "Stopien: " + Integer.valueOf(stopien));
+		Log.d(TAG, "Rok: " + Integer.valueOf(rok));
 
-	// p = Pattern.compile(sP);
+		HttpConnect con = new HttpConnect(10000, siteIn + rodzajStudiow);
+		String site = null;
 
-	Matcher m = p.matcher(site);
-	int i = 0;
-	while (m.find()) {
-	    i++;
-	}
-	m.reset();
-	String[] outputTab = new String[i];
-	i = 0;
-	while (m.find()) {
-	    outputTab[i] = m.group().subSequence(1, m.group().indexOf(".pdf"))
-		    .toString();
-	    Log.d(TAG, outputTab[i]);
-	    i++;
-	}
-	return outputTab;
-    }
+		// String[] outputTab = new String[]; //- Pamiec jest chyba dynamicznie
+		// przydzielana to co jest nie tak?
+		try {
+			site = con.getPage();
+			Log.d(TAG, "Polaczono ze strona");
+		} catch (Exception e) {
+			Log.e(TAG, e.toString());
+		}
 
-    /**
-     *
-     * @param rodzaj
-     *            String Rodzaj studiï¿½w z duï¿½ej litery
-     * @param kierunek
-     *            String Kierunek studiï¿½w z duï¿½ej litery
-     * @param stopien
-     *            int Stopien studï¿½w
-     * @param rok
-     *            int Rok studiow
-     * @return pattern jeï¿½li dane istnieje, null jesli nie.
-     * @author Sebastian Peryt
-     */
-    private Pattern getRodzaj(String rodzaj, String kierunek, int stopien,
-	    int rok) {
-	Pattern p = null;
-	if (rodzaj.equals("Stacjonarne")) {
-	    if (kierunek.equals("Bioinformatyka")) {
-		p = Pattern.compile(">BI" + stopien + "-" + rok
-			+ "[0-9]{1,2}\\.pdf<");
-	    } else if (kierunek.equals("Informatyka")) {
-		p = Pattern.compile(">I" + stopien + "-" + rok
-			+ "[0-9]{1,2}\\.pdf<");
-	    } else if (kierunek.equals("ZIP")) {
-		p = Pattern.compile(">ZIP" + stopien + "-" + rok
-			+ "[0-9]{1,2}\\.pdf<");
-	    }
-	    return p;
-	} else if (rodzaj.equals("Niestacjonarne")) {
-	    if (kierunek.equals("Bioinformatyka")) {
-		p = null;
-	    } else if (kierunek.equals("Informatyka")) {
-		p = Pattern.compile(">I" + stopien + "n-" + rok
-			+ "[0-9]{1,2}\\.pdf<");
-	    } else if (kierunek.equals("ZIP")) {
-		p = Pattern.compile(">ZIP" + stopien + "n-" + rok
-			+ "[0-9]{1,2}\\.pdf<");
-		/*
-		 * if(1==rok) { p =
-		 * Pattern.compile(">ZIP"+stopien+"n-"+rok+"[0-9]{1,2}\\.pdf<");
-		 * } else { p = null; }
-		 */
-	    }
-	    return p;
-	}
+		if ("" == site) {
+			Log.e(TAG, "Error con.getStrona()");
+		}
 
-	return null;
-    }
+		// wybor kierunku i roku
+		Pattern p = null;
+		p = getRodzaj(rodzajStudiow, kierunek, stopien, rok);
 
-    /**
-     * Funkcja sprawdza czy folder do przechowywania planu istnieje i ew. go
-     * tworzy
-     *
-     * @return true jesli folder istniej lub utworzono, false jesli wystapil
-     *         blad
-     * @author Sebastian Peryt
-     */
-    private boolean setFolder() {
-	String newFolder = "/MAD_Plan_ZUT"; // nie wiem czemu nie dziala
-					    // this.getString(R.string.folder_name);
-	String extStorageDirectory = Environment.getExternalStorageDirectory()
-		.toString();
-	File myNewFolder = new File(extStorageDirectory + newFolder);
-	if (!myNewFolder.exists())// folder nie istnieje
-	{
-	    if (myNewFolder.mkdir()) {
-		return true;
-	    } else {
-		return false;
-	    }
-	}
-	return true;// folder istnieje
-    }
+		// sP = this.getRodzaj(rodzajStudiow, kierunek, stopien, rok);
 
-    /**
-     * <b>TODO</b>Sprawdzic co sie dzieje jesli nie ma takiego planu na
-     * serwerze, lub nie ma internetu
-     *
-     * @param String
-     *            forma studiow - Stacjonarne, Niestacjonarne (Musi byc z
-     *            wielkiej litery)
-     * @param String
-     *            Pelny numer grupy dla korego ma zostac pobrany plan np. I1-22
-     * @return true jesli pomyslnie pobrano plan
-     * @author Sebastian Peryt
-     */
-    private boolean downloadPlan(String forma, String grupa) {
-	String extStorageDirectory = Environment.getExternalStorageDirectory()
-		.toString();
-
-	/**
-	 * Najprawdopodobniej jest to zbï¿½dny fragment kodu, ale do momentu
-	 * zakonczenia testï¿½w, lepiej zostawic :)
-	 */
-	try {
-	    PlanDownloader.this.setFolder();
-	    Log.d(TAG, "setFolder - ok");
-	} catch (Exception e) {
-	    Log.e(TAG, "setFolder - Blad " + e);
-	}
-	if (PlanDownloader.this.setFolder()) {
-	    Log.d(TAG, "Folder utworzony");
-	} else {
-	    Log.e(TAG, "Bï¿½ad utworzenia folderu");
-	}
-
-	try {
-	    URL url = new URL(siteIn + forma + "/" + grupa + ".pdf");
-	    File file = new File(extStorageDirectory + "/MAD_Plan_ZUT/" + grupa
-		    + ".pdf");
-
-	    // long startTime = System.currentTimeMillis();// Poczatek
-	    // pobierania
-	    /* Open a connection to that URL. */
-	    URLConnection ucon = url.openConnection();
-
-	    /*
-	     * Define InputStreams to read from the URLConnection.
-	     */
-	    InputStream is = ucon.getInputStream();
-	    BufferedInputStream bis = new BufferedInputStream(is);
-
-	    /*
-	     * Read bytes to the Buffer until there is nothing more to read(-1).
-	     */
-	    ByteArrayBuffer baf = new ByteArrayBuffer(50);
-	    int current = 0;
-	    while ((current = bis.read()) != -1) {
-		baf.append((byte) current);
-	    }
-
-	    /* Convert the Bytes read to a String. */
-	    FileOutputStream fos = new FileOutputStream(file);
-	    fos.write(baf.toByteArray());
-	    fos.close();
-	    Log.d(TAG, "downloaded");// koniec pobierania
-	    return true;
-
-	} catch (IOException e) {
-	    Log.d(TAG, "Last Error: " + e);
-	    return false;
-	}
-    }
-
-    /**
-     * <b>TODO</b> Funkcja wyrzuca NullPointerException, moï¿½liwe, ï¿½e problem
-     * jest gdzies przy wywolaniu startActivity. <br>
-     * <br>
-     * Funkcja wywoï¿½uje intent, ktï¿½ry otwiera plan w pliku pdf
-     *
-     * @param grupa
-     *            String z numerem grupy
-     * @author Sebastian Peryt
-     */
-    private void planExists(String grupa) {
-	String extStorageDirectory = Environment.getExternalStorageDirectory()
-		.toString();
-	File file = new File(extStorageDirectory + "/MAD_Plan_ZUT/" + grupa
-		+ ".pdf");
-	if (file.exists()) {
-	    Uri path = Uri.fromFile(file);
-	    Intent intent = new Intent(con, getClass());
-	    // Intent intent = new Intent(Intent.ACTION_VIEW);
-	    intent.setAction(Intent.ACTION_VIEW);
-	    intent.setDataAndType(path, "application/pdf");
-	    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-
-	    try {
-		con.startActivity(intent);
 		/**
-		 * W tym miejscu wyrzuca NullPointerException
+		 * W momencie gdy zle zostana podane dane: rok; kierunek; rodzaj;
 		 */
-	    } catch (ActivityNotFoundException e) {
-		/*
-		 * Toast.makeText(con, "No Application Available to View PDF",
-		 * Toast.LENGTH_SHORT).show();
-		 */
-		Log.d(TAG, "Nie ma czym otworzyc PDF");
-	    } catch (Exception e) {
-		Log.d(TAG, "nie wiem co jest grane " + e.toString());
-	    }
-	}
-    }
+		if (null == p) {
+			String[] outputTab = new String[1];
+			outputTab[0] = "Bï¿½ednie podane dane";
+			Log.d(TAG, outputTab[0]);
+			return outputTab;
+		}
 
-    /**
-     * Funkcja sprawdza, czy plan dla podanej grupy jest pobrany
-     *
-     * @param grupa
-     * @return true jeï¿½li wszystko jest ok, false w przeciwnym wypadku
-     * @author Sebastian Peryt
-     */
-    public boolean openPlan(String forma, String grupa) {
-	String extStorageDirectory = Environment.getExternalStorageDirectory()
-		.toString();
-	File file = new File(extStorageDirectory + "/MAD_Plan_ZUT/" + grupa
-		+ ".pdf");
-	if (file.exists()) {
-	    planExists(grupa);
-	    return true;
-	} else {
-	    if (downloadPlan(forma, grupa)) {
-		planExists(grupa);
-		return true;
-	    } else {
-		Log.e(TAG, "Blad pobrania planu");
-		return false;
-	    }
+		// p = Pattern.compile(sP);
+
+		Matcher m = p.matcher(site);
+		int i = 0;
+		while (m.find()) {
+			i++;
+		}
+		m.reset();
+		String[] outputTab = new String[i];
+		i = 0;
+		while (m.find()) {
+			outputTab[i] = m.group().subSequence(1, m.group().indexOf(".pdf"))
+					.toString();
+			Log.d(TAG, outputTab[i]);
+			i++;
+		}
+		return outputTab;
 	}
-    }
+
+	/**
+	 * 
+	 * @param rodzaj
+	 *            String Rodzaj studiï¿½w z duï¿½ej litery
+	 * @param kierunek
+	 *            String Kierunek studiï¿½w z duï¿½ej litery
+	 * @param stopien
+	 *            int Stopien studï¿½w
+	 * @param rok
+	 *            int Rok studiow
+	 * @return pattern jeï¿½li dane istnieje, null jesli nie.
+	 * @author Sebastian Peryt
+	 */
+	private static Pattern getRodzaj(String rodzaj, String kierunek,
+			int stopien, int rok) {
+		Pattern p = null;
+		if (rodzaj.equals("Stacjonarne")) {
+			if (kierunek.equals("Bioinformatyka")) {
+				p = Pattern.compile(">BI" + stopien + "-" + rok
+						+ "[0-9]{1,2}\\.pdf<");
+			} else if (kierunek.equals("Informatyka")) {
+				p = Pattern.compile(">I" + stopien + "-" + rok
+						+ "[0-9]{1,2}\\.pdf<");
+			} else if (kierunek.equals("ZIP")) {
+				p = Pattern.compile(">ZIP" + stopien + "-" + rok
+						+ "[0-9]{1,2}\\.pdf<");
+			}
+			return p;
+		} else if (rodzaj.equals("Niestacjonarne")) {
+			if (kierunek.equals("Bioinformatyka")) {
+				p = null;
+			} else if (kierunek.equals("Informatyka")) {
+				p = Pattern.compile(">I" + stopien + "n-" + rok
+						+ "[0-9]{1,2}\\.pdf<");
+			} else if (kierunek.equals("ZIP")) {
+				p = Pattern.compile(">ZIP" + stopien + "n-" + rok
+						+ "[0-9]{1,2}\\.pdf<");
+				/*
+				 * if(1==rok) { p =
+				 * Pattern.compile(">ZIP"+stopien+"n-"+rok+"[0-9]{1,2}\\.pdf<");
+				 * } else { p = null; }
+				 */
+			}
+			return p;
+		}
+
+		return null;
+	}
+
+	// /**
+	// * Funkcja sprawdza czy folder do przechowywania planu istnieje i ew. go
+	// * tworzy
+	// *
+	// * @return true jesli folder istniej lub utworzono, false jesli wystapil
+	// * blad
+	// * @author Sebastian Peryt
+	// */
+	private static boolean setFolder() {
+		String newFolder = "/MAD_Plan_ZUT";
+		String extStorageDirectory = Environment.getExternalStorageDirectory()
+				.toString();
+		File myNewFolder = new File(extStorageDirectory + newFolder);
+		if (!myNewFolder.exists())// folder nie istnieje
+		{
+			if (myNewFolder.mkdir()) {
+				return true;
+			} else {
+				return false;
+			}
+		}
+		return true;// folder istnieje
+	}
+
+	/**
+	 * Funkcja do pobierania planu.
+	 * 
+	 * @param String
+	 *            forma studiow - Stacjonarne, Niestacjonarne (Musi byc z
+	 *            wielkiej litery)
+	 * @param String
+	 *            Pelny numer grupy dla korego ma zostac pobrany plan np. I1-22
+	 * @return true jesli pomyslnie pobrano plan
+	 * @author Sebastian Peryt
+	 */
+	public static boolean downloadPlan(String forma, String grupa) {
+
+		if (setFolder()) {
+
+			try {
+				URL url = new URL(siteIn + forma + "/" + grupa + ".pdf");
+
+				// create the new connection
+				HttpURLConnection urlConnection = (HttpURLConnection) url
+						.openConnection();
+
+				// set up some things on the connection
+				urlConnection.setRequestMethod("GET");
+				urlConnection.setDoOutput(true);
+
+				// and connect!
+				urlConnection.connect();
+
+				// set the path where we want to save the file
+				// in this case, going to save it on the root directory of the
+				// sd card.
+				File SDCardRoot = Environment.getExternalStorageDirectory();
+				// create a new file, specifying the path, and the filename
+				// which we want to save the file as.
+
+				File file = new File(SDCardRoot + "/MAD_Plan_ZUT/" + grupa
+						+ ".pdf");
+
+				// this will be used to write the downloaded data into the file
+				// we
+				// created
+				FileOutputStream fileOutput = new FileOutputStream(file);
+
+				// this will be used in reading the data from the internet
+				InputStream inputStream = urlConnection.getInputStream();
+
+				// create a buffer...
+				byte[] buffer = new byte[1024];
+				int bufferLength = 0; // used to store a temporary size of the
+										// buffer
+
+				// now, read through the input buffer and write the contents to
+				// the
+				// file
+				while ((bufferLength = inputStream.read(buffer)) > 0) {
+					// add the data in the buffer to the file in the file output
+					// stream (the file on the sd card
+					fileOutput.write(buffer, 0, bufferLength);
+
+				}
+				// close the output stream when done
+				fileOutput.close();
+
+				// catch some possible errors...
+			} catch (MalformedURLException e) {
+				e.printStackTrace();
+				return false;
+
+			} catch (IOException e) {
+				e.printStackTrace();
+				return false;
+			}
+			return true;
+		} else {
+			Log.e(TAG, "Nie mozna utworzyc folderu");
+			return false;
+		}
+
+	}
+
+	/**
+	 * 
+	 * Funkcja sprawdza czy plan ju¿ istenieje na dysku
+	 * 
+	 * @param grupa
+	 *            String z numerem grupy
+	 * @author Sebastian Peryt
+	 */
+	public static boolean planExists(String grupa) {
+		String extStorageDirectory = Environment.getExternalStorageDirectory()
+				.toString();
+		File file = new File(extStorageDirectory + "/MAD_Plan_ZUT/" + grupa
+				+ ".pdf");
+		if (file.exists()) {
+			return true;
+		} else
+			return false;
+	}
+
 }

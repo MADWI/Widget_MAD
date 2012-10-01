@@ -9,6 +9,15 @@
 
 
 ##CHANGELOG
+###Wersja 0.20
+
+NOWE
+
+- pobieranie planu oraz wyświetlanie go po kliknięciu na nazwę grupy
+
+BUGI
+
+- czasami  przy występuję wyjątek NullPointerException w klasie WeekParityChecker
 
 ###Wersja 0.12
 

@@ -42,9 +42,7 @@ public class PlanChangesActivity extends Activity {
 	private ListView lvPlanChanges;
 	private ProgressDialog pd;
 	private boolean enableExecuteRefresh = true;
-
-	// private boolean firstRun = true;
-
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);

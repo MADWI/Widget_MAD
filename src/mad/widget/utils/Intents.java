@@ -1,5 +1,7 @@
 package mad.widget.utils;
 
+import java.io.File;
+
 import mad.widget.UpdateWidgetService;
 import mad.widget.activities.MyPrefs;
 import mad.widget.activities.PlanChangesActivity;
@@ -8,6 +10,7 @@ import android.appwidget.AppWidgetManager;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Environment;
 
 public class Intents {
 	public static final Intent actionRefresh(final Context context) {
@@ -23,19 +26,33 @@ public class Intents {
 
 	}
 
-	public static final Intent actionSettings(final Context context,
-			int appWidgetId) {
+	public static final Intent actionSettings(final Context context) {
 		final Intent intent = new Intent(context, MyPrefs.class);
-		intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
 		return intent;
 
 	}
 
-	public static final Intent actionWebpage(final Context context,
-			int appWidgetId) {
+	public static final Intent actionWebpage(final Context context) {
 		final Uri uri = Uri.parse("http://www.mad.zut.edu.pl");
 		Intent intent = new Intent(Intent.ACTION_VIEW, uri);
 		return intent;
+
+	}
+
+	public static final Intent actionShowPlan(final Context context,
+			String grupa) {
+		File SDCardRoot = Environment.getExternalStorageDirectory();
+		File file = new File(SDCardRoot + "/MAD_Plan_ZUT/" + grupa + ".pdf");
+
+		if (file.exists()) {
+			Uri path = Uri.fromFile(file);
+			Intent intent = new Intent(Intent.ACTION_VIEW);
+			intent.setDataAndType(path, "application/pdf");
+			intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+
+			return intent;
+		} else
+			return null;
 
 	}
 
