@@ -42,7 +42,8 @@ public class Intents {
 	public static final Intent actionShowPlan(final Context context,
 			String grupa) {
 		File SDCardRoot = Environment.getExternalStorageDirectory();
-		File file = new File(SDCardRoot + "/MAD_Plan_ZUT/" + grupa + ".pdf");
+		File file = new File(SDCardRoot + Constans.PLAN_FOLDER + "/" + grupa
+				+ ".pdf");
 
 		if (file.exists()) {
 			Uri path = Uri.fromFile(file);

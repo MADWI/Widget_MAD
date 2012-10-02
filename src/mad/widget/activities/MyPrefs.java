@@ -86,10 +86,7 @@ public class MyPrefs extends Activity implements OnClickListener {
 		 */
 		res = getApplicationContext().getResources();
 
-		/*
-		 * initialize asynctask object
-		 */
-		downloadGroups = new AsyncTaskDownloadGroups();
+	
 
 	}
 
@@ -110,7 +107,8 @@ public class MyPrefs extends Activity implements OnClickListener {
 						rodzaj + " " + kierunek + " "
 								+ Integer.toString(stopien) + " "
 								+ Integer.toString(rok));
-
+				
+				downloadGroups = new AsyncTaskDownloadGroups();
 				downloadGroups.execute(this);
 			} else {
 				// second click , save group/type and refresh layout
@@ -203,6 +201,7 @@ public class MyPrefs extends Activity implements OnClickListener {
 		protected void onPostExecute(String[] result) {
 			Log.i(TAG, "onPostExecute");
 			progresDialog.dismiss();
+			
 			if (result != null && result.length > 0) {
 				pick_studies.setVisibility(View.INVISIBLE);
 				pic_group.setVisibility(View.VISIBLE);
@@ -215,6 +214,7 @@ public class MyPrefs extends Activity implements OnClickListener {
 
 				spinGroup.setAdapter(spinnerArrayAdapter);
 
+			
 			} else
 				Toast.makeText(ctx,
 						ctx.getString(R.string.cannot_download_groups),

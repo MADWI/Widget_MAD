@@ -11,6 +11,8 @@ import java.net.URL;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import mad.widget.utils.Constans;
+
 import android.os.Environment;
 import android.util.Log;
 
@@ -66,10 +68,8 @@ public class PlanDownloader {
 		 * W momencie gdy zle zostana podane dane: rok; kierunek; rodzaj;
 		 */
 		if (null == p) {
-			String[] outputTab = new String[1];
-			outputTab[0] = "Bï¿½ednie podane dane";
-			Log.d(TAG, outputTab[0]);
-			return outputTab;
+			Log.d(TAG, "b³edne dane, zwracam nulla...");
+			return null;
 		}
 
 		// p = Pattern.compile(sP);
@@ -149,7 +149,7 @@ public class PlanDownloader {
 	// * @author Sebastian Peryt
 	// */
 	private static boolean setFolder() {
-		String newFolder = "/MAD_Plan_ZUT";
+		String newFolder = Constans.PLAN_FOLDER;
 		String extStorageDirectory = Environment.getExternalStorageDirectory()
 				.toString();
 		File myNewFolder = new File(extStorageDirectory + newFolder);
@@ -200,8 +200,8 @@ public class PlanDownloader {
 				// create a new file, specifying the path, and the filename
 				// which we want to save the file as.
 
-				File file = new File(SDCardRoot + "/MAD_Plan_ZUT/" + grupa
-						+ ".pdf");
+				File file = new File(SDCardRoot + Constans.PLAN_FOLDER + "/"
+						+ grupa + ".pdf");
 
 				// this will be used to write the downloaded data into the file
 				// we
@@ -256,8 +256,8 @@ public class PlanDownloader {
 	public static boolean planExists(String grupa) {
 		String extStorageDirectory = Environment.getExternalStorageDirectory()
 				.toString();
-		File file = new File(extStorageDirectory + "/MAD_Plan_ZUT/" + grupa
-				+ ".pdf");
+		File file = new File(extStorageDirectory + Constans.PLAN_FOLDER + "/"
+				+ grupa + ".pdf");
 		if (file.exists()) {
 			return true;
 		} else
