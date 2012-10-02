@@ -98,6 +98,16 @@ public class UpdateWidgetService extends IntentService {
 
 		if (PlanDownloader.planExists(userGroup)) {
 			Log.d(TAG, "Plan istnieje na dysku");
+
+			// plan show onClick
+			Intent showPlanIntent = Intents.actionShowPlan(
+					this.getApplicationContext(), userGroup);
+
+			PendingIntent pendingIntentPlan = Intents.createPendingActivity(
+					this.getApplicationContext(), showPlanIntent);
+			remoteViews.setOnClickPendingIntent(R.id.btnPobierzPlan,
+					pendingIntentPlan);
+
 		} else {
 			Log.d(TAG, "Plan nie isteniejê, pobieram...");
 			if (PlanDownloader.downloadPlan(userStudiesType, userGroup)) {
