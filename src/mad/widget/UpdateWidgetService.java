@@ -73,19 +73,25 @@ public class UpdateWidgetService extends IntentService {
 		// get week parity and plan changes
 		String currentWeekParity = "";
 		if (HttpConnect.isOnline(this.getApplicationContext())) {
-			Log.i(TAG, "Getting week parity...");
-			currentWeekParity = checker.getParity();
-			Log.i(TAG, "Week parity = " + currentWeekParity);
 
-			Log.i(TAG, "Getting last plan change...");
-			lastMessage = PlanChanges.getLastMessage();
-			if (lastMessage == null) {
-				lastMessage = new MessagePlanChanges();
-				lastMessage.setBody(getString(R.string.no_messages));
+			try {
+				Log.i(TAG, "Getting week parity...");
 
-			} else {
-				Log.i(TAG, "last plan change= " + lastMessage.getTitle()
-						+ "success");
+				currentWeekParity = checker.getParity();
+				Log.i(TAG, "Week parity = " + currentWeekParity);
+
+				Log.i(TAG, "Getting last plan change...");
+				lastMessage = PlanChanges.getLastMessage();
+				if (lastMessage == null) {
+					lastMessage = new MessagePlanChanges();
+					lastMessage.setBody(getString(R.string.no_messages));
+
+				} else {
+					Log.i(TAG, "last plan change= " + lastMessage.getTitle()
+							+ "success");
+				}
+			} catch (NullPointerException e) {
+
 			}
 
 		}
@@ -96,7 +102,8 @@ public class UpdateWidgetService extends IntentService {
 
 		// download plan if no exist and setonclick
 
-		if (PlanDownloader.planExists(userGroup)) {
+		if (PlanDownloader.planExistsAndNew(this.getApplicationContext(),
+				userStudiesType, userGroup)) {
 			Log.d(TAG, "Plan istnieje na dysku");
 
 			// plan show onClick
@@ -110,24 +117,29 @@ public class UpdateWidgetService extends IntentService {
 
 		} else {
 			Log.d(TAG, "Plan nie isteniejê, pobieram...");
-			if (PlanDownloader.downloadPlan(userStudiesType, userGroup)) {
+			if (HttpConnect.isOnline(this.getApplicationContext())) {
 
-				// plan show onClick
-				Intent showPlanIntent = Intents.actionShowPlan(
-						this.getApplicationContext(), userGroup);
+				if (PlanDownloader.downloadPlan(this.getApplicationContext(),
+						userStudiesType, userGroup)) {
 
-				PendingIntent pendingIntentPlan = Intents
-						.createPendingActivity(this.getApplicationContext(),
-								showPlanIntent);
-				remoteViews.setOnClickPendingIntent(R.id.btnPobierzPlan,
-						pendingIntentPlan);
+					// plan show onClick
+					Intent showPlanIntent = Intents.actionShowPlan(
+							this.getApplicationContext(), userGroup);
 
-				Log.d(TAG, "Pobrano plan");
-			} else {
-				Toast.makeText(this.getApplicationContext(),
-						this.getString(R.string.cannot_download_plan),
-						Toast.LENGTH_SHORT).show();
-				Log.d(TAG, "Niepobrano planu ");
+					PendingIntent pendingIntentPlan = Intents
+							.createPendingActivity(
+									this.getApplicationContext(),
+									showPlanIntent);
+					remoteViews.setOnClickPendingIntent(R.id.btnPobierzPlan,
+							pendingIntentPlan);
+
+					Log.d(TAG, "Pobrano plan");
+				} else {
+					Toast.makeText(this.getApplicationContext(),
+							this.getString(R.string.cannot_download_plan),
+							Toast.LENGTH_SHORT).show();
+					Log.d(TAG, "Niepobrano planu ");
+				}
 			}
 
 		}

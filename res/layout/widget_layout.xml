@@ -127,15 +127,14 @@
         android:text="@string/empty"
         android:textColor="@color/white1"
         android:textSize="25dp" />
-
+
     <ImageButton
         android:id="@+id/imb_ustawienia"
         android:layout_width="35dp"
         android:layout_height="35dp"
         android:layout_above="@+id/tv_tydzien"
-        android:layout_alignRight="@+id/btnPobierzPlan"
+        android:layout_alignRight="@+id/tv_ustawienia"
         android:layout_alignTop="@+id/tv_ustawienia"
-        android:layout_marginRight="10dp"
         android:background="@android:color/transparent"
         android:contentDescription="@string/settings"
         android:scaleType="fitCenter"

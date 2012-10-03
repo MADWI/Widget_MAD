@@ -7,12 +7,19 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.URLConnection;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import mad.widget.utils.Constans;
+import mad.widget.utils.SharedPrefUtils;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Environment;
 import android.util.Log;
 
@@ -26,7 +33,7 @@ import android.util.Log;
 public class PlanDownloader {
 
 	private static final String TAG = "WidgetDownload";
-	private final static String siteIn = "http://wi.zut.edu.pl/plan/Wydruki/PlanGrup/";
+	private static final String siteIn = "http://wi.zut.edu.pl/plan/Wydruki/PlanGrup/";
 
 	/**
 	 * Funkcja na podstawie zadanego ciagu wejsciowego zwraca tablice z numerami
@@ -175,7 +182,7 @@ public class PlanDownloader {
 	 * @return true jesli pomyslnie pobrano plan
 	 * @author Sebastian Peryt
 	 */
-	public static boolean downloadPlan(String forma, String grupa) {
+	public static boolean downloadPlan(Context ctx, String forma, String grupa) {
 
 		if (setFolder()) {
 
@@ -185,6 +192,14 @@ public class PlanDownloader {
 				// create the new connection
 				HttpURLConnection urlConnection = (HttpURLConnection) url
 						.openConnection();
+
+				// save file last-modified time
+				String lastModified = urlConnection
+						.getHeaderField("Last-Modified");
+				SharedPreferences preferences = SharedPrefUtils
+						.getSharedPreferences(ctx);
+				SharedPrefUtils.saveString(preferences,
+						Constans.PLAN_LAST_MODIFIED, lastModified);
 
 				// set up some things on the connection
 				urlConnection.setRequestMethod("GET");
@@ -253,15 +268,64 @@ public class PlanDownloader {
 	 *            String z numerem grupy
 	 * @author Sebastian Peryt
 	 */
-	public static boolean planExists(String grupa) {
+	public static boolean planExistsAndNew(Context ctx, String forma,
+			String grupa) {
 		String extStorageDirectory = Environment.getExternalStorageDirectory()
 				.toString();
 		File file = new File(extStorageDirectory + Constans.PLAN_FOLDER + "/"
 				+ grupa + ".pdf");
 		if (file.exists()) {
+			/*URL url;
+			try {
+				url = new URL(siteIn + forma + "/" + grupa + ".pdf");
+				URLConnection connection = (HttpURLConnection) url
+						.openConnection();
+				String lastModifiedWeb = connection
+						.getHeaderField("Last-Modified");
+				
+				SharedPreferences preferences = SharedPrefUtils
+						.getSharedPreferences(ctx);
+				String lastModifiedLocal = SharedPrefUtils.loadString(
+						preferences, Constans.PLAN_LAST_MODIFIED);
+
+				if (!lastModifiedLocal.equals("")) {
+					Date web = stringtoDate(lastModifiedWeb);
+					Date local = stringtoDate(lastModifiedLocal);
+
+					if (web.compareTo(local) > 0) {
+						return false;
+					}
+				}
+				else
+					return false;
+
+			} catch (MalformedURLException e) {
+
+				e.printStackTrace();
+				return true;
+			} catch (IOException e) {
+
+				e.printStackTrace();
+				return true;
+			}*/
+
 			return true;
 		} else
 			return false;
 	}
 
+	private static Date stringtoDate(String dateString) {
+		SimpleDateFormat format = new SimpleDateFormat(
+				"EEE, dd MMM yyyy HH:mm:ss zzz");
+		Date d = null;
+		try {
+			d = format.parse(dateString);
+		} catch (ParseException e) {
+			e.printStackTrace();
+			return null;
+
+		}
+		return d;
+
+	}
 }

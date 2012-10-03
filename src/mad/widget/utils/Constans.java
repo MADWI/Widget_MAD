@@ -8,6 +8,7 @@ public class Constans {
 	
 	public static final String GROUP = "group"; //grupa
 	public static final String TYPE = "type"; //rodzaj studiów
+	public static final String PLAN_LAST_MODIFIED = "plan_modified";
 
 	public static final String WEEK_PARITY = "week_parity";
 	public static final String TITLE_PLAN_CHANGES = "title_plan_changes";
