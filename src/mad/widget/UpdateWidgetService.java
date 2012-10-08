@@ -15,6 +15,8 @@ import android.content.ComponentName;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.IBinder;
+import android.text.Html;
+import android.text.Spanned;
 import android.util.Log;
 import android.view.View;
 import android.widget.RemoteViews;
@@ -89,6 +91,13 @@ public class UpdateWidgetService extends IntentService {
 				} else {
 					Log.i(TAG, "last plan change= " + lastMessage.getTitle()
 							+ "success");
+					
+					String temp = lastMessage.getTitle();
+					temp = temp.substring(0, 1).toUpperCase()
+							+ temp.substring(1, temp.length());
+					
+					lastMessage.setTitle(temp);					
+					
 				}
 			} catch (NullPointerException e) {
 
@@ -143,7 +152,6 @@ public class UpdateWidgetService extends IntentService {
 			}
 
 		}
-
 		// set user group
 		remoteViews.setTextViewText(R.id.btnPobierzPlan, userGroup);
 
@@ -174,7 +182,7 @@ public class UpdateWidgetService extends IntentService {
 					lastMessage.getBody());
 			// if messages downloaded successfull
 		} else if (!lastMessage.getBody().equals("")) {
-			String bodyLastMessage = lastMessage.getBody().substring(0, 110)
+			String bodyLastMessage = lastMessage.getBody().substring(0, 65 )
 					+ "...";
 			remoteViews.setTextViewText(R.id.tv_zmiany_tresc, bodyLastMessage);
 

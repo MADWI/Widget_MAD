@@ -1,11 +1,5 @@
 package mad.widget.connections;
 
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.Scanner;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import android.util.Log;
 
 /**
@@ -15,120 +9,104 @@ import android.util.Log;
  * required information from the said university's website but it is not limited
  * to it, i.e. the URL can be modified, etc.
  * 
- * @author bocianowsky
+ * @author bocianowsky, Dawid
+ * 
  */
+
 public class WeekParityChecker {
-    private static String ZUT_WI_URL;
-    private static String TAG_NAME;
-    private static String TAG_ID;
-    private static String oddMarker = "nieparzysty",
-	    oddMarkerMessage = "nieparzysty";
-    @SuppressWarnings("unused")
-    private static String evenMarker = "parzysty",
-	    evenMarkerMessage = "parzysty";
-    private static final String TAG = "MAD WIZUT Widget";
 
-    public WeekParityChecker() {
-	ZUT_WI_URL = "http://wi.zut.edu.pl";
-	TAG_NAME = "div";
-	TAG_ID = "dzien";
-    }
+	private static String ZUT_WI_URL = "http://wi.zut.edu.pl";
 
-    public WeekParityChecker(String page_url, String tag_name, String tag_id) {
-	ZUT_WI_URL = page_url;
-	TAG_NAME = tag_name;
-	TAG_ID = tag_id;
-    }
+	private static final String TAG = "WeekParityChecker";
 
-    /**
-     * Returns a boolean value, true if the week is odd, false if it is even.
-     * 
-     * @return the parity of the week
-     */
-    public boolean isOdd() {
-	String pageSource = WeekParityChecker.getURLSource(ZUT_WI_URL);
-	if (pageSource == null) // an error has occurred
-	{
-	    // System.out.println("Error while retriving source page!!!");
-	    Log.e(TAG,
-		    "Received an exception while getting the source of the webpage.");
+	private static final String WeekOdd = "d. nieparzysty";
+	private static final String WeekEven = "d. parzysty";
+	private static final String WeekUnknow = " ? ";
+
+	public WeekParityChecker() {
 	}
-	String extractedTag = this.extractTag(pageSource);
-	boolean result;
-	if (true == this.hasSubstring(extractedTag, oddMarker))
-	    result = true;
-	else
-	    // (true == this.hasSubstring(extractedTag, evenMarker))
-	    result = false;
-	return result; // the week is: 1 - odd, 0 - even
-    }
 
-    /**
-     * Returns the string which tells whether the week is odd or even
-     * 
-     * @return string which signifies whether the week is odd or even
-     */
-    public String getParity() {
-	return (this.isOdd() ? oddMarkerMessage : evenMarkerMessage);
-    }
+	/**
+	 * Returns the string which tells whether the week is odd or even
+	 * 
+	 * @return string which signifies whether the week is odd or even
+	 */
+	public String getParity() {
+		int result = this.checkParity(ZUT_WI_URL);
+		if (result == 1)
+			return WeekOdd;
+		else if (result == 2)
+			return WeekEven;
+		else
+			return WeekUnknow;
+	}
 
-    private boolean hasSubstring(String inString, String subString) {
-	int index = inString.indexOf(subString);
-	if (index == -1)
-	    return false;
-	else
-	    return true;
-    }
+	/**
+	 * This method returns page source code as a string
+	 * 
+	 * @param string
+	 *            which contain URL address
+	 * @return page source code as a string
+	 * @author Dawid
+	 */
 
-    private static String getURLSource(String url) {
-	final char newline = '\n';
-	try {
-	    URL pageURL = new URL(url);
-	    StringBuilder sourceText = new StringBuilder();
-	    Scanner scanner = new Scanner(pageURL.openStream(), "utf-8");
-	    try {
-		while (scanner.hasNextLine()) {
-		    sourceText.append(scanner.nextLine() + newline);
-		}
-	    } finally {
-		scanner.close();
-	    }
-	    return sourceText.toString();
-	}
-	/* Error handling MUST BE improved soon! */
-	catch (MalformedURLException ex) {
-	    // invalid URL, this should be handled by us, don't you think?
-	}
-	// catch (IOException ex) {
-	// // connection not established
-	// return null;
-	// }
-	catch (Exception ex) {
-	    // other unspecified error
-	    return null;
-	}
-	return null;
-    }
+	private static String getURLSource(String url) {
+		String do_obrobki = "";
 
-    private String extractTag(String htmlString) {
-	// String regexTag =
-	// "<"+TAG_NAME+"\\s*id=\""+TAG_ID+"\\s*>([^*<]+)</"+TAG_NAME+">";
-	// //doesn't work..
-	String regexTag = "<" + TAG_NAME + " [^>]*id=\"" + TAG_ID
-		+ "\"[^>]*>(.*?)</div>"; // this one does!!! uff..
-	Pattern pattern = Pattern.compile(regexTag, Pattern.CASE_INSENSITIVE
-		| Pattern.DOTALL);
-	Matcher matcher = pattern.matcher(htmlString);
-	String fullTag = "";
-	boolean patternFound = false;
-	while (matcher.find()) {
-	    patternFound = true;
-	    fullTag = matcher.group();
+		HttpConnect strona = new HttpConnect(10000, url);
+		do_obrobki = strona.getPage();
+
+		return do_obrobki;
 	}
-	if (patternFound == false) {
-	    return null;
-	} else {
-	    return fullTag;
+
+	/**
+	 * This method returns true if week is odd false if even
+	 * 
+	 * @param string
+	 *            which contain URL address
+	 * @return true if week is odd, false if even
+	 * @author Dawid
+	 * */
+	private int checkParity(String source) {
+		String pageSource = WeekParityChecker.getURLSource(source);
+
+		if (pageSource.equals("") || pageSource.equals(null))
+			return 0;
+		String extracted = Parse(pageSource).toString();
+		Log.i(TAG, "sprawdzono");
+
+		if (extracted.equals(null))
+			return 0;
+		if (extracted.contains("nieparzystego")
+				|| extracted.contains("nieparzysty"))
+			return 1;
+		else
+			return 2;
 	}
-    }
+
+	/**
+	 * This method is searching substring which is on the '<>' and '</>' symbols
+	 * (need to update)(na razie dla tytulu zeby sprawdzic czy dziala)
+	 * 
+	 * @param where
+	 *            method must seek a substring
+	 * @return found text
+	 * @author Dawid
+	 */
+	private CharSequence Parse(String searching_string) {
+		int begin_extract = searching_string.indexOf("<div id=\"dzien\">") + 16;
+		int end_extract = searching_string.indexOf("</div>", begin_extract);
+
+		if (begin_extract < 0 || end_extract < 0)
+			return null;
+
+		System.out.println("Poczatek znacznika: " + begin_extract);
+		System.out.println("Koniec znacznika: " + end_extract);
+
+		CharSequence title = searching_string.subSequence(begin_extract,
+				end_extract);
+
+		return title;
+	}
+
 }

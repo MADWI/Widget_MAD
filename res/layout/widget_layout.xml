@@ -17,7 +17,7 @@
         android:layout_marginTop="5dp"
         android:background="@drawable/background_top"
         android:textAppearance="?android:attr/textAppearanceLarge" />
-
+
     <TextView
         android:id="@+id/tv_data"
         android:layout_width="147dp"
@@ -29,13 +29,13 @@
         android:paddingLeft="5dp"
         android:text="@string/empty"
         android:textAppearance="?android:attr/textAppearanceMedium" />
-
+
     <TextView
         android:id="@+id/tv_tydzien"
         android:layout_width="147dp"
         android:layout_height="30dp"
         android:layout_alignRight="@+id/tv_ustawienia"
-        android:layout_below="@+id/tv_ustawienia"
+        android:layout_alignTop="@+id/tv_data"
         android:layout_toRightOf="@+id/tv_data"
         android:background="@drawable/background_bottom"
         android:gravity="center_vertical|center_horizontal"
@@ -55,11 +55,11 @@
         android:paddingTop="5dp"
         android:text="@string/plan_for"
         android:textAppearance="?android:attr/textAppearanceLarge" />
-
+
     <TextView
         android:id="@+id/tv_zmiany_tytul"
         android:layout_width="294dp"
-        android:layout_height="25dp"
+        android:layout_height="30dp"
         android:layout_alignLeft="@+id/tv_plan"
         android:layout_below="@+id/tv_plan"
         android:background="@drawable/background_listview"
@@ -68,11 +68,11 @@
         android:text="@string/empty"
         android:textColor="#000000"
         android:textStyle="bold" />
-
+
     <TextView
         android:id="@+id/tv_zmiany_tresc"
         android:layout_width="294dp"
-        android:layout_height="60dp"
+        android:layout_height="55dp"
         android:layout_alignLeft="@+id/tv_zmiany_tytul"
         android:layout_below="@+id/tv_zmiany_tytul"
         android:background="@drawable/background_listview"
