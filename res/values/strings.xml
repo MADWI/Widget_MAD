@@ -21,7 +21,7 @@
     <string name="empty">" "</string>
     <string name="no_messages">Brak zmian w planie</string>
     <string name="hello_world">Hello world!</string>
-    <string name="title_activity_my_prefs">MyPrefs</string>
+    <string name="title_activity_my_prefs">Ustawienia Widget MAD</string>
     <string name="studies_type">Rodzaj studiów:</string>
     <string name="studies_degree">Kierunek_studiów:</string>
     <string name="studies_level">Stopień studiów:</string>
