@@ -5,6 +5,7 @@ import java.io.File;
 import mad.widget.UpdateWidgetService;
 import mad.widget.activities.MyPrefs;
 import mad.widget.activities.PlanChangesActivity;
+
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.content.Context;

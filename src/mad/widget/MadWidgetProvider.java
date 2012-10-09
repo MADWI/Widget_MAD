@@ -3,7 +3,7 @@ package mad.widget;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
-import mad.widget.activities.MyPrefs;
+import mad.widget.activities.MyGroups;
 import mad.widget.utils.Constans;
 import mad.widget.utils.Intents;
 import mad.widget.utils.SharedPrefUtils;
@@ -104,7 +104,7 @@ public class MadWidgetProvider extends AppWidgetProvider {
 		if (!SharedPrefUtils.getSharedPreferences(context).contains(
 				Constans.GROUP)) {
 
-			Intent intent = new Intent(context, MyPrefs.class);
+			Intent intent = new Intent(context, MyGroups.class);
 			intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 			context.startActivity(intent);
 		}

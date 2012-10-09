@@ -3,5 +3,5 @@
     android:initialLayout="@layout/widget_layout"
     android:minHeight="144dp"
     android:minWidth="292dp"
-    android:updatePeriodMillis="3600000" />
-<!-- update widget every 60 minutes or manualy by refresh button -->
+    android:updatePeriodMillis="7200000" />
+<!-- update widget every 120 minutes or manualy by refresh button -->

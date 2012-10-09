@@ -30,7 +30,7 @@
     <string name="studies_download_grups">Pobierz grupy</string>
     <string name="ok_button">Dalej</string>
     <string name="cancel_button">Anuluj</string>
-    <string name="group_settings_title">Widget M.A.D. - Ustawienia grupy </string>
+    <string name="group_settings_title">Ustawienia grupy - Widget MAD</string>
     <string name="menu_info_title">Informacje</string>
     <string name="about_title">O nas</string>
     <string name="logo_description">logo</string>
@@ -43,5 +43,10 @@
     <string name="empty_group">brak grupy</string>
     <string name="folder_name">/MAD_Plan_ZUT</string>
     <string name="cannot_download_plan">Nie moża pobrać planu </string>
+    <string name="menu_settings">Settings</string>
+    <string name="title_activity_remove_plans">Pobrane plany</string>
+    <string name="remove_all_plans">Usuń wszystkie</string>
+    <string name="remove_plans_alert_dialog">Usuń plany</string>
+    <string name="remove_plans_message">Czy na pewno chcesz usunąć wszystkie plany z dysku?</string>
 
 </resources>

@@ -21,7 +21,7 @@ public class WeekParityChecker {
 
 	private static final String WeekOdd = "d. nieparzysty";
 	private static final String WeekEven = "d. parzysty";
-	private static final String WeekUnknow = " ? ";
+	private static final String WeekUnknow = " - ";
 
 	public WeekParityChecker() {
 	}

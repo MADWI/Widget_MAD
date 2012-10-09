@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <PreferenceCategory
+        android:summary="Plan zajęć"
+        android:title="Plan" >
+        <Preference 
+            android:key="groups"
+            android:summary="Wybór swojej grupy"
+            android:title="Grupa" />
+        <Preference 
+            android:key="plans"
+            android:summary="Wyświetlenie pobranych planów lub ich usunięcie"
+            android:title="Pobrane plany" />
+    </PreferenceCategory>
+    <PreferenceCategory
+        android:summary="Plan zajęć"
+        android:title="Informacje" >
+        <Preference 
+            android:key="about"
+            android:summary="Pokaż autorów widgetu"
+            android:title="Autorzy" />
+    </PreferenceCategory>
+
+</PreferenceScreen>
