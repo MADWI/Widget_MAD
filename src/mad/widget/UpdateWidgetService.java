@@ -144,7 +144,7 @@ public class UpdateWidgetService extends IntentService {
 				} else {
 					Toast.makeText(this.getApplicationContext(),
 							this.getString(R.string.cannot_download_plan),
-							Toast.LENGTH_SHORT).show();
+							Toast.LENGTH_LONG).show();
 					Log.d(TAG, "Niepobrano planu ");
 				}
 			}

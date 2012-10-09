@@ -189,14 +189,6 @@ public class PlanDownloader {
 				HttpURLConnection urlConnection = (HttpURLConnection) url
 						.openConnection();
 
-				// save file last-modified time
-				String lastModified = urlConnection
-						.getHeaderField("Last-Modified");
-				SharedPreferences preferences = SharedPrefUtils
-						.getSharedPreferences(ctx);
-				SharedPrefUtils.saveString(preferences,
-						Constans.PLAN_LAST_MODIFIED, lastModified);
-
 				// set up some things on the connection
 				urlConnection.setRequestMethod("GET");
 				urlConnection.setDoOutput(true);
