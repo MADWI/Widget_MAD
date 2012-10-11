@@ -50,5 +50,7 @@
     <string name="remove_plans_message">Czy na pewno chcesz usunąć wszystkie plany z dysku?</string>
      <string name="remove_plan_alert_dialog">Usuń plan</string>
     <string name="remove_plan_message">Czy na pewno chcesz usunąć plan z dysku?</string>
+    <string name="today">dzisiaj:</string>
+    <string name="tomorrow">jutro:</string>
 
 </resources>
