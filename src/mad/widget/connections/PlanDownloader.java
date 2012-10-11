@@ -1,6 +1,7 @@
 package mad.widget.connections;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -280,6 +281,12 @@ public class PlanDownloader {
 			return true;
 		} else
 			return false;
+	}
+
+	public static void removePlan(String path) {
+
+		new File(path).delete();
+
 	}
 
 }
