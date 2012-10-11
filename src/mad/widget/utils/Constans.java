@@ -11,6 +11,7 @@ public class Constans {
 	public static final String PLAN_LAST_MODIFIED = "plan_modified";
 
 	public static final String WEEK_PARITY = "week_parity";
+	public static final String WEEK_PARITY_NEXT = "week_parity_next";
 	public static final String TITLE_PLAN_CHANGES = "title_plan_changes";
 	public static final String BODY_PLAN_CHANGES = "body_plan_changes";
 

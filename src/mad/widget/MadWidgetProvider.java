@@ -19,125 +19,134 @@ import android.widget.RemoteViews;
 
 public class MadWidgetProvider extends AppWidgetProvider {
 
-	private static final String TAG = "AppWidgetProvider";
+    private static final String TAG = "AppWidgetProvider";
 
-	@Override
-	public void onUpdate(Context context, AppWidgetManager appWidgetManager,
-			int[] appWidgetIds) {
+    @Override
+    public void onUpdate(Context context, AppWidgetManager appWidgetManager,
+	    int[] appWidgetIds) {
 
-		Log.i(TAG, "onUpdate");
-		// Get all ids
-		ComponentName thisWidget = new ComponentName(context,
-				MadWidgetProvider.class);
-		int[] allWidgetIds = appWidgetManager.getAppWidgetIds(thisWidget);
-		for (int widgetId : allWidgetIds) {
+	Log.i(TAG, "onUpdate");
+	// Get all ids
+	ComponentName thisWidget = new ComponentName(context,
+		MadWidgetProvider.class);
+	int[] allWidgetIds = appWidgetManager.getAppWidgetIds(thisWidget);
+	for (int widgetId : allWidgetIds) {
 
-			// get current date
-			String currentDateTimeString = " ";
-			Calendar c = Calendar.getInstance();
-			SimpleDateFormat df = new SimpleDateFormat("dd.MM.yyyy");
-			currentDateTimeString = df.format(c.getTime());
-			Log.i(TAG, "date = " + currentDateTimeString);
+	    // get current date
+	    String currentDateTimeString = " ";
+	    String nextDateTimeString = " ";
+	    Calendar c = Calendar.getInstance();
+	    SimpleDateFormat df = new SimpleDateFormat("dd.MM.yy");
+	    currentDateTimeString = df.format(c.getTime());
 
-			// refresh onClick
-			RemoteViews remoteViews = new RemoteViews(context.getPackageName(),
-					R.layout.widget_layout);
-			// set date
-			remoteViews.setTextViewText(R.id.tv_data, currentDateTimeString
-					+ " r.");
+	    // get tommorow date
+	    c.add(Calendar.DAY_OF_YEAR, 1);
+	    nextDateTimeString = df.format(c.getTime());
+	    Log.i(TAG, "date = " + currentDateTimeString);
 
-			// refresh OnClick
-			Intent refreshIntent = Intents.actionRefresh(context);
-			PendingIntent pendingIntentRefresh = Intents.createPendingService(
-					context, refreshIntent);
-			remoteViews.setOnClickPendingIntent(R.id.imb_odswiez,
-					pendingIntentRefresh);
+	    // refresh onClick
+	    RemoteViews remoteViews = new RemoteViews(context.getPackageName(),
+		    R.layout.widget_layout);
+	    // set date
+	    remoteViews.setTextViewText(R.id.tv_data, currentDateTimeString
+		    + " r.");
 
-			// planChanges OnClick
-			Intent planIntent = Intents.actionPlanChanges(context);
-			PendingIntent pendingIntentPlan = Intents.createPendingActivity(
-					context, planIntent);
-			remoteViews.setOnClickPendingIntent(R.id.btZmianyPlanu,
-					pendingIntentPlan);
+	    // set next date
+	    remoteViews.setTextViewText(R.id.tv_data_nastepna,
+		    nextDateTimeString + " r.");
 
-			// settings OnClick
-			Intent settingsIntent = Intents.actionSettings(context);
-			PendingIntent pendingSettingsIntent = Intents
-					.createPendingActivity(context, settingsIntent);
-			remoteViews.setOnClickPendingIntent(R.id.imb_ustawienia,
-					pendingSettingsIntent);
+	    // refresh OnClick
+	    Intent refreshIntent = Intents.actionRefresh(context);
+	    PendingIntent pendingIntentRefresh = Intents.createPendingService(
+		    context, refreshIntent);
+	    remoteViews.setOnClickPendingIntent(R.id.imb_odswiez,
+		    pendingIntentRefresh);
 
-			// open webapge OnClick
+	    // planChanges OnClick
+	    Intent planIntent = Intents.actionPlanChanges(context);
+	    PendingIntent pendingIntentPlan = Intents.createPendingActivity(
+		    context, planIntent);
+	    remoteViews.setOnClickPendingIntent(R.id.btZmianyPlanu,
+		    pendingIntentPlan);
 
-			Intent webpageIntent = Intents.actionWebpage(context);
-			PendingIntent webpageSettingsIntent = Intents
-					.createPendingActivity(context, webpageIntent);
-			remoteViews.setOnClickPendingIntent(R.id.btnWeb,
-					webpageSettingsIntent);
+	    // settings OnClick
+	    Intent settingsIntent = Intents.actionSettings(context);
+	    PendingIntent pendingSettingsIntent = Intents
+		    .createPendingActivity(context, settingsIntent);
+	    remoteViews.setOnClickPendingIntent(R.id.imb_ustawienia,
+		    pendingSettingsIntent);
 
-			appWidgetManager.updateAppWidget(widgetId, remoteViews);
+	    // open webapge OnClick
 
+	    Intent webpageIntent = Intents.actionWebpage(context);
+	    PendingIntent webpageSettingsIntent = Intents
+		    .createPendingActivity(context, webpageIntent);
+	    remoteViews.setOnClickPendingIntent(R.id.btnWeb,
+		    webpageSettingsIntent);
+
+	    appWidgetManager.updateAppWidget(widgetId, remoteViews);
+
+	}
+	// intent for calling update service
+	Intent intent = new Intent(context, UpdateWidgetService.class);
+	// start service
+	context.startService(intent);
+	Log.i(TAG, "onUpdate ended");
+
+	super.onUpdate(context, appWidgetManager, appWidgetIds);
+    }
+
+    @Override
+    public void onDisabled(Context context) {
+	super.onDisabled(context);
+	Log.i(TAG, "onDisabled");
+
+    }
+
+    @Override
+    public void onEnabled(Context context) {
+	Log.i(TAG, "onEnabled");
+	super.onEnabled(context);
+
+	// show MyPref acvtivity when added widget if there is no group field in
+	// SharedPreferences
+	if (!SharedPrefUtils.getSharedPreferences(context).contains(
+		Constans.GROUP)) {
+
+	    Intent intent = new Intent(context, MyGroups.class);
+	    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+	    context.startActivity(intent);
+	}
+    }
+
+    @Override
+    public void onReceive(Context context, Intent intent) {
+	// Protect against rogue update broadcasts (not really a security issue,
+	// just filter bad broacasts out so subclasses are less likely to
+	// crash).
+	String action = intent.getAction();
+	if (AppWidgetManager.ACTION_APPWIDGET_UPDATE.equals(action)) {
+	    Bundle extras = intent.getExtras();
+	    if (extras != null) {
+		int[] appWidgetIds = extras
+			.getIntArray(AppWidgetManager.EXTRA_APPWIDGET_IDS);
+		if (appWidgetIds != null && appWidgetIds.length > 0) {
+		    this.onUpdate(context,
+			    AppWidgetManager.getInstance(context), appWidgetIds);
 		}
-		// intent for calling update service
-		Intent intent = new Intent(context, UpdateWidgetService.class);
-		// start service
-		context.startService(intent);
-		Log.i(TAG, "onUpdate ended");
-
-		super.onUpdate(context, appWidgetManager, appWidgetIds);
+	    }
+	} else if (AppWidgetManager.ACTION_APPWIDGET_DELETED.equals(action)) {
+	    Bundle extras = intent.getExtras();
+	    if (extras != null
+		    && extras.containsKey(AppWidgetManager.EXTRA_APPWIDGET_ID)) {
+		final int appWidgetId = extras
+			.getInt(AppWidgetManager.EXTRA_APPWIDGET_ID);
+		this.onDeleted(context, new int[] { appWidgetId });
+	    }
+	} else if (AppWidgetManager.ACTION_APPWIDGET_ENABLED.equals(action)) {
+	    this.onEnabled(context);
+	} else if (AppWidgetManager.ACTION_APPWIDGET_DISABLED.equals(action)) {
+	    this.onDisabled(context);
 	}
-
-	@Override
-	public void onDisabled(Context context) {
-		super.onDisabled(context);
-		Log.i(TAG, "onDisabled");		
-
-	}
-
-	@Override
-	public void onEnabled(Context context) {
-		Log.i(TAG, "onEnabled");
-		super.onEnabled(context);
-
-		// show MyPref acvtivity when added widget if there is no group field in
-		// SharedPreferences
-		if (!SharedPrefUtils.getSharedPreferences(context).contains(
-				Constans.GROUP)) {
-
-			Intent intent = new Intent(context, MyGroups.class);
-			intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-			context.startActivity(intent);
-		}
-	}
-
-	@Override
-	public void onReceive(Context context, Intent intent) {
-		// Protect against rogue update broadcasts (not really a security issue,
-		// just filter bad broacasts out so subclasses are less likely to
-		// crash).
-		String action = intent.getAction();
-		if (AppWidgetManager.ACTION_APPWIDGET_UPDATE.equals(action)) {
-			Bundle extras = intent.getExtras();
-			if (extras != null) {
-				int[] appWidgetIds = extras
-						.getIntArray(AppWidgetManager.EXTRA_APPWIDGET_IDS);
-				if (appWidgetIds != null && appWidgetIds.length > 0) {
-					this.onUpdate(context,
-							AppWidgetManager.getInstance(context), appWidgetIds);
-				}
-			}
-		} else if (AppWidgetManager.ACTION_APPWIDGET_DELETED.equals(action)) {
-			Bundle extras = intent.getExtras();
-			if (extras != null
-					&& extras.containsKey(AppWidgetManager.EXTRA_APPWIDGET_ID)) {
-				final int appWidgetId = extras
-						.getInt(AppWidgetManager.EXTRA_APPWIDGET_ID);
-				this.onDeleted(context, new int[] { appWidgetId });
-			}
-		} else if (AppWidgetManager.ACTION_APPWIDGET_ENABLED.equals(action)) {
-			this.onEnabled(context);
-		} else if (AppWidgetManager.ACTION_APPWIDGET_DISABLED.equals(action)) {
-			this.onDisabled(context);
-		}
-	}
+    }
 }

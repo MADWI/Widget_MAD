@@ -12,7 +12,7 @@
     <string name="plan_changes_finished">Zakończono !</string>
     <string name="plan_changes_refreshing_title">Odswieżanie wiadomości</string>
     <string name="refreshing_body">Proszę czekać &#8230;</string>
-    <string name="plan_for">Plan dla grupy:</string>
+    <string name="plan_for">Plan:</string>
     <string name="authors_list">Opiekun koła/Project Manager:\n----------\n dr inż. Radosław Maciaszczyk\n\nProgramiści:\n----------\n- Fabisiak Grzegorz\n- Gliński Dawid\n- Peryt Sebastian\n- Świerczek Sebastian\n- Wojtalewicz Michał</string>
     <string name="no_groups">Brak wybranych grup !</string>
     <string name="ellipsis">&#8230;</string>

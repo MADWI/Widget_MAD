@@ -9,6 +9,16 @@
 
 
 ##CHANGELOG
+###Wersja 0.30
+
+NOWE
+
+- parzystosc dla dnia biezacego i nastepnego
+- nowe ustawienia
+- mozliwosc usuwania planow
+- poprawione wyswietlanie ostaniej zmiany w planie
+
+
 ###Wersja 0.20
 
 NOWE

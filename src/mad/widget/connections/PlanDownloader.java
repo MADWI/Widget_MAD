@@ -12,10 +12,10 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import mad.widget.utils.Constans;
-import mad.widget.utils.SharedPrefUtils;
+//import mad.widget.utils.SharedPrefUtils;
 
 import android.content.Context;
-import android.content.SharedPreferences;
+//import android.content.SharedPreferences;
 import android.os.Environment;
 import android.util.Log;
 

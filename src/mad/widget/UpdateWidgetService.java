@@ -15,6 +15,8 @@ import android.content.ComponentName;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.IBinder;
+import android.text.Html;
+import android.text.Spanned;
 import android.util.Log;
 import android.view.View;
 import android.widget.RemoteViews;
@@ -22,198 +24,220 @@ import android.widget.Toast;
 
 public class UpdateWidgetService extends IntentService {
 
-	private static final String TAG = "UpdateWidgetService";
+    private static final String TAG = "UpdateWidgetService";
 
-	private final WeekParityChecker checker = new WeekParityChecker();
-	private final GetPlanChanges PlanChanges = new GetPlanChanges();
-	private MessagePlanChanges lastMessage = new MessagePlanChanges();
+    private final WeekParityChecker checker = new WeekParityChecker();
+    private final GetPlanChanges PlanChanges = new GetPlanChanges();
+    private MessagePlanChanges lastMessage = new MessagePlanChanges();
 
-	// fields Strings
-	private String userGroup = " ";
-	private String userStudiesType = " ";
+    // fields Strings
+    private String userGroup = " ";
+    private String userStudiesType = " ";
 
-	public UpdateWidgetService() {
-		super("UpdateWidgetService");
+    public UpdateWidgetService() {
+	super("UpdateWidgetService");
 
-	}
+    }
 
-	@Override
-	public int onStartCommand(Intent intent, int flags, int startId) {
-		Log.i(TAG, "onStart");
+    @Override
+    public int onStartCommand(Intent intent, int flags, int startId) {
+	Log.i(TAG, "onStart");
 
-		AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(this
-				.getApplicationContext());
-		ComponentName thisWidget = new ComponentName(
-				this.getApplicationContext(), MadWidgetProvider.class.getName());
+	AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(this
+		.getApplicationContext());
+	ComponentName thisWidget = new ComponentName(
+		this.getApplicationContext(), MadWidgetProvider.class.getName());
 
-		// remote view to show progress bar
-		RemoteViews remoteViewsStarting = new RemoteViews(this
-				.getApplicationContext().getPackageName(),
-				R.layout.widget_layout);
+	// remote view to show progress bar
+	RemoteViews remoteViewsStarting = new RemoteViews(this
+		.getApplicationContext().getPackageName(),
+		R.layout.widget_layout);
 
-		remoteViewsStarting.setViewVisibility(R.id.ProgressBarLayout,
-				View.VISIBLE);
-		// finally update widget by RemoteView
-		appWidgetManager.updateAppWidget(thisWidget, remoteViewsStarting);
+	remoteViewsStarting.setViewVisibility(R.id.ProgressBarLayout,
+		View.VISIBLE);
+	// finally update widget by RemoteView
+	appWidgetManager.updateAppWidget(thisWidget, remoteViewsStarting);
 
-		// get SharedPreferences
-		SharedPreferences ustawienia = SharedPrefUtils
-				.getSharedPreferences(this.getApplicationContext());
+	// get SharedPreferences
+	SharedPreferences ustawienia = SharedPrefUtils
+		.getSharedPreferences(this.getApplicationContext());
 
-		// get user group
-		userGroup = ustawienia.getString(Constans.GROUP,
-				getString(R.string.empty_group));
+	// get user group
+	userGroup = ustawienia.getString(Constans.GROUP,
+		getString(R.string.empty_group));
 
-		// get user studies type
-		userStudiesType = ustawienia.getString(Constans.TYPE, "");
+	// get user studies type
+	userStudiesType = ustawienia.getString(Constans.TYPE, "");
 
-		Log.d(TAG, "Grupa " + userGroup);
-		Log.d(TAG, "Typ " + userStudiesType);
+	Log.d(TAG, "Grupa " + userGroup);
+	Log.d(TAG, "Typ " + userStudiesType);
 
-		// get week parity and plan changes
-		String currentWeekParity = "";
-		if (HttpConnect.isOnline(this.getApplicationContext())) {
+	// get week parity and plan changes
+	String[] weekParity = null;
 
-			try {
-				Log.i(TAG, "Getting week parity...");
+	if (HttpConnect.isOnline(this.getApplicationContext())) {
 
-				currentWeekParity = checker.getParity();
-				Log.i(TAG, "Week parity = " + currentWeekParity);
+	    try {
+		Log.i(TAG, "Getting week parity...");
 
-				Log.i(TAG, "Getting last plan change...");
-				lastMessage = PlanChanges.getLastMessage();
-				if (lastMessage == null) {
-					lastMessage = new MessagePlanChanges();
-					lastMessage.setBody(getString(R.string.no_messages));
+		weekParity = checker.getParity();
 
-				} else {
-					Log.i(TAG, "last plan change= " + lastMessage.getTitle()
-							+ "success");
+		Log.i(TAG, "Week parity = " + weekParity[0]);
+		Log.i(TAG, "Week parity next = " + weekParity[1]);
 
-					String temp = lastMessage.getTitle();
-					temp = temp.substring(0, 1).toUpperCase()
-							+ temp.substring(1, temp.length());
-
-					lastMessage.setTitle(temp);
-
-				}
-			} catch (NullPointerException e) {
-
-			}
-
-		}
-
-		// remote view to update widget layout
-		RemoteViews remoteViews = new RemoteViews(this.getApplicationContext()
-				.getPackageName(), R.layout.widget_layout);
-
-		// download plan if no exist and setonclick
-
-		if (PlanDownloader.planExistsAndNew(this.getApplicationContext(),
-				userStudiesType, userGroup)) {
-			Log.d(TAG, "Plan istnieje na dysku");
-
-			// plan show onClick
-			Intent showPlanIntent = Intents.actionShowPlan(
-					this.getApplicationContext(), userGroup);
-
-			PendingIntent pendingIntentPlan = Intents.createPendingActivity(
-					this.getApplicationContext(), showPlanIntent);
-			remoteViews.setOnClickPendingIntent(R.id.btnPobierzPlan,
-					pendingIntentPlan);
+		Log.i(TAG, "Getting last plan change...");
+		lastMessage = PlanChanges.getLastMessage();
+		if (lastMessage == null) {
+		    lastMessage = new MessagePlanChanges();
+		    lastMessage.setBody(getString(R.string.no_messages));
 
 		} else {
-			Log.d(TAG, "Plan nie isteniejê, pobieram...");
-			if (HttpConnect.isOnline(this.getApplicationContext())) {
+		    Log.i(TAG, "last plan change= " + lastMessage.getTitle()
+			    + "success");
 
-				if (PlanDownloader.downloadPlan(this.getApplicationContext(),
-						userStudiesType, userGroup)) {
+		    String temp = lastMessage.getTitle();
+		    temp = temp.substring(0, 1).toUpperCase()
+			    + temp.substring(1, temp.length());
+		    lastMessage.setTitle(temp);
 
-					// plan show onClick
-					Intent showPlanIntent = Intents.actionShowPlan(
-							this.getApplicationContext(), userGroup);
-
-					PendingIntent pendingIntentPlan = Intents
-							.createPendingActivity(
-									this.getApplicationContext(),
-									showPlanIntent);
-					remoteViews.setOnClickPendingIntent(R.id.btnPobierzPlan,
-							pendingIntentPlan);
-
-					Log.d(TAG, "Pobrano plan");
-				} else {
-					Toast.makeText(this.getApplicationContext(),
-							this.getString(R.string.cannot_download_plan),
-							Toast.LENGTH_LONG).show();
-					Log.d(TAG, "Niepobrano planu ");
-				}
-			}
+		    Spanned sp = Html.fromHtml(lastMessage.getBody().trim());
+		    temp = sp.toString().replaceAll("[\r\n]{1,}$", "");
+		    lastMessage.setBody(temp);
 
 		}
-		// set user group
-		remoteViews.setTextViewText(R.id.btnPobierzPlan, userGroup);
+	    } catch (NullPointerException e) {
 
-		// set week parity
-		if (!currentWeekParity.equals("")) {
-			remoteViews.setTextViewText(R.id.tv_tydzien, currentWeekParity);
-			SharedPrefUtils.saveString(ustawienia, Constans.WEEK_PARITY,
-					currentWeekParity);
+	    }
+
+	}
+
+	// remote view to update widget layout
+	RemoteViews remoteViews = new RemoteViews(this.getApplicationContext()
+		.getPackageName(), R.layout.widget_layout);
+
+	// download plan if no exist and setonclick
+
+	if (PlanDownloader.planExistsAndNew(this.getApplicationContext(),
+		userStudiesType, userGroup)) {
+	    Log.d(TAG, "Plan istnieje na dysku");
+
+	    // plan show onClick
+	    Intent showPlanIntent = Intents.actionShowPlan(
+		    this.getApplicationContext(), userGroup);
+
+	    PendingIntent pendingIntentPlan = Intents.createPendingActivity(
+		    this.getApplicationContext(), showPlanIntent);
+	    remoteViews.setOnClickPendingIntent(R.id.btnPobierzPlan,
+		    pendingIntentPlan);
+
+	} else {
+	    Log.d(TAG, "Plan nie isteniejê, pobieram...");
+	    if (HttpConnect.isOnline(this.getApplicationContext())) {
+
+		if (PlanDownloader.downloadPlan(this.getApplicationContext(),
+			userStudiesType, userGroup)) {
+
+		    // plan show onClick
+		    Intent showPlanIntent = Intents.actionShowPlan(
+			    this.getApplicationContext(), userGroup);
+
+		    PendingIntent pendingIntentPlan = Intents
+			    .createPendingActivity(
+				    this.getApplicationContext(),
+				    showPlanIntent);
+		    remoteViews.setOnClickPendingIntent(R.id.btnPobierzPlan,
+			    pendingIntentPlan);
+
+		    Log.d(TAG, "Pobrano plan");
 		} else {
-			remoteViews.setTextViewText(R.id.tv_tydzien, SharedPrefUtils
-					.loadString(ustawienia, Constans.WEEK_PARITY));
+		    Toast.makeText(this.getApplicationContext(),
+			    this.getString(R.string.cannot_download_plan),
+			    Toast.LENGTH_LONG).show();
+		    Log.d(TAG, "Niepobrano planu ");
 		}
-
-		// show last plan change title
-		if (!lastMessage.getTitle().equals("")) {
-			remoteViews.setTextViewText(R.id.tv_zmiany_tytul,
-					lastMessage.getTitle());
-			SharedPrefUtils.saveString(ustawienia, Constans.TITLE_PLAN_CHANGES,
-					lastMessage.getTitle());
-		} else
-			remoteViews.setTextViewText(R.id.tv_zmiany_tytul, SharedPrefUtils
-					.loadString(ustawienia, Constans.TITLE_PLAN_CHANGES));
-
-		// set plan changes body
-		// if there is no messages
-		if (lastMessage.getBody().equals(getString(R.string.no_messages))) {
-			remoteViews.setTextViewText(R.id.tv_zmiany_tresc,
-					lastMessage.getBody());
-			// if messages downloaded successfull
-		} else if (!lastMessage.getBody().equals("")) {
-			String bodyLastMessage = lastMessage.getBody().substring(0, 65)
-					+ "...";
-			remoteViews.setTextViewText(R.id.tv_zmiany_tresc, bodyLastMessage);
-
-			SharedPrefUtils.saveString(ustawienia, Constans.BODY_PLAN_CHANGES,
-					bodyLastMessage);
-			if (lastMessage.getBody().equals(getString(R.string.no_messages))) {
-				remoteViews.setTextViewText(R.id.tv_zmiany_tresc,
-						bodyLastMessage);
-			}
-			// if have no Internet connectivity
-		} else {
-			remoteViews.setTextViewText(R.id.tv_zmiany_tresc, SharedPrefUtils
-					.loadString(ustawienia, Constans.BODY_PLAN_CHANGES));
-		}
-
-		// hide progress bar
-		remoteViews.setViewVisibility(R.id.ProgressBarLayout, View.INVISIBLE);
-
-		// finally update widget by RemoteView
-		appWidgetManager.updateAppWidget(thisWidget, remoteViews);
-
-		Log.i(TAG, "onStart ended");
-		return super.onStartCommand(intent, flags, startId);
-	}
-
-	@Override
-	public IBinder onBind(Intent arg0) {
-		return null;
-	}
-
-	@Override
-	protected void onHandleIntent(Intent intent) {
+	    }
 
 	}
+	// set user group
+	remoteViews.setTextViewText(R.id.btnPobierzPlan, userGroup);
+
+	// set week parity
+	if (weekParity != null && weekParity[0] != null) {
+	    remoteViews.setTextViewText(R.id.tv_tydzien_current, weekParity[0]);
+	    SharedPrefUtils.saveString(ustawienia, Constans.WEEK_PARITY,
+		    weekParity[0]);
+	    Log.d(TAG, "Week parity 1 !=null");
+	} else {
+	    remoteViews.setTextViewText(R.id.tv_tydzien_current,
+		    SharedPrefUtils
+			    .loadString(ustawienia, Constans.WEEK_PARITY));
+	    Log.d(TAG, "Week parity 1 ==null");
+
+	}
+
+	// set next day week parity
+	if (weekParity != null && weekParity[1] != null) {
+	    remoteViews.setTextViewText(R.id.tv_tydzien, weekParity[1]);
+	    SharedPrefUtils.saveString(ustawienia, Constans.WEEK_PARITY_NEXT,
+		    weekParity[1]);
+	    Log.d(TAG, "Week parity 2 !=null");
+	} else {
+	    remoteViews.setTextViewText(R.id.tv_tydzien, SharedPrefUtils
+		    .loadString(ustawienia, Constans.WEEK_PARITY_NEXT));
+	    Log.d(TAG, "Week parity 2 ==null");
+
+	}
+	// show last plan change title
+	if (!lastMessage.getTitle().equals("")) {
+	    remoteViews.setTextViewText(R.id.tv_zmiany_tytul,
+		    lastMessage.getTitle());
+	    SharedPrefUtils.saveString(ustawienia, Constans.TITLE_PLAN_CHANGES,
+		    lastMessage.getTitle());
+	} else
+	    remoteViews.setTextViewText(R.id.tv_zmiany_tytul, SharedPrefUtils
+		    .loadString(ustawienia, Constans.TITLE_PLAN_CHANGES));
+
+	// set plan changes body
+	// if there is no messages
+	if (lastMessage.getBody().equals(getString(R.string.no_messages))) {
+	    remoteViews.setTextViewText(R.id.tv_zmiany_tresc,
+		    lastMessage.getBody());
+	    // if messages downloaded successfull
+	} else if (!lastMessage.getBody().equals("")) {
+	    String bodyLastMessage = lastMessage.getBody().substring(0, 65)
+		    + "...";
+	    remoteViews.setTextViewText(R.id.tv_zmiany_tresc, bodyLastMessage);
+
+	    SharedPrefUtils.saveString(ustawienia, Constans.BODY_PLAN_CHANGES,
+		    bodyLastMessage);
+	    if (lastMessage.getBody().equals(getString(R.string.no_messages))) {
+		remoteViews.setTextViewText(R.id.tv_zmiany_tresc,
+			bodyLastMessage);
+	    }
+	    // if have no Internet connectivity
+	} else {
+	    remoteViews.setTextViewText(R.id.tv_zmiany_tresc, SharedPrefUtils
+		    .loadString(ustawienia, Constans.BODY_PLAN_CHANGES));
+	}
+
+	// hide progress bar
+	remoteViews.setViewVisibility(R.id.ProgressBarLayout, View.INVISIBLE);
+
+	// finally update widget by RemoteView
+	appWidgetManager.updateAppWidget(thisWidget, remoteViews);
+
+	Log.i(TAG, "onStart ended");
+	return super.onStartCommand(intent, flags, startId);
+    }
+
+    @Override
+    public IBinder onBind(Intent arg0) {
+	return null;
+    }
+
+    @Override
+    protected void onHandleIntent(Intent intent) {
+
+    }
 
 }
