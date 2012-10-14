@@ -1,8 +1,5 @@
 package mad.widget;
 
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-
 import mad.widget.activities.MyGroups;
 import mad.widget.utils.Constans;
 import mad.widget.utils.Intents;

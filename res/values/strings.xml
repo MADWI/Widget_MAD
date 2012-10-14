@@ -21,7 +21,7 @@
     <string name="empty">" "</string>
     <string name="no_messages">Brak zmian w planie</string>
     <string name="hello_world">Hello world!</string>
-    <string name="title_activity_my_prefs">Ustawienia Widget MAD</string>
+    <string name="title_activity_my_prefs">Ustawienia widgetu WI ZUT</string>
     <string name="studies_type">Rodzaj studiów:</string>
     <string name="studies_degree">Kierunek_studiów:</string>
     <string name="studies_level">Stopień studiów:</string>
@@ -30,7 +30,7 @@
     <string name="studies_download_grups">Pobierz grupy</string>
     <string name="ok_button">Dalej</string>
     <string name="cancel_button">Anuluj</string>
-    <string name="group_settings_title">Ustawienia grupy - Widget MAD</string>
+    <string name="group_settings_title">Ustawienia grupy - Widget WI ZUT</string>
     <string name="menu_info_title">Informacje</string>
     <string name="about_title">O nas</string>
     <string name="logo_description">logo</string>

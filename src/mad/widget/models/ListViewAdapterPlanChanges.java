@@ -9,6 +9,7 @@ package mad.widget.models;
 import java.util.ArrayList;
 
 import mad.widget.R;
+import mad.widget.utils.Constans;
 import android.content.Context;
 import android.graphics.Color;
 import android.text.Html;
@@ -22,7 +23,6 @@ import android.widget.TextView;
 public class ListViewAdapterPlanChanges extends
 		ArrayAdapter<MessagePlanChanges> {
 
-	private static final int MAX_TITLE_LENGHT = 35;
 	private final Context context;
 	private ArrayList<MessagePlanChanges> messages = new ArrayList<MessagePlanChanges>();
 
@@ -59,8 +59,8 @@ public class ListViewAdapterPlanChanges extends
 		temp = temp.substring(0, 1).toUpperCase()
 				+ temp.substring(1, temp.length());
 
-		if (temp.length() >= MAX_TITLE_LENGHT) {
-			temp = temp.substring(0, MAX_TITLE_LENGHT) + "...";
+		if (temp.length() >= Constans.MAX_TITLE_LENGTH) {
+			temp = temp.substring(0, Constans.MAX_TITLE_LENGTH) + "...";
 			title.setText(temp);
 		} else
 			title.setText(temp);

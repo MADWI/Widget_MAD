@@ -19,5 +19,7 @@ public class Constans {
 	public static final String ACTION_WIDGET_GET_PLAN_CHANGES = "PlanChangesAction";
 	
 	public static final String PLAN_FOLDER = "/MAD_Plan_ZUT";
+	
+	public static final int MAX_TITLE_LENGTH = 30;
 
 }

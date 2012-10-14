@@ -98,7 +98,12 @@ public class UpdateWidgetService extends IntentService {
 		    String temp = lastMessage.getTitle();
 		    temp = temp.substring(0, 1).toUpperCase()
 			    + temp.substring(1, temp.length());
-		    lastMessage.setTitle(temp);
+		    
+		    if (temp.length() >= Constans.MAX_TITLE_LENGTH) {
+				temp = temp.substring(0, Constans.MAX_TITLE_LENGTH) + "...";
+				  lastMessage.setTitle(temp);
+			} else
+				  lastMessage.setTitle(temp);
 
 		    Spanned sp = Html.fromHtml(lastMessage.getBody().trim());
 		    temp = sp.toString().replaceAll("[\r\n]{1,}$", "");
