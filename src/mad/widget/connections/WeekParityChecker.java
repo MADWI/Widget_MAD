@@ -19,9 +19,6 @@ import android.util.Log;
  */
 public class WeekParityChecker {
 
-	/** Zmienna zawierajaca adres strony. */
-	private static String ZUT_WI_URL = "http://wi.zut.edu.pl";
-
 	/** Obiekt klasy HttpConnect, sluzacy do polaczenia ze strona */
 	private static HttpConnect strona = null;
 
@@ -149,26 +146,4 @@ public class WeekParityChecker {
 
 		return do_obrobki;
 	}
-
-	/**
-	 * Metoda wyszukuje i wycina podciag zawarty pomiêdzy znacznikami
-	 * 
-	 * @param searching_string
-	 *            tekst, w ktorym szuka siê zadanego podciagu
-	 * @return znaleziony podciag
-	 */
-	private CharSequence Parse(String searching_string) {
-		int begin_extract = searching_string.indexOf("<div id=\"dzien\">") + 16;
-		int end_extract = searching_string.indexOf("<div id=\"pathway\">",
-				begin_extract);
-
-		if (begin_extract < 0 || end_extract < 0)
-			return null;
-
-		CharSequence div = searching_string.subSequence(begin_extract,
-				end_extract);
-
-		return div;
-	}
-
 }
