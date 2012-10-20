@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="mad.widget"
     android:versionCode="5"
-    android:versionName="2.2" >
+    android:versionName="2.3" >
 
     <uses-permission android:name="android.permission.INTERNET" >
     </uses-permission>

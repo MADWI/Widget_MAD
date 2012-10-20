@@ -12,7 +12,7 @@ import android.util.Log;
 /**
  * Klasa uzywana na urzadzeniach podlaczonych do Internetu w celu wydobycia
  * informacji ze strony Wydzialu Informatyki ZUT o parzystosci dnia obecnego i
- * nastepnego zgodnie z planem zajêc.
+ * nastepnego zgodnie z planem zajec.
  * 
  * @author Grzegorz Fabisiak, Dawid Glinski
  * 
@@ -39,11 +39,11 @@ public class WeekParityChecker {
 	}
 
 	/**
-	 * Metoda zwraca tablice stringow, ktora mowi czy dzien obecny i nastêpny
+	 * Metoda zwraca tablice stringow, ktora mowi czy dzien obecny i nastepny
 	 * jest nieparzysty/parzysty.
 	 * 
 	 * @return Tablica stringow mowiaca o nieparzystosci/parzystosci dnia
-	 *         obecnego i nastêpnego.
+	 *         obecnego i nastepnego.
 	 */
 	public String[] getParity() {
 		String pageSource = WeekParityChecker.getURLSource(ZUT_WI_JSON);
@@ -120,8 +120,8 @@ public class WeekParityChecker {
 					String weekType = pageSrcObject.getString(date);
 
 					daysParityMap.put(date, weekType);
-					Log.d(TAG + " date" + i + 1, date);
-					Log.d(TAG + " week" + i + 1, weekType);
+					Log.d(TAG + " date", date);
+					Log.d(TAG + " week", weekType);
 				}
 			}
 

@@ -21,127 +21,150 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 
+/** Klasa odpowiedzialna za usuwanie planow zajec */
 public class RemovePlans extends Activity implements OnClickListener {
 
-	private List<String> fileList = new ArrayList<String>();
-	private File root = new File(Environment.getExternalStorageDirectory()
-			+ Constans.PLAN_FOLDER);
-	private ListView listPlans;
-	private Button removePlans;
+    /** Lista planow zajec */
+    private List<String> fileList = new ArrayList<String>();
 
+    /** Obiekt klasy File okreslajacy folder glowny */
+    private File root = new File(Environment.getExternalStorageDirectory()
+	    + Constans.PLAN_FOLDER);
+
+    /** ListView zawierajace sciagniete plany */
+    private ListView listPlans;
+
+    /**
+     * Obiekt klasy Button definiujacy przycisk usuwajacy wszystkie plany
+     */
+    private Button removePlans;
+
+    /** Metoda wykonywana przy starcie aplikacji */
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+	super.onCreate(savedInstanceState);
+	setContentView(R.layout.activity_remove_plans);
+
+	listPlans = (ListView) findViewById(R.id.listPlany);
+	removePlans = (Button) findViewById(R.id.btnUsunPlany);
+	removePlans.setOnClickListener(this);
+
+	ListDir(root);
+
+    }
+
+    /**
+     * Metoda uzupelniajaca liste sciagnietych planow
+     * 
+     * @param f
+     *            sciezka do folderu
+     */
+    private void ListDir(File f) {
+	if (f.isDirectory()) {
+	    File[] files = f.listFiles();
+	    fileList.clear();
+	    for (File file : files) {
+		fileList.add(file.getPath());
+	    }
+
+	    ArrayAdapter<String> directoryList = new ArrayAdapter<String>(this,
+		    android.R.layout.simple_list_item_1, fileList);
+	    listPlans.setAdapter(directoryList);
+	    listPlans.setClickable(true);
+	    listPlans.setOnItemClickListener(myClickListener);
+	}
+
+    }
+
+    public OnItemClickListener myClickListener = new AdapterView.OnItemClickListener() {
 	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_remove_plans);
+	public void onItemClick(AdapterView<?> arg0, View arg1,
+		final int position, long arg3) {
+	    AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+		    RemovePlans.this);
 
-		listPlans = (ListView) findViewById(R.id.listPlany);
-		removePlans = (Button) findViewById(R.id.btnUsunPlany);
-		removePlans.setOnClickListener(this);
+	    // set title
+	    alertDialogBuilder
+		    .setTitle(getString(R.string.remove_plan_alert_dialog));
 
-		ListDir(root);
+	    // set dialog message
+	    alertDialogBuilder
+		    .setMessage(R.string.remove_plan_message)
+		    .setCancelable(false)
+		    .setPositiveButton("Tak",
+			    new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog,
+					int id) {
+
+				    PlanDownloader.removePlan(fileList
+					    .get(position));
+				    ListDir(root);
+				}
+			    })
+		    .setNegativeButton("Nie",
+			    new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog,
+					int id) {
+
+				    dialog.cancel();
+				}
+			    });
+
+	    // create alert dialog
+	    AlertDialog alertDialog = alertDialogBuilder.create();
+
+	    // show it
+	    alertDialog.show();
 
 	}
+    };
 
-	private void ListDir(File f) {
-		if (f.isDirectory()) {
-			File[] files = f.listFiles();
-			fileList.clear();
-			for (File file : files) {
-				fileList.add(file.getPath());
-			}
+    /**
+     * Metoda wywolywana po kliknieciu w dane View
+     * 
+     * @param v
+     *            View ktore ma byc obsluzone
+     */
+    @Override
+    public void onClick(View v) {
+	switch (v.getId()) {
+	case R.id.btnUsunPlany:
+	    AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+		    RemovePlans.this);
 
-			ArrayAdapter<String> directoryList = new ArrayAdapter<String>(this,
-					android.R.layout.simple_list_item_1, fileList);
-			listPlans.setAdapter(directoryList);
-			listPlans.setClickable(true);
-			listPlans.setOnItemClickListener(myClickListener);
-		}
+	    // set title
+	    alertDialogBuilder
+		    .setTitle(getString(R.string.remove_plans_alert_dialog));
 
+	    // set dialog message
+	    alertDialogBuilder
+		    .setMessage(R.string.remove_plans_message)
+		    .setCancelable(false)
+		    .setPositiveButton("Tak",
+			    new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog,
+					int id) {
+
+				    PlanDownloader.removePlans();
+				    finish();
+				}
+			    })
+		    .setNegativeButton("Nie",
+			    new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog,
+					int id) {
+
+				    dialog.cancel();
+				}
+			    });
+
+	    // create alert dialog
+	    AlertDialog alertDialog = alertDialogBuilder.create();
+
+	    // show it
+	    alertDialog.show();
+
+	    break;
 	}
-
-	public OnItemClickListener myClickListener = new AdapterView.OnItemClickListener() {
-		@Override
-		public void onItemClick(AdapterView<?> arg0, View arg1,
-				final int position, long arg3) {
-			AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
-					RemovePlans.this);
-
-			// set title
-			alertDialogBuilder
-					.setTitle(getString(R.string.remove_plan_alert_dialog));
-
-			// set dialog message
-			alertDialogBuilder
-					.setMessage(R.string.remove_plan_message)
-					.setCancelable(false)
-					.setPositiveButton("Tak",
-							new DialogInterface.OnClickListener() {
-								public void onClick(DialogInterface dialog,
-										int id) {
-
-									PlanDownloader.removePlan(fileList
-											.get(position));
-									ListDir(root);
-								}
-							})
-					.setNegativeButton("Nie",
-							new DialogInterface.OnClickListener() {
-								public void onClick(DialogInterface dialog,
-										int id) {
-
-									dialog.cancel();
-								}
-							});
-
-			// create alert dialog
-			AlertDialog alertDialog = alertDialogBuilder.create();
-
-			// show it
-			alertDialog.show();
-
-		}
-	};
-
-	@Override
-	public void onClick(View v) {
-		switch (v.getId()) {
-		case R.id.btnUsunPlany:
-			AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
-					RemovePlans.this);
-
-			// set title
-			alertDialogBuilder
-					.setTitle(getString(R.string.remove_plans_alert_dialog));
-
-			// set dialog message
-			alertDialogBuilder
-					.setMessage(R.string.remove_plans_message)
-					.setCancelable(false)
-					.setPositiveButton("Tak",
-							new DialogInterface.OnClickListener() {
-								public void onClick(DialogInterface dialog,
-										int id) {
-
-									PlanDownloader.removePlans();
-									finish();
-								}
-							})
-					.setNegativeButton("Nie",
-							new DialogInterface.OnClickListener() {
-								public void onClick(DialogInterface dialog,
-										int id) {
-
-									dialog.cancel();
-								}
-							});
-
-			// create alert dialog
-			AlertDialog alertDialog = alertDialogBuilder.create();
-
-			// show it
-			alertDialog.show();
-
-			break;
-		}
-	}
+    }
 }

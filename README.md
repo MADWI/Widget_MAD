@@ -9,6 +9,15 @@
 
 
 ##CHANGELOG
+
+###Wersja 0.40
+
+NOWE
+
+- zmiana wygladu layoutu
+- zmieniony sposob parsowania dni tygodnia
+- dodano sprawdzanie parzystosci dla dnia nastepnego
+
 ###Wersja 0.30
 
 NOWE

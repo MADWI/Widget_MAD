@@ -22,23 +22,58 @@ import android.view.View;
 import android.widget.RemoteViews;
 import android.widget.Toast;
 
+/** Klasa odpowiedzialna za aktualizacje uslug widgetu */
 public class UpdateWidgetService extends IntentService {
 
+    /**
+     * Zmienna pomocna dla programistow w celu sprawdzenia wystapien wywolania
+     * klasy w konsoli (debugging).
+     */
     private static final String TAG = "UpdateWidgetService";
 
+    /** Obiekt klasy WeekParityChecker */
     private final WeekParityChecker checker = new WeekParityChecker();
+
+    /** Obiekt klasy GetPlanChanges */
     private final GetPlanChanges PlanChanges = new GetPlanChanges();
+
+    /** Obiekt klasy MessagePlanChanges */
     private MessagePlanChanges lastMessage = new MessagePlanChanges();
 
     // fields Strings
+
+    /**
+     * Zmienna inicjujaca informacje o grupie uzytkownika.
+     */
     private String userGroup = " ";
+
+    /**
+     * Zmienna inicjujaca informacje o typie studiow uzytkownika.
+     */
     private String userStudiesType = " ";
 
+    /** Domyslny konstruktor klasy */
     public UpdateWidgetService() {
 	super("UpdateWidgetService");
 
     }
 
+    /**
+     * Metoda wywolywana kazdorazowo, gdy klient wyraznie uruchomi usluge
+     * startService()
+     * 
+     * @param intent
+     *            intencja ktora aktualizujemy
+     * 
+     * @param flags
+     *            dodatkowe dane o konkretnym wywolaniu
+     * 
+     * @param startId
+     *            unikalny numer id reprezentujacy dane wywolanie
+     * 
+     * @return wartosc wskazujaca jak powinien zachowac sie system dla danego
+     *         stanu wywolania
+     */
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
 	Log.i(TAG, "onStart");
@@ -98,12 +133,13 @@ public class UpdateWidgetService extends IntentService {
 		    String temp = lastMessage.getTitle();
 		    temp = temp.substring(0, 1).toUpperCase()
 			    + temp.substring(1, temp.length());
-		    
+
 		    if (temp.length() >= Constans.MAX_TITLE_LENGTH) {
-				temp = temp.substring(0, Constans.MAX_TITLE_LENGTH) + "...";
-				  lastMessage.setTitle(temp);
-			} else
-				  lastMessage.setTitle(temp);
+			temp = temp.substring(0, Constans.MAX_TITLE_LENGTH)
+				+ "...";
+			lastMessage.setTitle(temp);
+		    } else
+			lastMessage.setTitle(temp);
 
 		    Spanned sp = Html.fromHtml(lastMessage.getBody().trim());
 		    temp = sp.toString().replaceAll("[\r\n]{1,}$", "");
@@ -134,7 +170,6 @@ public class UpdateWidgetService extends IntentService {
 		    this.getApplicationContext(), showPlanIntent);
 	    remoteViews.setOnClickPendingIntent(R.id.btnPobierzPlan,
 		    pendingIntentPlan);
-
 	} else {
 	    Log.d(TAG, "Plan nie isteniejê, pobieram...");
 	    if (HttpConnect.isOnline(this.getApplicationContext())) {
@@ -235,11 +270,25 @@ public class UpdateWidgetService extends IntentService {
 	return super.onStartCommand(intent, flags, startId);
     }
 
+    /**
+     * Metoda zwracajaca kanal komunikacyjny do uslugi
+     * 
+     * @param arg0
+     *            intencja uzywana do powiazania z usluga
+     * 
+     * @return domyslna implementacja metody zwraca null, inaczej obiekt IBinder
+     *         przez ktory klient moze wezwac usluge
+     */
     @Override
     public IBinder onBind(Intent arg0) {
 	return null;
     }
 
+    /**
+     * Metoda jest wywolywana na dzialajacym watku z zadaniem do procesu
+     * 
+     * @param intent
+     */
     @Override
     protected void onHandleIntent(Intent intent) {
 

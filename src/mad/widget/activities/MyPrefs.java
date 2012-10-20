@@ -12,63 +12,67 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 
+/**
+ * Klasa definiujaca widok okna ustawien
+ */
 public class MyPrefs extends PreferenceActivity {
 
-	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		addPreferencesFromResource(R.xml.prefs);
+    /** Metoda wywolywana przy starcie aplikacji */
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+	super.onCreate(savedInstanceState);
+	addPreferencesFromResource(R.xml.prefs);
 
-		final Preference about = (Preference) findPreference("about");
+	final Preference about = (Preference) findPreference("about");
 
-		about.setOnPreferenceClickListener(new OnPreferenceClickListener() {
+	about.setOnPreferenceClickListener(new OnPreferenceClickListener() {
 
-			public boolean onPreferenceClick(Preference preference) {
+	    public boolean onPreferenceClick(Preference preference) {
 
-				final Dialog dialog = new Dialog(MyPrefs.this);
-				dialog.setContentView(R.layout.dialog_info_layout);
-				dialog.setTitle(getString(R.string.about_title));
+		final Dialog dialog = new Dialog(MyPrefs.this);
+		dialog.setContentView(R.layout.dialog_info_layout);
+		dialog.setTitle(getString(R.string.about_title));
 
-				Button dialogButton = (Button) dialog
-						.findViewById(R.id.btnOkDialog);
-				// if button is clicked, close the custom dialog
-				dialogButton.setOnClickListener(new OnClickListener() {
+		Button dialogButton = (Button) dialog
+			.findViewById(R.id.btnOkDialog);
+		// if button is clicked, close the custom dialog
+		dialogButton.setOnClickListener(new OnClickListener() {
 
-					@Override
-					public void onClick(View v) {
-						dialog.dismiss();
-					}
-				});
-
-				dialog.show();
-				return true;
-			}
+		    @Override
+		    public void onClick(View v) {
+			dialog.dismiss();
+		    }
 		});
 
-		final Preference plans = (Preference) findPreference("plans");
+		dialog.show();
+		return true;
+	    }
+	});
 
-		plans.setOnPreferenceClickListener(new OnPreferenceClickListener() {
+	final Preference plans = (Preference) findPreference("plans");
 
-			public boolean onPreferenceClick(Preference preference) {
-				Intent intent = new Intent(MyPrefs.this, RemovePlans.class);
-				intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-				MyPrefs.this.startActivity(intent);
-				return true;
-			}
-		});
+	plans.setOnPreferenceClickListener(new OnPreferenceClickListener() {
 
-		final Preference groups = (Preference) findPreference("groups");
+	    public boolean onPreferenceClick(Preference preference) {
+		Intent intent = new Intent(MyPrefs.this, RemovePlans.class);
+		intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+		MyPrefs.this.startActivity(intent);
+		return true;
+	    }
+	});
 
-		groups.setOnPreferenceClickListener(new OnPreferenceClickListener() {
+	final Preference groups = (Preference) findPreference("groups");
 
-			public boolean onPreferenceClick(Preference preference) {
-				Intent intent = new Intent(MyPrefs.this, MyGroups.class);
-				intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-				MyPrefs.this.startActivity(intent);
+	groups.setOnPreferenceClickListener(new OnPreferenceClickListener() {
 
-				return true;
-			}
-		});
+	    public boolean onPreferenceClick(Preference preference) {
+		Intent intent = new Intent(MyPrefs.this, MyGroups.class);
+		intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+		MyPrefs.this.startActivity(intent);
 
-	}
+		return true;
+	    }
+	});
+
+    }
 }
