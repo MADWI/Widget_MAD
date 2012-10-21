@@ -17,6 +17,7 @@ NOWE
 - zmiana wygladu layoutu
 - zmieniony sposob parsowania dni tygodnia
 - dodano sprawdzanie parzystosci dla dnia nastepnego
+- dodano dokumentacje
 
 ###Wersja 0.30
 

@@ -22,12 +22,11 @@ import android.util.Log;
 public class GetPlanChanges {
 
     /**
-     * Zmienna pomocna dla programistow w celu ustalenia dzialania klasy
-     * (debugging).
+     * Zmienna do debuggowania.
      */
     private static final String TAG = "GetPlanChanges";
 
-    /** Zmienna inicjalizujaca zawartosc strony. */
+    /** Zmienna przechowujaca zawartosc strony. */
     private static String strona = "";
 
     /**

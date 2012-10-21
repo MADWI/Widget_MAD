@@ -22,12 +22,11 @@ import android.view.View;
 import android.widget.RemoteViews;
 import android.widget.Toast;
 
-/** Klasa odpowiedzialna za aktualizacje uslug widgetu */
+/** Usluga aktualizujaca widget */
 public class UpdateWidgetService extends IntentService {
 
     /**
-     * Zmienna pomocna dla programistow w celu sprawdzenia wystapien wywolania
-     * klasy w konsoli (debugging).
+     * Zmienna do debuggowania
      */
     private static final String TAG = "UpdateWidgetService";
 
@@ -43,12 +42,12 @@ public class UpdateWidgetService extends IntentService {
     // fields Strings
 
     /**
-     * Zmienna inicjujaca informacje o grupie uzytkownika.
+     * Zmienna przechowujaca informacje o grupie uzytkownika.
      */
     private String userGroup = " ";
 
     /**
-     * Zmienna inicjujaca informacje o typie studiow uzytkownika.
+     * Zmienna przechowujaca informacje o typie studiow uzytkownika.
      */
     private String userStudiesType = " ";
 
@@ -59,8 +58,7 @@ public class UpdateWidgetService extends IntentService {
     }
 
     /**
-     * Metoda wywolywana kazdorazowo, gdy klient wyraznie uruchomi usluge
-     * startService()
+     * Metoda wywolywana kazdorazowo przy starcie uslugi
      * 
      * @param intent
      *            intencja ktora aktualizujemy
@@ -270,25 +268,11 @@ public class UpdateWidgetService extends IntentService {
 	return super.onStartCommand(intent, flags, startId);
     }
 
-    /**
-     * Metoda zwracajaca kanal komunikacyjny do uslugi
-     * 
-     * @param arg0
-     *            intencja uzywana do powiazania z usluga
-     * 
-     * @return domyslna implementacja metody zwraca null, inaczej obiekt IBinder
-     *         przez ktory klient moze wezwac usluge
-     */
     @Override
     public IBinder onBind(Intent arg0) {
 	return null;
     }
 
-    /**
-     * Metoda jest wywolywana na dzialajacym watku z zadaniem do procesu
-     * 
-     * @param intent
-     */
     @Override
     protected void onHandleIntent(Intent intent) {
 

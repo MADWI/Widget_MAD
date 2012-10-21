@@ -29,8 +29,7 @@ import android.util.Log;
 public class PlanDownloader {
 
     /**
-     * Zmienna pomocna dla programistow w celu ustalenia dzialania klasy
-     * (debugging).
+     * Zmienna do debuggowania.
      */
     private static final String TAG = "WidgetDownload";
 

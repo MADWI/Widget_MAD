@@ -36,12 +36,14 @@ public class PlanChangesActivity extends Activity {
     private final GetPlanChanges pars = new GetPlanChanges();
 
     /**
-     * Zmienna pomocna dla programistow w celu ustalenia dzialania klasy
-     * (debugging).
+     * Zmienna do debuggowania.
      */
     private static final String TAG = "PlanChangesActivity";
 
-    /** Obiekt klasy Resources, odwolujacy sie do elementow Layoutu */
+    /**
+     * Obiekt klasy Resources, odwolujacy sie do wartosci z pliku
+     * res/strings.xml
+     */
     private Resources res;
 
     /**
@@ -62,7 +64,7 @@ public class PlanChangesActivity extends Activity {
     /** Zmienna stwierdzajaca wcisniecie przycisku odswiezania */
     private boolean enableExecuteRefresh = true;
 
-    /** Metoda wywolywana przy starcie aplikacji */
+    /** Metoda wywolywana przy starcie aktywnosci */
     @Override
     public void onCreate(Bundle savedInstanceState) {
 	super.onCreate(savedInstanceState);
@@ -78,14 +80,14 @@ public class PlanChangesActivity extends Activity {
     }
 
     /**
-     * Metoda pokazujaca na ekranie Toast z informacja o konkretnym zdarzeniu
+     * Metoda wyswietlajaca powiadomienie Toast
      * 
      * @param text
      *            tekst powiadomienia
      * @param duration
      *            czas wyswietlania komunikatu
      * @param con
-     *            kontekst aplikacji w ktorym odbior dziala
+     *            kontekst aplikacji 
      */
     public void showToast(String text, int duration, Context con) {
 	Log.i(TAG, "showToast");
@@ -137,9 +139,10 @@ public class PlanChangesActivity extends Activity {
     }
 
     /**
-     * Metoda stwierdzajaca wcisniecie konkretnego pola z wiadomoscia
+     * Metoda sprawdza wybor elementu z menu
      * 
      * @param item
+     *            wybrany element menu
      * 
      * @return true, jezeli wybrano element
      */

@@ -27,20 +27,22 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 /**
- * Klasa definiujaca grupe na podstawie wyboru uzytkownika apikacji
+ * Aktywnosc wyboru grupy
  **/
 public class MyGroups extends Activity implements OnClickListener {
 
     /**
-     * Zmienna pomocna dla programistow w celu ustalenia dzialania klasy
-     * (debugging).
+     * Zmienna do debuggowania.
      */
     private static final String TAG = "MyPrefs";
 
     /** Obiekt klasy SharedPreferences (plik ustawien) */
     private SharedPreferences preferences;
 
-    /** Obiekt klasy Resources, odwolujacy sie do elementow Layoutu */
+    /**
+     * Obiekt klasy Resources, odwolujacy sie stringow w pliku
+     * res/values/strings.xml
+     */
     private Resources res;
 
     /** Obiekt w ktorym beda przechowywane grupy pobrane ze strony */
@@ -94,7 +96,7 @@ public class MyGroups extends Activity implements OnClickListener {
     /** Zmienna w ktorej przechowywany jest rok studiow */
     private int rok;
 
-    /** Metoda wywolywana przy starcie aplikacji */
+    /** Metoda wywolywana przy starcie aktywnosci */
     @Override
     public void onCreate(Bundle savedInstanceState) {
 	super.onCreate(savedInstanceState);
@@ -173,7 +175,7 @@ public class MyGroups extends Activity implements OnClickListener {
 	}
     }
 
-    /** Klasa realizuujaca pobieranie grup dziekanskich ze strony */
+    /** Klasa realizujaca pobieranie grup dziekanskich ze strony */
     private class AsyncTaskDownloadGroups extends
 	    AsyncTask<Context, Void, String[]> {
 

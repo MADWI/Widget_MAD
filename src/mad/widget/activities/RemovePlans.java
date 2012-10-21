@@ -21,7 +21,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 
-/** Klasa odpowiedzialna za usuwanie planow zajec */
+/** Klasa do usuwania planow zajec */
 public class RemovePlans extends Activity implements OnClickListener {
 
     /** Lista planow zajec */
@@ -35,11 +35,11 @@ public class RemovePlans extends Activity implements OnClickListener {
     private ListView listPlans;
 
     /**
-     * Obiekt klasy Button definiujacy przycisk usuwajacy wszystkie plany
+     * Obiekt klasy Button - przycisk usuwajacy wszystkie plany
      */
     private Button removePlans;
 
-    /** Metoda wykonywana przy starcie aplikacji */
+    /** Metoda wykonywana przy starcie aktywnosci */
     @Override
     public void onCreate(Bundle savedInstanceState) {
 	super.onCreate(savedInstanceState);

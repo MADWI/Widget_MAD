@@ -13,11 +13,11 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 
 /**
- * Klasa definiujaca widok okna ustawien
+ * Aktywnosc ustawien
  */
 public class MyPrefs extends PreferenceActivity {
 
-    /** Metoda wywolywana przy starcie aplikacji */
+    /** Metoda wywolywana przy starcie aktywnosci */
     @Override
     public void onCreate(Bundle savedInstanceState) {
 	super.onCreate(savedInstanceState);

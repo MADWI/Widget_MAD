@@ -5,19 +5,21 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 /**
- * Klasa definiujaca mozliwosci obiektu SharedPreferences
+ * Klasa wspomagajaca prace z SharedPreferences
  * 
  * @author Sebastian Swierczek
  * */
 public class SharedPrefUtils {
 
     /**
-     * Metoda odpowiedzialna za pobranie danych z pliku ustawien
+     * Metoda zwraca obiekt SharedPreferences, ktory wskazuje na plik
+     * SharedPreferences
+     * 
      * 
      * @param ctx
      *            kontekst aplikacji
      * 
-     * @return pobrana dana z pliku ustawien
+     * @return wskazany obiekt SharedPreferences
      */
     public static SharedPreferences getSharedPreferences(Context ctx) {
 	return ctx.getSharedPreferences(Constans.PREFERENCES_NAME,
@@ -25,7 +27,7 @@ public class SharedPrefUtils {
     }
 
     /**
-     * Metoda odpowiedzialna za wyczyszczenie pliku ustawien
+     * Metoda czyszczaca dane z SharedPreferences
      * 
      * @param ctx
      *            kontekst aplikacji
@@ -39,14 +41,14 @@ public class SharedPrefUtils {
     }
 
     /**
-     * Metoda do zapisu informacji w pliku SharedPreferences
+     * Metoda do zapisu informacji w SharedPreferences
      * 
      * @param preferences
-     *            nazwa pliku w ktorym zapisane sa dane
+     *            obiekt SharedPreferences w ktorym zapisane sa dane
      * @param key
-     *            dane do zapisu
+     *            nazwa zapisywanego elementu w SharedPreferences
      * @param value
-     *            wartosc pod ktora zapisana jest dana informacja
+     *            wartosc zapisywanego elementu w SharedPreferences
      */
     public static void saveString(SharedPreferences preferences, String key,
 	    String value) {
@@ -56,15 +58,15 @@ public class SharedPrefUtils {
     }
 
     /**
-     * Metoda do zaladowania pliku ustawien
+     * Metoda wczytujaca z SharedPreferences
      * 
      * @param preferences
-     *            plik ustawien, ktory ma byc zaladowany
+     *            wczytywany obiekt
      * 
      * @param key
-     *            klucz, ktory chcemy zaladowac
+     *            wczytywana nazwa
      * 
-     * @return uzyskany klucz
+     * @return wartosc wczytanego elementu
      */
     public static String loadString(SharedPreferences preferences, String key) {
 	return preferences.getString(key, "");

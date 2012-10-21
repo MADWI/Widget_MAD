@@ -32,8 +32,7 @@ import android.widget.Toast;
 public class HttpConnect {
 
     /***
-     * Zmienna pomocna dla programistow w celu ustalenia dzialania klasy
-     * (debugging).
+     * Zmienna do debuggowania.
      */
     private static final String TAG = "HttpConnect";
 
@@ -56,7 +55,8 @@ public class HttpConnect {
      * Konstruktor sluzacy do polaczenia ze strona WWW.
      * 
      * @param timeout
-     *            czas polaczenia w milisekundach
+     *            maksymalny czas oczekiwania na odpowiedz serwera w
+     *            milisekundach
      * @param adres
      *            adres URL do strony
      */

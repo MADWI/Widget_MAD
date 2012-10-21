@@ -14,19 +14,19 @@ import android.net.Uri;
 import android.os.Environment;
 
 /**
- * Klasa definiujaca intencje uzyte w aplikacji
+ * Intencje uzyte w aplikacji
  * 
  * @author Sebastian Swierczek
  */
 public class Intents {
 
     /**
-     * Tworzy i zwraca intencje sluzaca do odswiezania widgetu.
+     * Intencja odswiezania widgetu
      * 
      * @param context
-     *            kontekst dla ktorego dziala odbior
+     *            kontekst aplikacji
      * 
-     * @return intencja do odswiezania widgetu
+     * @return intencja odswiezania widgetu
      */
     public static final Intent actionRefresh(final Context context) {
 	final Intent intent = new Intent(context, UpdateWidgetService.class);
@@ -35,12 +35,11 @@ public class Intents {
     }
 
     /**
-     * Tworzy i zwraca intencje sluzaca do zmian w planie
+     * Intencja zmian w planie
      * 
      * @param context
-     *            kontekst dla ktorego dziala odbior
-     * 
-     * @return intencja do zmian w planie
+     *            kontekst aplikacji
+     * @return intencja zmian w planie
      */
     public static final Intent actionPlanChanges(final Context context) {
 	final Intent intent = new Intent(context, PlanChangesActivity.class);
@@ -50,12 +49,12 @@ public class Intents {
     }
 
     /**
-     * Tworzy i zwraca intencje sluzaca do ustawien.
+     * Intencja okna ustawien
      * 
      * @param context
-     *            kontekst dla ktorego dziala odbior
+     *            kontekst aplikacji
      * 
-     * @return intencja do ustawien
+     * @return intencja okna ustawien
      */
     public static final Intent actionSettings(final Context context) {
 	final Intent intent = new Intent(context, MyPrefs.class);
@@ -64,12 +63,11 @@ public class Intents {
     }
 
     /**
-     * Tworzy i zwraca intencje sluzaca do polaczenia ze strona.
+     * Intencja polaczenia ze strona SKN M. A. D.
      * 
      * @param context
-     *            kontekst dla ktorego dziala odbior
-     * 
-     * @return intencja do polaczenia.
+     *            kontekst aplikacji
+     * @return intencja polaczenia ze strona SKN M. A. D.
      */
     public static final Intent actionWebpage(final Context context) {
 	final Uri uri = Uri.parse("http://www.mad.zut.edu.pl");
@@ -79,14 +77,14 @@ public class Intents {
     }
 
     /**
-     * Tworzy i zwraca intencje sluzaca do pokazywania planu.
+     * Intencja otwierajaca plik .pdf z planem
      * 
      * @param context
-     *            kontekst dla ktorego dziala odbior
+     *            kontekst aplikacji
      * @param grupa
-     *            grupa dla ktorej ma byc pokazany plan
-     * 
-     * @return intencja do pokazywania planu.
+     *            numer grupy wybranej przez uzytkownika
+     * @return intencja otwierajaca plik .pdf z planem, gdy plan nie istnieje
+     *         null
      */
     public static final Intent actionShowPlan(final Context context,
 	    String grupa) {
@@ -106,31 +104,12 @@ public class Intents {
 
     }
 
-    /**
-     * Metoda tworzy i zwraca oczekujaca intencje
-     * 
-     * @param context
-     *            kontekst dla ktorego dziala odbior
-     * @param intent
-     *            intencja dla jakiej ma byc utworzona ta oczekujaca
-     * @return utworzona intencja
-     */
     public static PendingIntent createPendingActivity(final Context context,
 	    final Intent intent) {
 	return PendingIntent.getActivity(context, intent.hashCode(), intent,
 		PendingIntent.FLAG_UPDATE_CURRENT);
     }
 
-    /**
-     * Metoda tworzy oczekujaca intencje uslugi
-     * 
-     * @param context
-     *            kontekst dla ktorego dziala odbior
-     * 
-     * @param intent
-     *            usluga dla jakiej ma byc utworzona ta oczekujaca
-     * @return utworzona usluga
-     * */
     public static PendingIntent createPendingService(final Context context,
 	    final Intent intent) {
 	return PendingIntent.getService(context, 0, intent,

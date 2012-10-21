@@ -49,7 +49,7 @@ public class MessagePlanChanges {
     }
 
     /**
-     * Metoda definiujaca tytul wiadomosci
+     * Metoda ustawiajaca tytul wiadomosci
      * 
      * @param arg
      *            zadany tytul
@@ -59,7 +59,7 @@ public class MessagePlanChanges {
     }
 
     /**
-     * Metoda definiujaca date wiadomosci
+     * Metoda ustawiajaca date wiadomosci
      * 
      * @param arg
      *            zadana data
@@ -69,7 +69,7 @@ public class MessagePlanChanges {
     }
 
     /**
-     * Metoda definiujaca tresc wiadomosci
+     * Metoda ustawiajaca tresc wiadomosci
      * 
      * @param arg
      *            zadana tresc

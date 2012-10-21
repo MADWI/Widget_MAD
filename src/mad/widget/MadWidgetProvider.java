@@ -14,28 +14,23 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.RemoteViews;
 
-/**
- * Klasa zawierajaca informacje o dostawcy widgetu
- */
+/** Glowna klasa widgetu */
 public class MadWidgetProvider extends AppWidgetProvider {
 
     /**
-     * Zmienna pomocna dla programistow w celu ustalenia dzialania klasy
-     * (debugging).
+     * Zmienna do debuggowania.
      */
     private static final String TAG = "AppWidgetProvider";
 
     /**
-     * Metoda odpowiedzialna za odswiezanie widgetu
+     * Metoda wywolywana przy odswiezeniu widgetu przez system
      * 
      * @param context
-     *            kontekst aplikacji w ktorym odbior dziala
+     *            kontekst aplikacji
      * @param appWidgetManager
-     *            obiekt klasy AppWidgetManager na ktorym mozna wywolac metode
-     *            updateAppWidget()
+     * 
      * @param appWidgetIds
-     *            identyfikator instancji widgetu dla ktorej ma zostac wywolana
-     *            metoda
+     *            identyfikator instancji widgetu
      */
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager,
@@ -95,10 +90,10 @@ public class MadWidgetProvider extends AppWidgetProvider {
 
     /**
      * Metoda, ktora jest wywolywana gdy zostanie usunieta z ekranu ostatnia
-     * instancja widgetu dla danego dostawcy
+     * instancja widgetu
      * 
      * @param context
-     *            kontekst aplikacji w ktorym odbior dziala
+     *            kontekst aplikacji
      */
     @Override
     public void onDisabled(Context context) {
@@ -108,11 +103,10 @@ public class MadWidgetProvider extends AppWidgetProvider {
     }
 
     /**
-     * Metoda, wskazujaca istnienie co najmniej jednej instancji widgetu
-     * dzialajacej na ekranie poczatkowym
+     * Metoda, ktora jest wywolywana przy dodawaniu instancji widgetu na ekran
      * 
      * @param context
-     *            kontekst aplikacji w ktorym odbior dziala
+     *            kontekst aplikacji
      */
     @Override
     public void onEnabled(Context context) {
@@ -129,11 +123,10 @@ public class MadWidgetProvider extends AppWidgetProvider {
     }
 
     /**
-     * Metoda, ktora jest zabezpieczeniem przed niespodzewanym wyjatkiem podczas
-     * aktualizacji danych
+     * Obsluguje intencje odbierane od pozostalych metod
      * 
      * @param context
-     *            kontekst aplikacji w ktorym odbior dziala
+     *            kontekst aplikacji
      * @param intent
      *            odebrana intencja aktualizacji
      */
