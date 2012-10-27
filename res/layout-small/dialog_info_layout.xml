@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:scrollbars="vertical" >
+
+    <Button
+        android:id="@+id/btnOkDialog"
+        android:layout_width="100dp"
+        android:layout_height="45dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:text="@string/ok_title" />
+
+    <ImageView
+        android:id="@+id/imgLogoDialog"
+        android:layout_width="90dp"
+        android:layout_height="100dp"
+        android:layout_alignParentLeft="true"
+        android:contentDescription="@string/logo_description"
+        android:src="@drawable/logo" />
+
+    <TextView
+        android:id="@+id/txtAuthorsdialog"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/btnOkDialog"
+        android:layout_below="@+id/txtMailDialog"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="5dp"
+        android:text="@string/authors_list"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <TextView
+        android:id="@+id/txtWebsiteDialog"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/imgLogoDialog"
+        android:layout_centerHorizontal="true"
+        android:text="@string/website"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <TextView
+        android:id="@+id/txtMailDialog"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/txtWebsiteDialog"
+        android:layout_centerHorizontal="true"
+        android:text="@string/email"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <TextView
+        android:id="@+id/txtNameDialog"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/imgLogoDialog"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/imgLogoDialog"
+        android:gravity="center_vertical|center_horizontal"
+        android:text="@string/authors"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+</RelativeLayout>
