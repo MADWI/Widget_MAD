@@ -193,5 +193,17 @@
         android:text="@string/tomorrow"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:textSize="15dp" />
+
+    <Button
+        android:id="@+id/btnPokazKalendarz"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/tv_zmiany_tytul"
+        android:layout_alignLeft="@+id/tv_data"
+        android:layout_below="@+id/tv_ustawienia"
+        android:layout_toLeftOf="@+id/imb_odswiez"
+        android:background="@android:color/transparent"
+        android:gravity="right|center_vertical"
+        android:text="@string/empty" />
 
 </RelativeLayout>

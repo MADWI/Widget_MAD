@@ -11,6 +11,7 @@
     <string name="plan_changes_Messages">Nie można pobrać wiadomości</string>
     <string name="plan_changes_finished">Zakończono !</string>
     <string name="plan_changes_refreshing_title">Odswieżanie wiadomości</string>
+    <string name="refreshing_week_parity_list_title">Odswieżanie listy dni</string>
     <string name="refreshing_body">Proszę czekać &#8230;</string>
     <string name="plan_for">Plan:</string>
     <string name="authors_list">Opiekun koła/Project Manager:\n----------\n dr inż. Radosław Maciaszczyk\n\nProgramiści:\n----------\n- Fabisiak Grzegorz\n- Gliński Dawid\n- Peryt Sebastian\n- Świerczek Sebastian\n- Wojtalewicz Michał</string>
@@ -20,6 +21,7 @@
     <string name="settings">Ustawienia</string>
     <string name="empty">" "</string>
     <string name="no_messages">Brak zmian w planie</string>
+    <string name="no_week_parity_list">Brak danych o parzystości dni</string>
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_my_prefs">Ustawienia widgetu WI ZUT</string>
     <string name="studies_type">Rodzaj studiów:</string>
@@ -48,9 +50,11 @@
     <string name="remove_all_plans">Usuń wszystkie</string>
     <string name="remove_plans_alert_dialog">Usuń plany</string>
     <string name="remove_plans_message">Czy na pewno chcesz usunąć wszystkie plany z dysku?</string>
-     <string name="remove_plan_alert_dialog">Usuń plan</string>
+    <string name="remove_plan_alert_dialog">Usuń plan</string>
     <string name="remove_plan_message">Czy na pewno chcesz usunąć plan z dysku?</string>
     <string name="today">dzisiaj:</string>
     <string name="tomorrow">jutro:</string>
+    <string name="title_activity_calendar">Calendar</string>
+    <string name="cant_download_week_parity_list">Nie można pobrać listy </string>
 
 </resources>

@@ -55,13 +55,18 @@
         <activity
             android:name=".activities.MyPrefs"
             android:label="@string/title_activity_my_prefs"
-            android:theme="@android:style/Theme.NoTitleBar" >
+            android:theme="@android:style/Theme.Black.NoTitleBar" >
             <intent-filter>
                 <category android:name="android.intent.category.LAUNCHER" />
 
                 <action android:name="android.intent.action.MAIN" />
                 <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name=".activities.CalendarActivity"
+            android:label="@string/title_activity_calendar"
+            android:theme="@android:style/Theme.Black.NoTitleBar" >
         </activity>
     </application>
 

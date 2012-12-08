@@ -5,77 +5,77 @@ package mad.widget.models;
  */
 public class MessagePlanChanges {
 
-    /** Zmienna okreslajaca tytul */
-    public String title;
+	/** Zmienna okreslajaca tytul */
+	private String title;
 
-    /** Zmienna okreslajaca date */
-    public String date;
+	/** Zmienna okreslajaca date */
+	private String date;
 
-    /** Zmienna okreslajaca tresc */
-    public String body;
+	/** Zmienna okreslajaca tresc */
+	private String body;
 
-    /** Konstruktor inicjalizujacy zmnienne */
-    public MessagePlanChanges() {
-	title = "";
-	date = "";
-	body = "";
-    }
+	/** Konstruktor inicjalizujacy zmnienne */
+	public MessagePlanChanges() {
+		title = "";
+		date = "";
+		body = "";
+	}
 
-    /**
-     * Metoda zwracajaca tytul
-     * 
-     * @return tytul wiadomosci
-     */
-    public String getTitle() {
-	return title;
-    }
+	/**
+	 * Metoda zwracajaca tytul
+	 * 
+	 * @return tytul wiadomosci
+	 */
+	public String getTitle() {
+		return title;
+	}
 
-    /**
-     * Metoda zwracajaca date wiadomosci
-     * 
-     * @return data wiadomosci
-     */
-    public String getDate() {
-	return date;
-    }
+	/**
+	 * Metoda zwracajaca date wiadomosci
+	 * 
+	 * @return data wiadomosci
+	 */
+	public String getDate() {
+		return date;
+	}
 
-    /**
-     * Metoda zwracajaca tresc wiadomosci
-     * 
-     * @return tresc wiadomosci
-     */
-    public String getBody() {
-	return body;
-    }
+	/**
+	 * Metoda zwracajaca tresc wiadomosci
+	 * 
+	 * @return tresc wiadomosci
+	 */
+	public String getBody() {
+		return body;
+	}
 
-    /**
-     * Metoda ustawiajaca tytul wiadomosci
-     * 
-     * @param arg
-     *            zadany tytul
-     * */
-    public void setTitle(String arg) {
-	title = arg;
-    }
+	/**
+	 * Metoda ustawiajaca tytul wiadomosci
+	 * 
+	 * @param arg
+	 *          zadany tytul
+	 * */
+	public void setTitle(String arg) {
+		title = arg;
+	}
 
-    /**
-     * Metoda ustawiajaca date wiadomosci
-     * 
-     * @param arg
-     *            zadana data
-     */
-    public void setDate(String arg) {
-	date = arg;
-    }
+	/**
+	 * Metoda ustawiajaca date wiadomosci
+	 * 
+	 * @param arg
+	 *          zadana data
+	 */
+	public void setDate(String arg) {
+		date = arg;
+	}
 
-    /**
-     * Metoda ustawiajaca tresc wiadomosci
-     * 
-     * @param arg
-     *            zadana tresc
-     */
-    public void setBody(String arg) {
-	body = arg;
-    }
+	/**
+	 * Metoda ustawiajaca tresc wiadomosci
+	 * 
+	 * @param arg
+	 *          zadana tresc
+	 */
+	public void setBody(String arg) {
+		body = arg;
+	}
 
 }
