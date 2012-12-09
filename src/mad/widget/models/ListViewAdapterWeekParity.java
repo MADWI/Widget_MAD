@@ -19,7 +19,6 @@ import android.widget.TextView;
  */
 public class ListViewAdapterWeekParity extends ArrayAdapter<DayParity> {
 
-	/** Staly obiekt typu Context */
 	private final Context context;
 
 	ArrayList<DayParity> parityList = new ArrayList<DayParity>();
@@ -40,28 +39,44 @@ public class ListViewAdapterWeekParity extends ArrayAdapter<DayParity> {
 
 		TextView dateParity = (TextView) rowView.findViewById(R.id.dateParity);
 		TextView parity = (TextView) rowView.findViewById(R.id.parity);
+		TextView separator = (TextView) rowView.findViewById(R.id.separator);
+
+		int color = Color.argb(255, 17, 160, 213);
+		separator.setBackgroundColor(color);
+
 		String dateString = "";
 		String parityString = "";
 		String dayName = "";
 		if (parityList.get(position) != null) {
 
-			int ColorParzysty = Color.argb(255, 255, 0, 0);
-			int ColorNieparzysty = Color.argb(255, 0, 0, 255);
-
 			dateString = parityList.get(position).getDate();
 			parityString = parityList.get(position).getParity();
 			dayName = parityList.get(position).getDayName();
-			
-			if (parityString.equals("parzysty"))
-				parity.setTextColor(ColorParzysty);
 
-			else if (parityString.equals("nieparzysty"))
-				parity.setTextColor(ColorNieparzysty);
+			if (parityString.equals("parzysty")) {
+				parity.setTextColor(Color.RED);
+				dateParity.setTextColor(Color.BLACK);
+
+			}
+
+			else if (parityString.equals("nieparzysty")) {
+				parity.setTextColor(Color.BLUE);
+				dateParity.setTextColor(Color.BLACK);
+			} else {
+				parity.setTextColor(Color.GRAY);
+				dateParity.setTextColor(Color.BLACK);
+			}
 
 		}
 
+		if (dayName.equals(context.getString(R.string.first_day_of_week))) {
+			separator.setText(context.getString(R.string.new_week_separator));
+			separator.setVisibility(View.VISIBLE);
+		} else
+			separator.setVisibility(View.GONE);
+
 		dateParity.setText(dayName + " (" + dateString + ")");
-		//dateParity.setText(dateString);
+		// dateParity.setText(dateString);
 		parity.setText(parityString);
 
 		return rowView;

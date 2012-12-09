@@ -1,5 +1,7 @@
 package mad.widget.models;
 
+import java.util.GregorianCalendar;
+
 /**
  * 
  * @author Sebastian Swierczek
@@ -8,22 +10,25 @@ package mad.widget.models;
 public class DayParity {
 
 	private String date;
-
 	private String parity;
-
 	private String dayName;
+	private GregorianCalendar gregorianCal;
 
 	public DayParity() {
 
 		setDate("");
 		setParity("");
+		setDayName("");
+		setGregorianCal(null);
 	}
 
-	public DayParity(String date, String parity, String dayName) {
+	public DayParity(String date, String parity, String dayName,
+			GregorianCalendar gregorianCal) {
 
 		this.setDate(date);
 		this.setParity(parity);
 		this.setDayName(dayName);
+		this.setGregorianCal(gregorianCal);
 	}
 
 	public String getParity() {
@@ -48,6 +53,14 @@ public class DayParity {
 
 	public void setDayName(String dayName) {
 		this.dayName = dayName;
+	}
+
+	public GregorianCalendar getGregorianCal() {
+		return gregorianCal;
+	}
+
+	public void setGregorianCal(GregorianCalendar gregorianCal) {
+		this.gregorianCal = gregorianCal;
 	}
 
 }
