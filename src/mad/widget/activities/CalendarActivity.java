@@ -85,7 +85,7 @@ public class CalendarActivity extends Activity {
 		adapter = new ListViewAdapterWeekParity(getApplicationContext(),
 				android.R.layout.simple_list_item_1, android.R.id.text1, parityList);
 
-		lvWeekList.setOnItemClickListener(new OnItemClickListener() {
+		/*lvWeekList.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position,
@@ -102,7 +102,7 @@ public class CalendarActivity extends Activity {
 				startActivity(intent);
 
 			}
-		});
+		});*/
 		lvWeekList.setAdapter(adapter);
 		adapter.notifyDataSetChanged();
 
