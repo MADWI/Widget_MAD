@@ -9,6 +9,7 @@ import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceActivity;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.WindowManager.LayoutParams;
 import android.widget.Button;
 
 /**
@@ -31,7 +32,8 @@ public class MyPrefs extends PreferenceActivity {
 				final Dialog dialog = new Dialog(MyPrefs.this);
 				dialog.setContentView(R.layout.dialog_info_layout);
 				dialog.setTitle(getString(R.string.about_title));
-
+				dialog.getWindow().setLayout(LayoutParams.FILL_PARENT,
+						LayoutParams.WRAP_CONTENT);
 				Button dialogButton = (Button) dialog
 						.findViewById(R.id.btnOkDialog);
 				// if button is clicked, close the custom dialog
