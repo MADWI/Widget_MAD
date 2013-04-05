@@ -5,7 +5,7 @@
 
 ##AUTORZY:
 ![logo](http://www.mad.zut.edu.pl/images/logo-mini.png)
-###SKN [Mobile Applications Developers](http://www.mad.zut.edu.pl/news.php), WI ZUT.
+###SKN [Mobile Applications Developers](http://www.mad.zut.edu.pl) WI ZUT.
 
 
 ##CHANGELOG
