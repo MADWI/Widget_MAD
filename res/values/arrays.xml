@@ -20,4 +20,9 @@
         <item>Trzeci</item>
         <item>Czwarty</item>
     </string-array>
+    <string-array name="actions_on_plan">
+        <item>Otwórz</item>
+        <item>Usuń</item>
+    </string-array>
+
 </resources>

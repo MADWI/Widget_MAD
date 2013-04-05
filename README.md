@@ -10,6 +10,39 @@
 
 ##CHANGELOG
 
+###Wersja 0.60
+
+NOWE
+
+- możliwość otwarcia planu z poziomu listy planów
+- nowa ikona aplikacji
+
+POPRAWIONO
+
+- poprawiony błąd tworzenia pliku "brak.pdf"
+- w tej wersji brak zalegania aktywności na stosie
+
+
+###Wersja 0.50
+
+NOWE
+
+- po kliknięciu na rodzaj dnia zostanie wyświetlona pełna lista dni tygodnia
+
+POPRAWIONE
+
+- poprawiono prędkość działania i reakcji widgetu
+- zmniejszono transfer danych
+
+###Wersja 0.40
+
+NOWE
+
+- zmiana wygladu layoutu
+- zmieniony sposob parsowania dni tygodnia
+- dodano sprawdzanie parzystosci dla dnia nastepnego
+- dodano dokumentacje
+
 ###Wersja 0.40
 
 NOWE

@@ -41,7 +41,8 @@ public class PlanChangesActivity extends Activity {
 	private static final String TAG = "PlanChangesActivity";
 
 	/**
-	 * Obiekt klasy Resources, odwolujacy sie do wartosci z pliku res/strings.xml
+	 * Obiekt klasy Resources, odwolujacy sie do wartosci z pliku
+	 * res/strings.xml
 	 */
 	private Resources res;
 
@@ -82,11 +83,11 @@ public class PlanChangesActivity extends Activity {
 	 * Metoda wyswietlajaca powiadomienie Toast
 	 * 
 	 * @param text
-	 *          tekst powiadomienia
+	 *            tekst powiadomienia
 	 * @param duration
-	 *          czas wyswietlania komunikatu
+	 *            czas wyswietlania komunikatu
 	 * @param con
-	 *          kontekst aplikacji
+	 *            kontekst aplikacji
 	 */
 	public void showToast(String text, int duration, Context con) {
 		Log.i(TAG, "showToast");
@@ -105,8 +106,8 @@ public class PlanChangesActivity extends Activity {
 		lvPlanChanges.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
-			public void onItemClick(AdapterView<?> parent, View view, int position,
-					long id) {
+			public void onItemClick(AdapterView<?> parent, View view,
+					int position, long id) {
 
 				TextView body = (TextView) view.findViewById(R.id.body);
 				if (body.getVisibility() == View.GONE) {
@@ -117,8 +118,8 @@ public class PlanChangesActivity extends Activity {
 		});
 
 		if (news.size() == 0) {
-			Toast.makeText(this, getString(R.string.no_messages), Toast.LENGTH_LONG)
-					.show();
+			Toast.makeText(this, getString(R.string.no_messages),
+					Toast.LENGTH_LONG).show();
 		}
 
 	}
@@ -141,7 +142,7 @@ public class PlanChangesActivity extends Activity {
 	 * Metoda sprawdza wybor elementu z menu
 	 * 
 	 * @param item
-	 *          wybrany element menu
+	 *            wybrany element menu
 	 * 
 	 * @return true, jezeli wybrano element
 	 */
@@ -152,7 +153,8 @@ public class PlanChangesActivity extends Activity {
 		case R.id.refresh:
 			if (enableExecuteRefresh) {
 				if (HttpConnect.isOnline(getApplicationContext()) == true) {
-					new AsyncTaskGetPlanChanges().execute(getApplicationContext());
+					new AsyncTaskGetPlanChanges()
+							.execute(getApplicationContext());
 				}
 			}
 			return true;
@@ -169,8 +171,8 @@ public class PlanChangesActivity extends Activity {
 			AsyncTask<Context, Boolean, Void> {
 
 		/**
-		 * ArrayList obiektow MessagePlanChanges, gdzie beda przechowywane dane o
-		 * zmianach w planie
+		 * ArrayList obiektow MessagePlanChanges, gdzie beda przechowywane dane
+		 * o zmianach w planie
 		 */
 		ArrayList<MessagePlanChanges> tempArray = null;
 
@@ -204,7 +206,8 @@ public class PlanChangesActivity extends Activity {
 			super.onProgressUpdate(values);
 			Log.i(TAG, "onProgressUpdate");
 			if (values[0] == false)
-				showToast(res.getString(R.string.plan_changes_Messages), 3000, ctx);
+				showToast(res.getString(R.string.plan_changes_Messages), 3000,
+						ctx);
 
 		}
 
@@ -231,6 +234,13 @@ public class PlanChangesActivity extends Activity {
 			}
 			enableExecuteRefresh = true;
 		}
+	}
+
+	@Override
+	protected void onStop() {
+		super.onStop();
+		finish();
+
 	}
 
 }

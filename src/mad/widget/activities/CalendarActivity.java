@@ -1,7 +1,6 @@
 package mad.widget.activities;
 
 import java.util.ArrayList;
-import java.util.GregorianCalendar;
 
 import mad.widget.R;
 import mad.widget.connections.HttpConnect;
@@ -11,18 +10,14 @@ import mad.widget.models.ListViewAdapterWeekParity;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.Intent;
 import android.content.res.Resources;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
-import android.widget.AdapterView.OnItemClickListener;
 
 public class CalendarActivity extends Activity {
 	private static final String TAG = "CalendarActivity";
@@ -58,7 +53,8 @@ public class CalendarActivity extends Activity {
 		case R.id.refresh:
 			if (enableExecuteRefresh) {
 				if (HttpConnect.isOnline(getApplicationContext()) == true) {
-					new AsyncTaskGetParityList().execute(getApplicationContext());
+					new AsyncTaskGetParityList()
+							.execute(getApplicationContext());
 				}
 			}
 			return true;
@@ -83,26 +79,25 @@ public class CalendarActivity extends Activity {
 		lvWeekList = (ListView) findViewById(R.id.lvWeekList);
 
 		adapter = new ListViewAdapterWeekParity(getApplicationContext(),
-				android.R.layout.simple_list_item_1, android.R.id.text1, parityList);
+				android.R.layout.simple_list_item_1, android.R.id.text1,
+				parityList);
 
-		/*lvWeekList.setOnItemClickListener(new OnItemClickListener() {
-
-			@Override
-			public void onItemClick(AdapterView<?> parent, View view, int position,
-					long id) {
-
-				GregorianCalendar gc = parityList.get(position).getGregorianCal();
-				Intent intent = new Intent(Intent.ACTION_EDIT);
-				intent.setType("vnd.android.cursor.item/event");
-				intent.putExtra("beginTime", gc.getTimeInMillis());
-				intent.putExtra("allDay", false);
-				intent.putExtra("rrule", "FREQ=DAILY");
-				intent.putExtra("endTime", gc.getTimeInMillis() + 60 * 60 * 1000);
-				intent.putExtra("title", "");
-				startActivity(intent);
-
-			}
-		});*/
+		/*
+		 * lvWeekList.setOnItemClickListener(new OnItemClickListener() {
+		 * 
+		 * @Override public void onItemClick(AdapterView<?> parent, View view,
+		 * int position, long id) {
+		 * 
+		 * GregorianCalendar gc = parityList.get(position).getGregorianCal();
+		 * Intent intent = new Intent(Intent.ACTION_EDIT);
+		 * intent.setType("vnd.android.cursor.item/event");
+		 * intent.putExtra("beginTime", gc.getTimeInMillis());
+		 * intent.putExtra("allDay", false); intent.putExtra("rrule",
+		 * "FREQ=DAILY"); intent.putExtra("endTime", gc.getTimeInMillis() + 60 *
+		 * 60 * 1000); intent.putExtra("title", ""); startActivity(intent);
+		 * 
+		 * } });
+		 */
 		lvWeekList.setAdapter(adapter);
 		adapter.notifyDataSetChanged();
 
@@ -169,4 +164,12 @@ public class CalendarActivity extends Activity {
 			enableExecuteRefresh = true;
 		}
 	}
+
+	@Override
+	protected void onStop() {
+		super.onStop();
+		finish();
+
+	}
+
 }
