@@ -87,7 +87,7 @@ public class MyGroups extends Activity implements OnClickListener {
 	/** Zmienna w ktorej przechowywany jest kierunek studiow */
 	private String kierunek;
 
-	/** Zmienna w ktorej przechowywany jest stopieñ studiow */
+	/** Zmienna w ktorej przechowywany jest stopieï¿½ studiow */
 	private int stopien;
 
 	/** Zmienna w ktorej przechowywany jest rok studiow */
@@ -217,8 +217,7 @@ public class MyGroups extends Activity implements OnClickListener {
 				ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(
 						ctx, android.R.layout.simple_spinner_item, result);
 
-				spinnerArrayAdapter
-						.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                spinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
 				spinGroup.setAdapter(spinnerArrayAdapter);
 
