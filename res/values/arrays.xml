@@ -9,6 +9,7 @@
         <item>Informatyka</item>
         <item>ZIP</item>
         <item>Bioinformatyka</item>
+        <item>Inżynieria cyfryzacji</item>
     </string-array>
     <string-array name="list_stopien_studiow">
         <item>I</item>

@@ -124,6 +124,9 @@ public class PlanDownloader {
 			if (kierunek.equals("Bioinformatyka")) {
 				p = Pattern.compile(">BI" + stopien + "-" + rok
 						+ "[0-9]{1,2}\\.pdf<");
+			} else if (kierunek.equals("In¿ynieria cyfryzacji")) {
+				p = Pattern.compile(">IC" + stopien + "-" + rok
+						+ "[0-9]{1,2}\\.pdf<");
 			} else if (kierunek.equals("Informatyka")) {
 				p = Pattern.compile(">I" + stopien + "-" + rok
 						+ "[0-9]{1,2}\\.pdf<");
@@ -134,6 +137,8 @@ public class PlanDownloader {
 			return p;
 		} else if (rodzaj.equals("Niestacjonarne")) {
 			if (kierunek.equals("Bioinformatyka")) {
+				p = null;
+			} else if (kierunek.equals("In¿ynieria cyfryzacji")) {
 				p = null;
 			} else if (kierunek.equals("Informatyka")) {
 				p = Pattern.compile(">I" + stopien + "n-" + rok
