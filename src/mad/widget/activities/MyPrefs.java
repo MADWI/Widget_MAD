@@ -18,6 +18,7 @@ import android.widget.Button;
 public class MyPrefs extends PreferenceActivity {
 
 	/** Metoda wywolywana przy starcie aktywnosci */
+	@SuppressWarnings("deprecation")
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);

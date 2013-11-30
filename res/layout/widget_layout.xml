@@ -18,12 +18,6 @@
         android:background="@drawable/background_top"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
-
-
-
-
-
-
     <TextView
         android:id="@+id/tv_data"
         android:layout_width="90dp"
@@ -174,26 +168,17 @@
         android:layout_height="wrap_content"
         android:layout_above="@+id/tv_tydzien_current"
         android:layout_marginBottom="2dp"
+        android:layout_toLeftOf="@+id/imb_odswiez"
         android:orientation="horizontal"
-        android:visibility="visible" android:layout_toLeftOf="@+id/imb_odswiez">
+        android:visibility="visible" >
 
         <ProgressBar
             android:id="@+id/progressCircle"
             android:layout_width="29dp"
             android:layout_height="29dp"
-            android:indeterminate="true"
-            android:layout_alignTop="@+id/tv_ustawienia"
-            android:layout_above="@+id/tv_plan" android:layout_alignRight="@+id/btnPokazKalendarz"
-            android:layout_marginRight="10dp"/>
+            android:layout_marginRight="10dp"
+            android:indeterminate="true" />
     </LinearLayout>
-
-
-
-
-
-
-
-
 
     <TextView
         android:id="@+id/tv_data_nastepna"
@@ -209,12 +194,6 @@
         android:text="@string/tomorrow"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:textSize="15dp" />
-
-
-
-
-
-
 
     <Button
         android:id="@+id/btnPokazKalendarz"

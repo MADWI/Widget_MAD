@@ -1,7 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android"
+    android:initialKeyguardLayout="@layout/widget_layout"
     android:initialLayout="@layout/widget_layout"
     android:minHeight="144dp"
+    android:minResizeHeight="144dp"
+    android:minResizeWidth="292dp"
     android:minWidth="292dp"
-    android:updatePeriodMillis="7200000" />
+    android:resizeMode="horizontal|vertical"
+    android:updatePeriodMillis="7200000"
+    android:widgetCategory="home_screen|keyguard" />
 <!-- update widget every 120 minutes or manualy by refresh button -->
